@@ -1,0 +1,2 @@
+class FctEventForecastController < ApplicationController
+end

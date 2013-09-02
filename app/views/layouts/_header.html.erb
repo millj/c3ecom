@@ -7,6 +7,17 @@
       <nav>
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li>
+          <% if signed_in? %>
+              <li id="fat-menu" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Demand Functions <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "fct_event_forecast", '#' %></li>
+                  <li class="divider"></li>
+                </ul>
+              </li>
+          <% end %>
           <li><%= link_to "Help", help_path %></li>
           <% if signed_in? %>
             <li><%= link_to "Users", users_path %></li>
