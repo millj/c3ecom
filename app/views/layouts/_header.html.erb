@@ -7,7 +7,7 @@
       <nav>
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li>
-          <% if signed_in? %>
+          <% if demand_user? %>
               <li id="fat-menu" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   Demand Functions <b class="caret"></b>
