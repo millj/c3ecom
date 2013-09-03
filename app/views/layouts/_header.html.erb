@@ -18,6 +18,18 @@
                 </ul>
               </li>
           <% end %>
+          <% if direct_user? %>
+              <li id="fat-menu" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Direct Functions <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="divider"></li>
+                  <li><%= link_to "Location to Item Maintenance", '#' %></li>
+                  <li class="divider"></li>
+                </ul>
+              </li>
+          <% end %>
           <li><%= link_to "Help", help_path %></li>
           <% if signed_in? %>
             <li><%= link_to "Users", users_path %></li>
