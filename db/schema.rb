@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903220201) do
+ActiveRecord::Schema.define(version: 20130903230537) do
+
+  create_table "direct_bin_contents", force: true do |t|
+    t.string   "bin_name"
+    t.string   "item_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
