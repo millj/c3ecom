@@ -1,10 +1,26 @@
-<% provide(:title, 'All users') %>
-<h1>Bin Contents</h1>
+<% provide(:title, 'All Bin Contents') %>
+<h1>All Bin Contents</h1>
 
 <%= will_paginate %>
 
 <ul class="users">
-  <%= render @direct_bin_contents %>
+  <table class="table table-striped">
+    <tr>
+      <th> Item Code </th>
+      <th> Bin Code </th>
+      <th> Update date </th>
+      <th> Create date </th>
+    </tr>
+
+  <% @direct_bin_contents.each do |direct_bin_content| %>
+      <tr>
+        <td><%= direct_bin_content.item_code %></td>
+        <td><%= direct_bin_content.bin_name %></td>
+        <td><%= direct_bin_content.updated_at %></td>
+        <td><%= direct_bin_content.created_at %></td>
+      </tr>
+  <% end %>
+  </table>
 </ul>
 
 <%= will_paginate %>
