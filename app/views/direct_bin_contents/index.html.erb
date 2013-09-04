@@ -14,7 +14,7 @@
 
   <% @direct_bin_contents.each do |direct_bin_content| %>
       <tr>
-        <td><%= direct_bin_content.item_code %></td>
+        <td><%= link_to direct_bin_content.item_code %></td>
         <td><%= direct_bin_content.bin_name %></td>
         <td><%= direct_bin_content.updated_at %></td>
         <td><%= direct_bin_content.created_at %></td>

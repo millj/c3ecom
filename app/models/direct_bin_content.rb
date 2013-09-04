@@ -4,4 +4,14 @@ class DirectBinContent < ActiveRecord::Base
 
   default_scope -> { order('bin_name ASC')}
   self.per_page = 50
+
+
+
+  def self.search(search, page)
+    paginate :per_page => 50, :page => page,
+             :conditions => ['item_code like ?', "%#{search}%"],
+             :order => 'item_code'
+  end
+
+
 end
