@@ -1,0 +1,13 @@
+<% provide(:title, "Edit bin contents") %>
+<h1>Edit Item/Bin relation</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@direct_bin_contents) do |f| %>
+        <%= render 'shared/error_messages' %>
+
+        <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

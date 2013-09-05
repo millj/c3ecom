@@ -4,6 +4,14 @@ class DirectBinContentsController < ApplicationController
   def new
   end
 
+  def edit
+    @direct_bin_contents = DirectBinContent.find(params[:id])
+  end
+
+  def show
+    @direct_bin_contents = DirectBinContent.find(params[:id])
+  end
+
   def index
  #   @direct_bin_contents = DirectBinContent.paginate(page: params[:page])
     @direct_bin_contents = DirectBinContent.search(params[:search], params[:page])
