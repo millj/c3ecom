@@ -39,7 +39,6 @@ class DirectBinContentsController < ApplicationController
   end
 
   def index
- #   @direct_bin_contents = DirectBinContent.paginate(page: params[:page])
     @direct_bin_contents = DirectBinContent.search(params[:search], params[:page])
   end
 
