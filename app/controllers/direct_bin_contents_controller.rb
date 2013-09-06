@@ -12,6 +12,22 @@ class DirectBinContentsController < ApplicationController
     @direct_bin_contents = DirectBinContent.find(params[:id])
   end
 
+  def update
+    @direct_bin_contents = DirectBinContent.find(params[:id])
+    if @direct_bin_contents.update_attributes(direct_bin_contents_params)
+      flash[:success] = "Item updated"
+      redirect_to @direct_bin_contents
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    DirectBinContent.find(params[:id]).destroy
+    flash[:success] = "Item removed"
+    redirect_to direct_bin_contents_path
+  end
+
   def index
  #   @direct_bin_contents = DirectBinContent.paginate(page: params[:page])
     @direct_bin_contents = DirectBinContent.search(params[:search], params[:page])
@@ -20,6 +36,6 @@ class DirectBinContentsController < ApplicationController
   private
 
     def direct_bin_contents_params
-      params.require(:direct_bin_contents).permit(:bin_code, :item_code)
+      params.require(:direct_bin_content).permit(:bin_name)
     end
 end
