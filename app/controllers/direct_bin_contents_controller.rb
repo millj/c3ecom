@@ -1,7 +1,17 @@
 class DirectBinContentsController < ApplicationController
 
+  def create
+    @direct_bin_contents = DirectBinContent.new(direct_bin_contents_params)
+    if @direct_bin_contents.save
+      flash[:success] = "Item added"
+      redirect_to @direct_bin_contents
+    else
+      render 'new'
+    end
+  end
 
   def new
+    @direct_bin_contents = DirectBinContent.new
   end
 
   def edit
@@ -36,6 +46,6 @@ class DirectBinContentsController < ApplicationController
   private
 
     def direct_bin_contents_params
-      params.require(:direct_bin_content).permit(:bin_name)
+      params.require(:direct_bin_content).permit(:bin_name, :item_code)
     end
 end
