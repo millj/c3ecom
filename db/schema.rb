@@ -11,14 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130903230537) do
+ActiveRecord::Schema.define(version: 20130906065726) do
 
-  create_table "direct_bin_contents", force: true do |t|
-    t.string   "bin_name"
+  create_table "dim_items", force: true do |t|
     t.string   "item_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "direct_bin_contents", force: true do |t|
+    t.string   "bin_name",   limit: 15
+    t.string   "item_code",  limit: 15
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "direct_bin_contents", ["item_code"], name: "dbc_ix1", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

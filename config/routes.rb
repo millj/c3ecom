@@ -3,7 +3,7 @@ C3ecom::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :direct_bin_contents
-  resources :dim_item
+
 
   root 'static_pages#home'
 
