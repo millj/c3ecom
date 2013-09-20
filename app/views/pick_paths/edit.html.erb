@@ -1,0 +1,20 @@
+<% provide(:title, "Edit pick paths") %>
+<h2>Edit Pick Order:</h2>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@pick_paths) do |f| %>
+        <%= render 'shared/error_messages_pp' %>
+
+        <%= f.label :bin_name %>
+        <%= f.text_field :bin_name, :disabled=>true %>
+
+
+        <%= f.label :pick_order %>
+        <%= f.text_field :pick_order %>
+
+        <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+  </div>
+</div>

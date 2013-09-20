@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130906065726) do
+ActiveRecord::Schema.define(version: 20130920045200) do
 
   create_table "dim_items", force: true do |t|
     t.string   "item_code"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20130906065726) do
   end
 
   add_index "direct_bin_contents", ["item_code"], name: "dbc_ix1", using: :btree
+
+  create_table "pick_paths", force: true do |t|
+    t.string   "bin_name"
+    t.integer  "pick_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"

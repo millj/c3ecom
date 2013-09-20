@@ -1,0 +1,41 @@
+<% provide(:title, 'Pick Paths') %>
+<h1>Pick Paths</h1>
+
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Filters</legend>
+
+    <!-- Search input-->
+    <div class="control-group">
+      <label class="control-label" for="search">Bin code</label>
+      <div class="controls">
+        <input id="search" name="search" class="input-medium search-query" type="text">
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+
+<%= link_to "Add new pick path", new_pick_path_path %>
+<%= will_paginate %>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Bin Name </th>
+      <th> Pick Order </th>
+    </tr>
+
+  <% @pick_paths.each do |pick_path| %>
+      <tr>
+        <td><%= link_to pick_path.bin_name, edit_pick_path_path(pick_path.id) %></td>
+        <td><%= pick_path.pick_order %></td>
+        <td><%= link_to "Delete", pick_path, method: :delete, data: { confirm:"You sure?"} %></td>
+      </tr>
+  <% end %>
+  </table>
+</ul>
+
+<%= will_paginate %>

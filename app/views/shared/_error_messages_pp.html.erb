@@ -1,0 +1,12 @@
+<% if @pick_paths.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-error">
+        The form contains <%= pluralize(@pick_paths.errors.count, "error") %>.
+      </div>
+      <ul>
+        <% @pick_paths.errors.full_messages.each do |msg| %>
+            <li>* <%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
