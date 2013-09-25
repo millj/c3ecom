@@ -12,4 +12,14 @@ class StaticPagesController < ApplicationController
   def contact
 
   end
+
+  def truncate
+
+  end
+
+
+  def truncate_table(select_table)
+
+  end
+
 end

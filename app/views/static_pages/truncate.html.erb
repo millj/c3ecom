@@ -1,0 +1,61 @@
+<% provide(:title, 'Truncate') %>
+<h2>Truncate</h2>
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Choose a table to truncate!</legend>
+
+    <!-- Select Basic -->
+    <div class="control-group">
+      <label class="control-label" for="selectbasic">Select Table</label>
+      <div class="controls">
+        <select id="select_table" name="select_table" class="input-xlarge">
+          <option> temp_josh </option>
+          <option> dim_c3_seeded_hist </option>
+          <option> fct_base_replen_fc </option>
+          <option> fct_base_replen_fc_item_format </option>
+          <option> fct_brand_forecast_splits </option>
+          <option> fct_event_fc </option>
+          <option> fct_forecast_same_store </option>
+          <option> fct_forecastcosts </option>
+          <option> fct_forecastitemmaster </option>
+          <option> fct_forecastprices </option>
+          <option> fct_forecastprices_dept </option>
+          <option> fct_forecastunits </option>
+          <option> fct_forecastunits_dept </option>
+          <option> fct_fpro_fc_overrides </option>
+          <option> fct_fpro_hot_list </option>
+          <option> fct_item_gross_ups </option>
+          <option> fct_item_transition </option>
+          <option> fct_le_fc_inputs </option>
+          <option> fct_le_item_forecast </option>
+          <option> fct_le_tester_fc </option>
+          <option> fct_order_replen </option>
+          <option> fct_planned_store_rng </option>
+          <option> fct_post_launch_new </option>
+          <option> fct_post_launch_new_tester </option>
+          <option> fct_pre_launch_new </option>
+          <option> fct_pre_launch_new_tester </option>
+          <option> fct_prelaunch_new_fc_inputs </option>
+          <option> fct_promo_up_fc </option>
+          <option> fct_replen_sales_hist </option>
+          <option> fct_replen_supplies_fc </option>
+          <option> fct_replen_tester_fc </option>
+          <option> fct_seasonality </option>
+          <option> fct_total_bu_forecast </option>
+          <option> fct_total_gu_item_format_fc </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="control-group">
+      <label class="control-label" for="truncatebutton">Truncate Me!</label>
+      <div class="controls">
+        <%= button_to 'Go ahead, truncate my day.',{controller => :static_pages, :action => 'truncate_table'}, class: 'btn btn-warning btn-large' %>
+      </div>
+    </div>
+
+  </fieldset>
+</form>
