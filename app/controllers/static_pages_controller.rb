@@ -13,14 +13,15 @@ class StaticPagesController < ApplicationController
 
   end
 
+
   def truncate
 
   end
 
   def table_truncate
-   flash[:notice] =  params[:id]
+      flash[:success] = 'Hiho'
 
-   redirect_to truncate_path
   end
+
 
 end
