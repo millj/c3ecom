@@ -1,24 +1,27 @@
 C3ecom::Application.routes.draw do
 
+  root 'static_pages#home'
+
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :direct_bin_contents
   resources :pick_paths
 
 
-  root 'static_pages#home'
-
-
-  match '/signup',          to: 'users#new',             via: 'get'
-  match '/help',            to: 'static_pages#help',     via: 'get'
-  match '/about',           to: 'static_pages#about',    via: 'get'
-  match '/contact',         to: 'static_pages#contact',  via: 'get'
-  match '/truncate',        to: 'static_pages#truncate', via: 'get'
-
   match '/signin',    to: 'sessions#new',          via: 'get'
   match '/signout',   to: 'sessions#destroy',      via: 'delete'
 
-  match 'table_truncate', to: 'static_pages#table_truncate', via: 'post'
+  #match 'table_truncate', to: 'static_pages#table_truncate', via: 'get'
+
+  #post 'table_truncate' => 'static_pages#table_truncate'
+
+  get 'signup'   => 'users#new'
+  get 'help'     => 'static_pages#help'
+  get 'about'    => 'static_pages#about'
+  get 'contact'  => 'static_pages#contact'
+
+  post 'truncate' => 'static_pages#table_truncate'
+  get 'truncate' => 'static_pages#truncate'
 
 
 
