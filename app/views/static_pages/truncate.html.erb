@@ -1,7 +1,8 @@
 <% provide(:title, 'Truncate') %>
 <h2>Truncate</h2>
 
-<form class="form-horizontal">
+
+<%= form_tag(controller: 'static_pages', action: 'table_truncate', method: "post") do %>
   <fieldset>
 
     <!-- Form Name -->
@@ -57,4 +58,6 @@
 
 
   </fieldset>
-</form>
+<% end %>
+
+

@@ -15,15 +15,14 @@ class StaticPagesController < ApplicationController
 
 
   def truncate
-    flash[:success] = 'bugger'
 
   end
 
   def table_truncate
       flash[:success] = params[:id]
-      sql_query = "truncate table c3demand.temp_josh"
+      sql_query = "truncate table c3demand." + params[:id]
       ActiveRecord::Base.connection.execute(sql_query)
-
+      redirect_to truncate_path
   end
 
 
