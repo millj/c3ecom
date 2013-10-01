@@ -30,7 +30,9 @@ class StaticPagesController < ApplicationController
   end
 
   def load_table
-
+    flash[:success] = 'Loading' + params[:select_table]
+    sql_query =  'load data infile \'/tmp/' + params[:select_table][9..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' ignore 1 lines'
+    ActiveRecord::Base.connection.execute(sql_query)
     redirect_to load_path
 
   end

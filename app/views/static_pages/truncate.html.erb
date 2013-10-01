@@ -1,10 +1,9 @@
 <% provide(:title, 'Truncate') %>
 <h2>Truncate</h2>
 
-
 <%= form_tag(controller: 'static_pages', action: 'table_truncate', method: "post") do %>
     <!-- Form Name -->
-    <legend>Choose a table to truncate!</legend>
+    <legend>Choose a table to truncate! (Remember this is not reversable)</legend>
 
         <%=select_tag "select_table",
           "<option> c3demand.temp_josh </option>

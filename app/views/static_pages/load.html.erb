@@ -5,7 +5,8 @@
 <%= form_tag(controller: 'static_pages', action: 'load', method: "post") do %>
     <!-- Form Name -->
     <legend>Choose a table to load!</legend>
-
+    File needs to be in /tmp, with a name that matches the table, an extension of csv and no spaces </p>
+      Example: fct_event_fc.csv </p>
         <%=select_tag "select_table",
           "<option> c3demand.temp_josh </option>
           <option> c3demand.dim_c3_seeded_hist </option>
