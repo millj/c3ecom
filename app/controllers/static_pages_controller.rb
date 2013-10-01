@@ -19,7 +19,7 @@ class StaticPagesController < ApplicationController
   end
 
   def table_truncate
-      flash[:success] = 'Truncating ' + params[:select_table]
+      flash[:success] = 'Truncated ' + params[:select_table]
       sql_query = "truncate table " + params[:select_table]
       ActiveRecord::Base.connection.execute(sql_query)
       redirect_to truncate_path
@@ -30,9 +30,14 @@ class StaticPagesController < ApplicationController
   end
 
   def load_table
-    flash[:success] = 'Loading' + params[:select_table]
-    sql_query =  'load data infile \'/tmp/' + params[:select_table][9..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' ignore 1 lines'
+
+    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
+    flash[:success] = 'Loaded ' + params[:select_table]
+    redirect_to load_path
+  rescue Exception => exc
+    logger.error("Message for the log file #{exc.message}")
+    flash[:notice] = "Error #{exc.message}"
     redirect_to load_path
 
   end

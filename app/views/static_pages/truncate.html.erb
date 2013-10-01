@@ -6,8 +6,7 @@
     <legend>Choose a table to truncate! (Remember this is not reversable)</legend>
 
         <%=select_tag "select_table",
-          "<option> c3demand.temp_josh </option>
-          <option> c3demand.dim_c3_seeded_hist </option>
+          "<option> c3demand.dim_c3_seeded_hist </option>
           <option> c3demand.fct_base_replen_fc </option>
           <option> c3demand.fct_base_replen_fc_item_format </option>
           <option> c3demand.fct_brand_forecast_splits </option>
@@ -39,7 +38,14 @@
           <option> c3demand.fct_replen_tester_fc </option>
           <option> c3demand.fct_seasonality </option>
           <option> c3demand.fct_total_bu_forecast </option>
-          <option> c3demand.fct_total_gu_item_format_fc </option>".html_safe, class: "input-xlarge"
+          <option> c3demand.fct_total_gu_item_format_fc </option>
+          <option> c3demand.fct_forecast_same_store </option>
+          <option> c3dss.fct_event_forecast </option>
+          <option> c3dss.fct_planned_vendor </option>
+          <option> c3dss.fct_store_forecast_raw </option>
+          <option> c3dss.fct_store_sales_weight </option>
+          <option> c3dss.fct_store_ranging_weight </option>
+          <option> c3dss.fct_new_store_ranging </option>".html_safe, class: "input-xlarge"
          %>
 
        <div>
