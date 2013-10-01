@@ -1,10 +1,10 @@
-<% provide(:title, 'Truncate') %>
-<h2>Truncate</h2>
+<% provide(:title, 'Load data') %>
+<h2>Load</h2>
 
 
-<%= form_tag(controller: 'static_pages', action: 'table_truncate', method: "post") do %>
+<%= form_tag(controller: 'static_pages', action: 'load', method: "post") do %>
     <!-- Form Name -->
-    <legend>Choose a table to truncate!</legend>
+    <legend>Choose a table to load!</legend>
 
         <%=select_tag "select_table",
           "<option> c3demand.temp_josh </option>
@@ -44,7 +44,7 @@
          %>
 
        <div>
-         <%= submit_tag 'Go ahead, truncate my day.', confirm: 'Are you sure?', class: 'btn btn-warning btn-large' %>
+         <%= submit_tag 'Load me!', class: 'btn btn-warning btn-large' %>
        </div>
 
 <% end %>
