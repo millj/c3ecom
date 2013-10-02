@@ -6,6 +6,7 @@ C3ecom::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :direct_bin_contents
   resources :pick_paths
+  resources :allocation_orders
 
 
   match '/signin',    to: 'sessions#new',          via: 'get'
