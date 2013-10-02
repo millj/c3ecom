@@ -11,20 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130920045200) do
+ActiveRecord::Schema.define(version: 20131002025348) do
 
-  create_table "dim_items", force: true do |t|
+  create_table "allocation_order_lines", force: true do |t|
+    t.string   "order_num"
     t.string   "item_code"
+    t.string   "upc"
+    t.integer  "qty_required"
+    t.integer  "qty_scanned"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "allocation_orders", force: true do |t|
+    t.string   "order_num"
+    t.datetime "order_date"
+    t.integer  "order_priority"
+    t.boolean  "order_complete"
+    t.boolean  "order_processed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "direct_bin_contents", force: true do |t|
-    t.string   "bin_name"
-    t.string   "item_code"
+    t.string   "bin_name",   limit: 15
+    t.string   "item_code",  limit: 15
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "direct_bin_contents", ["item_code"], name: "dbc_ix1", using: :btree
 
   create_table "pick_paths", force: true do |t|
     t.string   "bin_name"
