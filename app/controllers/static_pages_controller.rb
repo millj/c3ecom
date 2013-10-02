@@ -19,10 +19,15 @@ class StaticPagesController < ApplicationController
   end
 
   def table_truncate
-      flash[:success] = 'Truncated ' + params[:select_table]
+
       sql_query = "truncate table " + params[:select_table]
       ActiveRecord::Base.connection.execute(sql_query)
+      flash[:success] = 'Truncated ' + params[:select_table]
       redirect_to truncate_path
+  rescue Exception => exc
+    logger.error("Message for the log file #{exc.message}")
+    flash[:notice] = "Error #{exc.message}"
+    redirect_to truncate_path
   end
 
   def load
