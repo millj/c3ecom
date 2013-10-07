@@ -7,6 +7,7 @@ C3ecom::Application.routes.draw do
   resources :direct_bin_contents
   resources :pick_paths
   resources :allocation_orders
+  resources :allocation_order_lines
 
 
   match '/signin',    to: 'sessions#new',          via: 'get'
@@ -26,6 +27,9 @@ C3ecom::Application.routes.draw do
 
   post 'load'  => 'static_pages#load_table'
   get  'load'  => 'static_pages#load'
+
+
+  get 'allocate' => 'allocation_order_lines#allocate'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

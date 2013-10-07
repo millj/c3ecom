@@ -1,0 +1,16 @@
+<% provide(:title, 'Allocation') %>
+<h2>Allocate</h2>
+
+<%= form_tag(controller: 'allocation_order_lines', action: 'allocate', method: "get") do %>
+    <!-- Form Name -->
+    <legend>Scan a barcode or type in an Item code</legend>
+
+    <%= text_field_tag('upc', nil, autofocus: 'true', placeholder: 'Scan barcode or type in I code', class: 'input-xlarge search-query') %>
+
+    <div>
+       <%= submit_tag 'Get Basket for item    ', class: 'btn btn-success btn-large' %>
+    </div>
+
+<% end %>
+
+
