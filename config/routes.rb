@@ -30,6 +30,7 @@ C3ecom::Application.routes.draw do
 
 
   get 'allocate' => 'allocation_order_lines#allocate'
+  post 'allocate' => 'allocation_order_lines#allocate_item'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
