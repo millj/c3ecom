@@ -6,16 +6,11 @@ C3ecom::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :direct_bin_contents
   resources :pick_paths
-  resources :allocation_orders
   resources :allocation_order_lines
-
+  resources :allocation_orders
 
   match '/signin',    to: 'sessions#new',          via: 'get'
   match '/signout',   to: 'sessions#destroy',      via: 'delete'
-
-  #match 'table_truncate', to: 'static_pages#table_truncate', via: 'get'
-
-  #post 'table_truncate' => 'static_pages#table_truncate'
 
   get 'signup'   => 'users#new'
   get 'help'     => 'static_pages#help'

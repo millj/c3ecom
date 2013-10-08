@@ -1,11 +1,18 @@
 class AllocationOrderLinesController < ApplicationController
 
+ def allocate_item
+   basket_number = params[:upc]
+   sql_query = 'truncate table c3dss.' + basket_number
+
+   render :allocate
+ end
+
   def index
 
   end
 
-  def allocate_item
-    redirect_to allocate_path
+  def show
+
   end
 
 end
