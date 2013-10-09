@@ -12,15 +12,12 @@
           <%= submit_tag 'Display basket and add item to order', class: 'btn btn-success btn-large' %>
       </div>
 
-
 <% end %>
-<p>
-<div class="text-center">
-  Display basket ID here
-  <pre>
-  <%= @basket_number %>
-  </pre>
-</div>
+
+<%= render :partial => 'basket_display', :locals => { :basket_num => @basket_number } %>
+
+
+
 
 
 
