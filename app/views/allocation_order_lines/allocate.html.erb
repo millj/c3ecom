@@ -13,8 +13,11 @@
       </div>
 
 <% end %>
-
-  <%= render :partial => 'basket_display', :locals => { :basket_num => @basket_number } %>
+  <% if @display_screen.nil? %>
+    <%= render :partial => 'basket_display', :locals => { :basket_num => @basket_number } %>
+  <% else %>
+    <%= render :partial => @display_screen, :locals => { :basket_num => @basket_number } %>
+  <% end %>
 
 
 
