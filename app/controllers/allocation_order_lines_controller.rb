@@ -3,9 +3,9 @@ class AllocationOrderLinesController < ApplicationController
  def allocate_item
 
    sql_query = 'select concat(c.basket_num, \',\', a.order_num)
-                   from c3rails_dev.allocation_orders a,
-                        c3rails_dev.allocation_order_lines b,
-                        c3rails_dev.baskets c
+                   from c3ecom.allocation_orders a,
+                        c3ecom.allocation_order_lines b,
+                        c3ecom.baskets c
                    where b.order_num = a.order_num
                      and b.upc = \'' + params[:upc] + '\'
                      and b.qty_scanned < b.qty_required
@@ -19,7 +19,7 @@ class AllocationOrderLinesController < ApplicationController
      @basket_number = result.split(",").first
      @order_number = result.split(",").second
 
-     sql_query = 'update c3rails_dev.allocation_order_lines b
+     sql_query = 'update c3ecom.allocation_order_lines b
                      set b.qty_scanned = b.qty_scanned + 1
                      where b.order_num = \'' + @order_number + '\'
                        and b.upc = \'' + params[:upc] + '\'
