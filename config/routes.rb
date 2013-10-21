@@ -8,6 +8,7 @@ C3ecom::Application.routes.draw do
   resources :pick_paths
   resources :allocation_order_lines
   resources :allocation_orders
+  resources :items, only: [:index, :show]
 
   match '/signin',    to: 'sessions#new',          via: 'get'
   match '/signout',   to: 'sessions#destroy',      via: 'delete'

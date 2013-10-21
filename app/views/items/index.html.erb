@@ -1,0 +1,43 @@
+<% provide(:title, 'Items') %>
+<h1>Items</h1>
+
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Filters</legend>
+
+    <!-- Search input-->
+    <div class="control-group">
+      <label class="control-label" for="search">Item Code or UPC</label>
+      <div class="controls">
+        <input id="search" name="search" class="input-medium search-query" type="text" autofocus="true">
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+
+<%= will_paginate %>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Item Code </th>
+      <th> UPC </th>
+      <th> Vendor Code </th>
+      <th> Description </th>
+    </tr>
+
+  <% @items.each do |item| %>
+      <tr>
+        <td><%= item.item_code %></td>
+        <td><%= item.upc %></td>
+        <td><%= item.vendor_code %></td>
+        <td><%= item.description %></td>
+      </tr>
+  <% end %>
+  </table>
+</ul>
+
+<%= will_paginate %>

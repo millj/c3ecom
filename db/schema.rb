@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131010220144) do
+ActiveRecord::Schema.define(version: 20131021031521) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20131010220144) do
 
   create_table "baskets", force: true do |t|
     t.string   "basket_num"
-    t.string   "order_num"
-    t.string   "location_num"
+    t.string   "order_num",    default: "Empty"
+    t.string   "location_num", default: "0"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20131010220144) do
   end
 
   add_index "direct_bin_contents", ["item_code"], name: "dbc_ix1", using: :btree
+
+  create_table "items", force: true do |t|
+    t.string   "item_code"
+    t.string   "description"
+    t.string   "vendor_code"
+    t.string   "upc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pick_paths", force: true do |t|
     t.string   "bin_name"
