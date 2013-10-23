@@ -1,8 +1,11 @@
 C3ecom::Application.routes.draw do
 
+  get "baskets/update"
+  get "baskets/index"
   root 'static_pages#home'
 
   resources :users
+  resources :baskets
   resources :sessions, only: [:new, :create, :destroy]
   resources :direct_bin_contents
   resources :pick_paths
