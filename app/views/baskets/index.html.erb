@@ -1,0 +1,27 @@
+<% provide(:title, 'Baskets') %>
+<h1>Baskets</h1>
+
+
+
+<%= will_paginate %>
+<div class="baskets">
+  <table class="table table-striped">
+    <tr>
+      <th> Basket Number </th>
+      <th> Order Number </th>
+      <th colspan=2> Actions </th>
+     </tr>
+  <% @baskets.each do |basket| %>
+      <tr>
+        <td><%= basket.basket_num %></td>
+        <td><%= basket.order_num %></td>
+        <td><%= link_to 'Edit', edit_basket_path(basket) %></td>
+        <td><%= link_to 'Delete', basket, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+
+  <% end %>
+  </table>
+</div>
+<%= will_paginate %>
+
+
