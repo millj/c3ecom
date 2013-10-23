@@ -1,7 +1,7 @@
 C3ecom::Application.routes.draw do
 
-  get "baskets/update"
-  get "baskets/index"
+  #get "baskets/update"
+  #get "baskets/index"
   root 'static_pages#home'
 
   resources :users
