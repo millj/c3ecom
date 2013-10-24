@@ -30,9 +30,16 @@ class AllocationOrderLinesController < ApplicationController
      @display_screen = 'basket_display_error'
      sql_query = 'select item_code from c3dss.dim_item
                    where upc = \'' + params[:upc] + '\'
+                      or item_code = \'' + params[:upc] + '\'
                  '
      result = ActiveRecord::Base.connection.select_value(sql_query)
-     @order_number = params[:upc] + ' Item Code: ' + result
+
+     if result != nil
+       @order_number = params[:upc] + ' Item Code: ' + result
+     else
+       @order_number = 'No such item or upc in system' + params[:upc]
+     end
+
    end
 
    render :allocate
