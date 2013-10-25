@@ -10,7 +10,7 @@ class AllocationOrderLinesController < ApplicationController
                      and b.upc = \'' + params[:upc] + '\'
                      and b.qty_scanned < b.qty_required
                      and c.order_num = a.order_num
-                    order by a.order_priority desc, a.order_date desc limit 1'
+                    order by a.order_priority desc, a.order_date desc, a.order_num limit 1'
    result = ActiveRecord::Base.connection.select_value(sql_query)
 
 
