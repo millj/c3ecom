@@ -10,7 +10,7 @@ C3ecom::Application.routes.draw do
   resources :direct_bin_contents
   resources :pick_paths
   resources :allocation_order_lines
-  resources :allocation_orders
+  resources :allocation_orders, only: [:index, :show]
   resources :items, only: [:index, :show]
 
   match '/signin',    to: 'sessions#new',          via: 'get'
