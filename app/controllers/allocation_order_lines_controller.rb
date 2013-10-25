@@ -37,7 +37,7 @@ class AllocationOrderLinesController < ApplicationController
      if result != nil
        @order_number = params[:upc] + ' Item Code: ' + result
      else
-       @order_number = 'No such item or upc in system' + params[:upc]
+       @order_number = 'No such item or upc in system: ' + params[:upc]
      end
 
    end
