@@ -9,7 +9,7 @@ C3ecom::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :direct_bin_contents
   resources :pick_paths
-  resources :allocation_order_lines
+  resources :allocation_order_lines, only: [:index, :show]
   resources :allocation_orders, only: [:index, :show]
   resources :items, only: [:index, :show]
 

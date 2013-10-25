@@ -1,0 +1,26 @@
+<% provide(:title, 'Allocation Order Lines') %>
+<h1>Allocation Order Lines</h1>
+
+
+
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Order # </th>
+      <th> Item Code </th>
+      <th> Qty Required </th>
+      <th> Qty Scanned </th>
+    </tr>
+
+    <% @allocation_order_lines.find_each do |allocation_order_lines| %>
+        <tr>
+          <td><%= allocation_orders.order_num %></td>
+          <td><%= allocation_orders.item_code %></td>
+          <td><%= allocation_orders.qty_required %></td>
+          <td><%= allocation_orders.qty_scanned %></td>
+        </tr>
+    <% end %>
+  </table>
+</ul>
+
