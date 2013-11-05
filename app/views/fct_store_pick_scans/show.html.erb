@@ -1,0 +1,28 @@
+<%= provide(:title, @fct_store_pick_scans.store_code) %>
+<h2>
+  <%= @fct_store_pick_scans.item_code %>
+</h2>
+<table class="table">
+  <tr>
+    <th> Store Code </th>
+    <th> Pack Date </th>
+    <th> WPI code </th>
+    <th> WSN code </th>
+    <th> Start Time </th>
+    <th> End Time </th>
+    <th> Picked By </th>
+    <th> Scanned By </th>
+    <th> Checked By </th>
+  </tr>
+  <tr>
+    <td><%= fct_store_pick_scan.store_code %></td>
+    <td><%= fct_store_pick_scan.pack_date %></td>
+    <td><%= fct_store_pick_scan.wpi_code %></td>
+    <td><%= fct_store_pick_scan.wsn_code %></td>
+    <td><%= fct_store_pick_scan.start_time %></td>
+    <td><%= fct_store_pick_scan.end_time %></td>
+    <td><%= fct_store_pick_scan.picked_by %></td>
+    <td><%= fct_store_pick_scan.scanned_by %></td>
+    <td><%= fct_store_pick_scan.checked_by %></td>
+  </tr>
+</table>

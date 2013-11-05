@@ -8,6 +8,7 @@ C3ecom::Application.routes.draw do
   resources :baskets
   resources :sessions, only: [:new, :create, :destroy]
   resources :direct_bin_contents
+  resources :fct_store_pick_scans
   resources :pick_paths
   resources :allocation_order_lines, only: [:index, :show]
   resources :allocation_orders, only: [:index, :show]
