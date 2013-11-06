@@ -25,7 +25,7 @@
   <table class="table table-striped">
     <tr>
       <th> Store Code </th>
-      <th> Pack Date </th>
+      <th> Pick Date </th>
       <th> WPI code </th>
       <th> WSN code </th>
       <th> Start Time </th>
@@ -38,7 +38,7 @@
   <% @fct_store_pick_scans.each do |fct_store_pick_scan| %>
       <tr>
         <td><%= fct_store_pick_scan.store_code %></td>
-        <td><%= fct_store_pick_scan.pack_date %></td>
+        <td><%= fct_store_pick_scan.pick_date %></td>
         <td><%= fct_store_pick_scan.wpi_code %></td>
         <td><%= fct_store_pick_scan.wsn_code %></td>
         <td><%= fct_store_pick_scan.start_time %></td>

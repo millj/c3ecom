@@ -45,6 +45,6 @@ class FctStorePickScansController < ApplicationController
   private
 
     def fct_store_pick_scans_params
-      params.require(:@fct_store_pick_scans).permit(:store_code, :pick_date, :wpi_code, :wsn_code, :start_time, :end_time, :picked_by, :checked_by, :scanned_by)
+      params.require(:fct_store_pick_scan).permit(:store_code, :pick_date, :wpi_code, :wsn_code, :start_time, :end_time, :picked_by, :checked_by, :scanned_by)
     end
 end
