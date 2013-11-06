@@ -1,0 +1,69 @@
+<% provide(:title, 'New pick/scan') %>
+<h1>Create new pick/scan</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@fct_store_pick_scans) do |f| %>
+
+        <%= render 'shared/error_messages_fsps' %>
+
+        <%= f.label  :store_code %>
+        <%= f.select(:store_code, ['K004',
+                                   'K005',
+                                   'K006',
+                                   'K007',
+                                   'K008',
+                                   'K009',
+                                   'K010',
+                                   'K012',
+                                   'K013',
+                                   'L001',
+                                   'L002',
+                                   'L003',
+                                   'L004',
+                                   'L005',
+                                   'L006',
+                                   'M001',
+                                   'M002',
+                                   'M003',
+                                   'M004',
+                                   'M005',
+                                   'M006',
+                                   'M007',
+                                   'M008',
+                                   'M009',
+                                   'M010',
+                                   'M011',
+                                   'M012',
+                                   'M013',
+                                   'M015',
+                                   'M017',
+                                   'M018',
+                                   'M019',
+                                   'M020',
+                                   'M021',
+                                   'M022',
+                                   'M023',
+                                   'M024',
+                                   'M025',
+                                   'M026',
+                                   'M027',
+                                   'M028',
+                                   'M029',
+                                   'M030',
+                                   'M031',
+                                   'M032',
+                                   'M033',
+                                   'M101',
+                                   'M102',
+                                   'M103',
+                                   'M104'], {}, {:class => "input-small"}) %>
+
+        <%= f.label :pick_date %>
+        <%= f.date_select(:pick_date, order: [:day, :month, :year]) %>
+
+
+        <%= f.submit "Create Pick/scan", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131105215306) do
+ActiveRecord::Schema.define(version: 20131106012302) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20131105215306) do
     t.string   "scanned_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "pick_date"
   end
 
   create_table "items", force: true do |t|
