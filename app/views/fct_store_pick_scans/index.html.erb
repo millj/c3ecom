@@ -46,6 +46,8 @@
         <td><%= fct_store_pick_scan.picked_by %></td>
         <td><%= fct_store_pick_scan.scanned_by %></td>
         <td><%= fct_store_pick_scan.checked_by %></td>
+        <td><%= link_to "Edit", edit_fct_store_pick_scan_path(fct_store_pick_scan.id) %></td>
+        <td><%= link_to "Delete", fct_store_pick_scan, method: :delete, data: { confirm:"You sure?"} %></td>
       </tr>
   <% end %>
   </table>
