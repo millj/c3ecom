@@ -16,6 +16,7 @@
 /tmp
 
 database.yml
+database-example.yml
 doc/
 *.swp
 *~
