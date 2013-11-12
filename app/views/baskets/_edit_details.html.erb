@@ -1,14 +1,10 @@
 <table>
   <tr>
-    <th colspan=2>Basket #<%= @basket.basket_num %></th>
-
-
+    <th>Basket Number</th>
+    <td><%= f.number_field :basket_num %></td>
   </tr>
   <tr>
     <th>Order Number</th>
     <td><%= f.text_field :order_num %></td>
-
-
   </tr>
-
 </table>

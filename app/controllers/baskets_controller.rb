@@ -1,15 +1,34 @@
 class BasketsController < ApplicationController
 
   def index
-    @baskets = Basket.paginate(page: params[:page], :per_page => 25)
+    if  params[:search].nil?
+      @baskets = Basket.paginate(:page => params[:page], :per_page => 25)
+    else
+      @baskets = Basket.search(params[:search], params[:page])
+    end
+
   end
 
+  def new
+    @basket = Basket.new
+  end
+
+  def create
+    @basket = Basket.new(basket_params)
+    if @basket.save
+      flash[:success] = "New Basket added"
+      redirect_to baskets_url
+    else
+      render 'new'
+    end
+  end
+
+
   def destroy
-    basket = Basket.find(params[:id])
-    basket.destroy
+    @basket = Basket.find(params[:id])
+    @basket.destroy
 
-    flash[:success] = "Basket ##{params[:id]} removed"
-
+    flash[:success] = "Basket ##{@basket.basket_num} removed"
     redirect_to(:back)
   end
 
@@ -31,14 +50,12 @@ class BasketsController < ApplicationController
   end
 
 
-
-
   end
 
   private
 
   def basket_params
-    params.require(:basket).permit(:order_num)
+    params.require(:basket).permit(:order_num, :basket_num)
   end
 
 end
