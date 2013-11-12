@@ -1,0 +1,17 @@
+<% provide(:title, 'New Basket') %>
+<h1>Create new basket</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@basket) do |f| %>
+
+        <% @basket.errors.full_messages.each do |msg| %>
+            <%= msg %>  <br>
+        <% end %>
+
+        <%= render :partial => 'edit_details', :locals => {:f => f} %>
+
+        <%= f.submit "Create Item", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
