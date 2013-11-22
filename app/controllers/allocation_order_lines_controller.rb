@@ -7,7 +7,10 @@ class AllocationOrderLinesController < ApplicationController
                         c3ecom.allocation_order_lines b,
                         c3ecom.baskets c
                    where b.order_num = a.order_num
-                     and b.upc = \'' + params[:upc] + '\'
+                     and (b.upc = \'' + params[:upc] + '\' or
+                          b.item_code = \'' + params[:upc] + '\'
+                         )
+
                      and b.qty_scanned < b.qty_required
                      and c.order_num = a.order_num
                     order by a.order_priority desc, a.order_date, a.order_num limit 1'
