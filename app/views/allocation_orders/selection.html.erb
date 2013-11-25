@@ -1,0 +1,22 @@
+<% provide(:title, 'Allocation Orders') %>
+<h1>Order Selection</h1>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Order # </th>
+      <th> Basket Number </th>
+      <th> Actions </th>
+
+    </tr>
+
+    <% @allocation_orders.find(:all) do |allocation_order| %>
+        <tr>
+          <td><%= allocation_order['order_num'] %></td>
+          <td><%= allocation_order['basket_num'] %></td>
+          <td>Process</td>
+
+        </tr>
+    <% end %>
+  </table>
+</ul>

@@ -1,5 +1,6 @@
 C3ecom::Application.routes.draw do
 
+  get "order_selection/index"
   #get "baskets/update"
   #get "baskets/index"
   root 'static_pages#home'
