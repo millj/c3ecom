@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131106012302) do
+ActiveRecord::Schema.define(version: 20131125020511) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 20131106012302) do
 
   add_index "direct_bin_contents", ["item_code"], name: "dbc_ix1", using: :btree
 
+  create_table "fct_pack_histories", force: true do |t|
+    t.string   "order_num"
+    t.string   "user_name"
+    t.date     "processed_at"
+    t.date     "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "fct_store_pick_scans", force: true do |t|
     t.string   "store_code"
     t.datetime "start_time"
@@ -69,6 +78,32 @@ ActiveRecord::Schema.define(version: 20131106012302) do
     t.string   "description"
     t.string   "vendor_code"
     t.string   "upc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "orders", force: true do |t|
+    t.string   "order_id",             limit: 55
+    t.string   "order_no",             limit: 15
+    t.string   "customer_id",          limit: 45
+    t.string   "first_name",           limit: 45
+    t.string   "last_name",            limit: 45
+    t.string   "email",                limit: 60
+    t.datetime "when_created"
+    t.integer  "status_id"
+    t.datetime "shipping_date"
+    t.string   "shipping_ref",         limit: 100
+    t.string   "rpro_customer_id",     limit: 45
+    t.string   "is_special_request",   limit: 5
+    t.text     "special_request_text"
+    t.string   "is_gift_wrapped"
+    t.string   "billing_address_id",   limit: 45
+    t.string   "shipping_address_id",  limit: 45
+    t.integer  "shipping_method_id"
+    t.string   "phone",                limit: 45
+    t.string   "evening_phone",        limit: 45
+    t.string   "bl_card_id",           limit: 100
+    t.text     "gift_text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
