@@ -19,7 +19,8 @@ class AllocationOrdersController < ApplicationController
     @allocation_order = AllocationOrder.find_by_order_num(params[:id])
     @basket_num = Basket.find_by_order_num(@allocation_order.order_num).basket_num
 
-    #@special_message = Order.find_by_order_no(@allocation_order.order_num)
+    @special_message = Order.find_by_order_no(@allocation_order.order_num).special_request_text
+    print @special_message
 
   end
 
