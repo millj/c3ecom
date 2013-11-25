@@ -1,0 +1,32 @@
+<% provide(:title, 'Gift Cards') %>
+<h1>Gift Cards</h1>
+
+
+
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Order # </th>
+      <th> Item Code </th>
+      <th> Qty Required </th>
+      <th> Qty Scanned </th>
+    </tr>
+
+    <% @gift_cards.each do |gift_card| %>
+        <tr>
+          <td><%= gift_card.order_num %></td>
+          <td><%= gift_card.item_code %></td>
+          <td><%= gift_card.qty_required %></td>
+          <td><%= gift_card.qty_scanned %></td>
+        </tr>
+    <% end %>
+  </table>
+</ul>
+
+
+
+
+
+
+
