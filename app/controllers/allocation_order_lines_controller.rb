@@ -53,6 +53,7 @@ class AllocationOrderLinesController < ApplicationController
     @allocation_order_lines = AllocationOrderLine.find_by(params[:order_num])
   end
 
+
   def show
     @allocation_order_lines = AllocationOrderLine.find_by(params[:order_num])
   end

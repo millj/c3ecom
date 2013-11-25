@@ -7,15 +7,13 @@
       <th> Order # </th>
       <th> Basket Number </th>
       <th> Actions </th>
-
     </tr>
 
-    <% @allocation_orders.find(:all) do |allocation_order| %>
+    <% @allocation_orders.each do |allocation_order| %>
         <tr>
           <td><%= allocation_order['order_num'] %></td>
           <td><%= allocation_order['basket_num'] %></td>
-          <td>Process</td>
-
+          <td><%= link_to 'Process', order_display_path(:id => allocation_order['order_num']) %></td>
         </tr>
     <% end %>
   </table>

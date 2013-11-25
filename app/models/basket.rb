@@ -4,7 +4,10 @@ class Basket < ActiveRecord::Base
 
   validates :basket_num,  numericality: { only_integer: true }
 
+
   self.per_page = 25
+
+  #has_and_belongs_to_many :allocation_order
 
 
 

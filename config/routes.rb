@@ -1,6 +1,5 @@
 C3ecom::Application.routes.draw do
 
-  get "order_selection/index"
   #get "baskets/update"
   #get "baskets/index"
   root 'static_pages#home'
@@ -15,8 +14,12 @@ C3ecom::Application.routes.draw do
   resources :allocation_orders, only: [:index, :show]
   resources :items, only: [:index, :show]
 
+
   match '/signin',    to: 'sessions#new',          via: 'get'
   match '/signout',   to: 'sessions#destroy',      via: 'delete'
+
+  match '/order_selection', :action => 'selection', :via => [:get], :controller => 'allocation_orders'
+  match 'order_display', :action => 'display', :via => [:get], :controller => 'allocation_orders'
 
   get 'signup'   => 'users#new'
   get 'help'     => 'static_pages#help'
@@ -29,9 +32,12 @@ C3ecom::Application.routes.draw do
   post 'load'  => 'static_pages#load_table'
   get  'load'  => 'static_pages#load'
 
-
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
+
+  get 'order_display/:id' => 'allocation_orders#display'
+  post 'order_display' => 'allocation_orders#display'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

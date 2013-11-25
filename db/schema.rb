@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131106012302) do
+ActiveRecord::Schema.define(version: 20131122131943) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20131106012302) do
   end
 
   add_index "direct_bin_contents", ["item_code"], name: "dbc_ix1", using: :btree
+
+  create_table "fct_pack_histories", force: true do |t|
+    t.string   "order_num"
+    t.string   "user_name"
+    t.date     "processed_at"
+    t.date     "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fct_store_pick_scans", force: true do |t|
     t.string   "store_code"
