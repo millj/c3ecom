@@ -35,8 +35,9 @@ C3ecom::Application.routes.draw do
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
 
-  get 'order_display/:id' => 'allocation_orders#display'
-  post 'order_display' => 'allocation_orders#display'
+
+  get 'giftcard'  => 'allocation_order_lines#giftcard'
+  post 'giftcard' => 'allocation_order_lines#giftcard'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

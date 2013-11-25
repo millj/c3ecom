@@ -1,5 +1,9 @@
 class AllocationOrderLinesController < ApplicationController
 
+ def giftcard
+   @gift_cards = AllocationOrderLine.find_by("item_code = 'GC' and qty_required > qty_scanned")
+ end
+
  def allocate_item
 
    sql_query = 'select concat(c.basket_num, \',\', a.order_num)
