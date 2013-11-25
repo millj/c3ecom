@@ -1,6 +1,6 @@
 class AllocationOrder < ActiveRecord::Base
 
-  self.table_name = 'c3ecom.allocation_orders'
+  #self.table_name = 'c3ecom.allocation_orders'
 
   #has_many :baskets
 
@@ -20,10 +20,10 @@ class AllocationOrder < ActiveRecord::Base
   def self.order_selection
     sql_query = 'SELECT a.order_num,
                        c.basket_num
-                FROM c3ecom.allocation_orders a,
-                     c3ecom.baskets c
+                FROM allocation_orders a,
+                     baskets c
                 WHERE NOT EXISTS (SELECT *
-                                  FROM c3ecom.allocation_order_lines b
+                                  FROM allocation_order_lines b
                                   WHERE b.order_num = a.order_num
                                   AND   b.qty_required <> b.qty_scanned)
                 AND   c.order_num = a.order_num'
