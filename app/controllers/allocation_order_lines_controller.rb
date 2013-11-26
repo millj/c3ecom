@@ -6,6 +6,7 @@ class AllocationOrderLinesController < ApplicationController
 
  def complete_gift_card
 
+   redirect_to giftcard_path
  end
 
  def allocate_item
