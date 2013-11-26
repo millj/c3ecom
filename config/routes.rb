@@ -10,7 +10,11 @@ C3ecom::Application.routes.draw do
   resources :direct_bin_contents
   resources :fct_store_pick_scans
   resources :pick_paths
-  resources :allocation_order_lines, only: [:index, :show]
+  resources :allocation_order_lines do
+      collection do
+        get :complete_gift_card
+      end
+  end
   resources :allocation_orders, only: [:index, :show]
   resources :items, only: [:index, :show]
 
