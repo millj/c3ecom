@@ -1,11 +1,8 @@
 class AllocationOrderLinesController < ApplicationController
 
  def giftcard
-   @gift_cards = AllocationOrderLine.where("item_code = 'GC' and qty_required > qty_scanned").order("created_at asc")
- end
 
- def complete_gift_card
-
+   @gift_cards = AllocationOrderLine.where("item_code = 'GC' and qty_required > qty_scanned")
  end
 
  def allocate_item
@@ -63,6 +60,7 @@ class AllocationOrderLinesController < ApplicationController
   def index
     @allocation_order_lines = AllocationOrderLine.find_by(params[:order_num])
   end
+
 
   def show
     @allocation_order_lines = AllocationOrderLine.find_by(params[:order_num])
