@@ -19,7 +19,11 @@
           <td><%= gift_card.item_code %></td>
           <td><%= gift_card.qty_required %></td>
           <td><%= gift_card.qty_scanned %></td>
-          <td><%= link_to 'Complete Line', controller: 'allocation_order_lines', action: 'complete_gift_card' %></td>
+          <td><%= link_to 'Made gift card', {:controller => 'allocation_order_lines',
+                                            :action     => 'complete_gift_card',
+                                            :id         => gift_card.id
+                                           }
+               %></td>
         </tr>
     <% end %>
   </table>

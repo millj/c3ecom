@@ -5,6 +5,11 @@ class AllocationOrderLinesController < ApplicationController
  end
 
  def complete_gift_card
+   sql_query = 'update c3ecom.allocation_order_lines a
+                   set qty_scanned = qty_required
+                 where a.id = \'' + params[:id] + '\'
+               '
+   ActiveRecord::Base.connection.execute(sql_query)
 
    redirect_to giftcard_path
  end
