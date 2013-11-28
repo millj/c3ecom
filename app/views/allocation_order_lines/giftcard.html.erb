@@ -11,6 +11,7 @@
       <th> Item Code </th>
       <th> Qty Required </th>
       <th> Qty Scanned </th>
+      <th> Basket Number </th>
     </tr>
 
     <% @gift_cards.each do |gift_card| %>
@@ -19,6 +20,7 @@
           <td><%= gift_card.item_code %></td>
           <td><%= gift_card.qty_required %></td>
           <td><%= gift_card.qty_scanned %></td>
+          <td><%= gift_card.basket_num %></td>
           <td><%= link_to 'Made gift card', {:controller => 'allocation_order_lines',
                                             :action     => 'complete_gift_card',
                                             :id         => gift_card.id

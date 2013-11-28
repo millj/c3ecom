@@ -1,7 +1,7 @@
 class AllocationOrderLinesController < ApplicationController
 
  def giftcard
-  @gift_cards = AllocationOrderLine.where("item_code = 'GC' and qty_required > qty_scanned")
+  @gift_cards = AllocationOrderLine.joins('left join c3ecom.baskets on baskets.order_num = allocation_order_lines.order_num').where("item_code = 'GC' and qty_required > qty_scanned").select('allocation_order_lines.*, baskets.basket_num')
  end
 
  def complete_gift_card
