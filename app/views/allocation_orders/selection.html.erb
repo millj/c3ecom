@@ -11,9 +11,20 @@
 
     <% @allocation_orders.each do |allocation_order| %>
         <tr>
-          <td><%= allocation_order['order_num'] %></td>
+          <td><%= allocation_order['order_num']  %></td>
           <td><%= allocation_order['basket_num'] %></td>
-          <td><%= link_to 'Process', order_display_path(:id => allocation_order['order_num']) %></td>
+          <td>
+            <%=
+                link_to_unless(allocation_order['processed_by'], 'Process', edit_allocation_order_path(:id => allocation_order['order_num'])) do
+                  "Processed by #{allocation_order['processed_by']}"
+               end
+            #if !allocation_order['processed_by']
+                   #print link_to 'Process', order_display_path(:id => allocation_order['order_num'])
+                #else
+                  #  "Processed by #{allocation_order['processed_by']}"
+                #end
+
+          %></td>
         </tr>
     <% end %>
   </table>
