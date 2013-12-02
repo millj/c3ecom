@@ -1,6 +1,6 @@
 class AllocationOrder < ActiveRecord::Base
 
-  self.table_name = 'c3ecom.allocation_orders'
+  #self.table_name = 'c3ecom.allocation_orders'
 
   #has_many :baskets
 
@@ -26,7 +26,8 @@ class AllocationOrder < ActiveRecord::Base
                                   FROM allocation_order_lines b
                                   WHERE b.order_num = a.order_num
                                   AND   b.qty_required <> b.qty_scanned)
-                AND   c.order_num = a.order_num'
+                AND   c.order_num = a.order_num
+                AND   a.order_complete = 0'
 
     connection.select_all(sql_query)
   end

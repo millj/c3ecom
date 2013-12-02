@@ -15,7 +15,7 @@ C3ecom::Application.routes.draw do
         get :complete_gift_card
       end
   end
-  resources :allocation_orders, only: [:index, :show]
+  resources :allocation_orders, only: [:index, :show, :edit, :update]
   resources :items, only: [:index, :show]
 
 

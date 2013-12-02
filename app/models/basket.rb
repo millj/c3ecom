@@ -1,6 +1,6 @@
 class Basket < ActiveRecord::Base
 
-  self.table_name = 'c3ecom.baskets'
+  #self.table_name = 'c3ecom.baskets'
 
   validates :basket_num,  numericality: { only_integer: true }
 
