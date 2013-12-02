@@ -15,7 +15,7 @@ class AllocationOrdersController < ApplicationController
     @allocation_orders.each do |order|
       if order['order_processed'] == 1
         pack_history = FctPackHistory.where(:order_num => order['order_num']).first
-          order['processed_by']  = pack_history.user_name  if  pack_history.user_name != current_user.name
+          order['processed_by']  = pack_history.user_name  if  pack_history && pack_history.user_name != current_user.name
       end
     end
 
