@@ -11,7 +11,7 @@ C3ecom::Application.routes.draw do
   resources :fct_store_pick_scans
   resources :pick_paths
   resources :allocation_order_lines, only: [:index, :show]
-  resources :allocation_orders, only: [:index, :show]
+  resources :allocation_orders, only: [:index, :show, :edit, :update]
   resources :items, only: [:index, :show]
 
 
@@ -19,7 +19,7 @@ C3ecom::Application.routes.draw do
   match '/signout',   to: 'sessions#destroy',      via: 'delete'
 
   match '/order_selection', :action => 'selection', :via => [:get], :controller => 'allocation_orders'
-  match 'order_display', :action => 'display', :via => [:get], :controller => 'allocation_orders'
+  #match 'order_display', :action => 'display', :via => [:get], :controller => 'allocation_orders'
 
   get 'signup'   => 'users#new'
   get 'help'     => 'static_pages#help'
