@@ -1,0 +1,59 @@
+<% provide(:title, 'Allocation Orders') %>
+<br>
+<%= form_for @allocation_order do |allocation_order| %>
+
+    <h2>ORDER NUMBER: <%= @allocation_order.order_num %></h2>
+    <h2>Basket Number: <%= @basket_num %></h2>
+
+
+    <table>
+      <tr>
+        <th valign="top" align="left">Samples:</th>
+        <td>
+          <table>
+            <% @order_samples.each do |sample| %>
+                <tr>
+                  <td><%= sample['product_name'] %></td>
+                </tr>
+            <% end %>
+          </table>
+        </td>
+      </tr>
+      <tr><td><br></td></tr>
+
+      <%= fields_for @order do |order| %>
+
+          <tr>
+            <th valign="top" align="left"><%= label_tag(:special_request_text, "Special request:") %></th>
+            <td><%= order.text_area :special_request_text, :size => "24x6" %></td>
+          </tr>
+          <tr>
+            <th valign="top" align="left"><%= label_tag(:gift_text, "Gift message:") %></th>
+            <td><%= order.text_field :gift_text, :size => "50" %></td>
+          </tr>
+
+
+      <% end %>
+      <tr><td><br></td></tr>
+      <tr>
+        <th align="left" valign="top">Order Items:</th>
+        <td>
+          <table>
+            <% @order_items.each do |line| %>
+                <tr>
+                  <td width="70px"><%= line[:item_code] %> </td>
+                  <td width="300px"><%= line[:item_desc] %> </td>
+                  <td><%= line[:qty_required] %> </td>
+                </tr>
+            <% end %>
+          </table>
+        </td>
+      </tr>
+      <tr><td><br>
+        <%= allocation_order.hidden_field :order_complete, :value => 1 %></td></tr>
+      <tr>
+        <td colspan="2" align="center"><%= allocation_order.submit "Complete Order" %>  </td>
+      </tr>
+
+    </table>
+<% end %>
