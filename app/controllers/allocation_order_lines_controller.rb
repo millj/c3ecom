@@ -1,7 +1,17 @@
 class AllocationOrderLinesController < ApplicationController
 
  def giftcard
-   @gift_cards = AllocationOrderLine.where("item_code = 'GC' and qty_required > qty_scanned")
+  @gift_cards = AllocationOrderLine.joins('left join c3ecom.baskets on baskets.order_num = allocation_order_lines.order_num').where("item_code = 'GC' and qty_required > qty_scanned").select('allocation_order_lines.*, baskets.basket_num')
+ end
+
+ def complete_gift_card
+   sql_query = 'update c3ecom.allocation_order_lines a
+                   set qty_scanned = qty_required
+                 where a.id = \'' + params[:id] + '\'
+               '
+   ActiveRecord::Base.connection.execute(sql_query)
+
+   redirect_to giftcard_path
  end
 
  def allocate_item

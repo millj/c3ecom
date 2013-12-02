@@ -13,7 +13,7 @@
       <th> Qty Scanned </th>
     </tr>
 
-    <% @allocation_order_lines.find_each do |allocation_order_lines| %>
+    <% @allocation_order_lines.each do |allocation_order_lines| %>
         <tr>
           <td><%= allocation_orders.order_num %></td>
           <td><%= allocation_orders.item_code %></td>
