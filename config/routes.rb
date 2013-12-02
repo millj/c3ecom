@@ -10,12 +10,14 @@ C3ecom::Application.routes.draw do
   resources :direct_bin_contents
   resources :fct_store_pick_scans
   resources :pick_paths
+
   resources :allocation_order_lines do
       collection do
         get :complete_gift_card
       end
   end
   resources :allocation_orders, only: [:index, :show, :edit, :update]
+
   resources :items, only: [:index, :show]
 
 
@@ -23,7 +25,7 @@ C3ecom::Application.routes.draw do
   match '/signout',   to: 'sessions#destroy',      via: 'delete'
 
   match '/order_selection', :action => 'selection', :via => [:get], :controller => 'allocation_orders'
-  match 'order_display', :action => 'display', :via => [:get], :controller => 'allocation_orders'
+  #match 'order_display', :action => 'display', :via => [:get], :controller => 'allocation_orders'
 
   get 'signup'   => 'users#new'
   get 'help'     => 'static_pages#help'
