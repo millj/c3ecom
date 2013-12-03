@@ -67,7 +67,7 @@ class AllocationOrderLinesController < ApplicationController
  end
 
   def index
-    @allocation_order_lines = AllocationOrderLine.find_by(params[:order_num])
+    @allocation_order_lines = AllocationOrderLine.each(params[:order_num])
   end
 
 

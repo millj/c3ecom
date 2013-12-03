@@ -15,10 +15,10 @@
 
     <% @allocation_order_lines.each do |allocation_order_lines| %>
         <tr>
-          <td><%= allocation_orders.order_num %></td>
-          <td><%= allocation_orders.item_code %></td>
-          <td><%= allocation_orders.qty_required %></td>
-          <td><%= allocation_orders.qty_scanned %></td>
+          <td><%= allocation_orders_lines.order_num %></td>
+          <td><%= allocation_orders_lines.item_code %></td>
+          <td><%= allocation_orders_lines.qty_required %></td>
+          <td><%= allocation_orders_lines.qty_scanned %></td>
         </tr>
     <% end %>
   </table>
