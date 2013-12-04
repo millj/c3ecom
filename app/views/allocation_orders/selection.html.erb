@@ -1,18 +1,22 @@
 <% provide(:title, 'Allocation Orders') %>
-<h1>Order Selection</h1>
+<h1>Orders to pack</h1>
 
 <ul class="users">
-  <table class="table table-striped">
+  <table class="table table-hover">
     <tr>
-      <th> Order # </th>
-      <th> Basket Number </th>
+      <th><p class="text-center"> Order # </p></th>
+      <th><p class="text-center">Basket Number</p></th>
+      <th><p class="text-center">Order Priority</p></th>
+      <th><p class="text-center">Order Date</p></th>
       <th> Actions </th>
     </tr>
 
     <% @allocation_orders.each do |allocation_order| %>
         <tr>
-          <td><%= allocation_order['order_num']  %></td>
-          <td><%= allocation_order['basket_num'] %></td>
+          <td><p class="text-center"><%= allocation_order['order_num']  %> </p></td>
+          <td><p class="text-center"><%= allocation_order['basket_num'] %> </p></td>
+          <td><p class="text-center"><%= allocation_order['order_priority'] %> </p></td>
+          <td><p class="text-center"><%= allocation_order['order_date'] %> </p></td>
           <td>
             <%=
                 link_to_unless(allocation_order['processed_by'], 'Process', edit_allocation_order_path(:id => allocation_order['order_num'])) do
