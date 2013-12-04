@@ -75,10 +75,10 @@ class AllocationOrdersController < ApplicationController
 
       #samples
       sql_query1 =  'SELECT s.product_name
-                    FROM c3ecom.OrderSamples s,
-                        c3ecom.orders o
-                    WHERE s.order_id = o.order_id
-                    AND order_no = \'' + @order_number + '\''
+                       FROM c3ecom.OrderSamples s,
+                            c3ecom.orders o
+                       WHERE s.order_id = o.order_id
+                         AND order_no = \'' + @order_number + '\''
       @order_samples = ActiveRecord::Base.connection.select_all(sql_query1)
 
       #order items

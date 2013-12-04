@@ -1,14 +1,14 @@
-<% provide(:title, 'Allocation Orders') %>
+<% provide(:title, 'Order packing') %>
 <br>
 <%= form_for @allocation_order do |allocation_order| %>
 
-    <h2>ORDER NUMBER: <%= @allocation_order.order_num %></h2>
+    <h2>Order to pack: <%= @allocation_order.order_num %></h2>
     <h2>Basket Number: <%= @basket_num %></h2>
 
 
     <table>
       <tr>
-        <th valign="top" align="left">Samples:</th>
+        <th valign="top" align="left">Samples to pack:</th>
         <td>
           <table>
             <% @order_samples.each do |sample| %>
@@ -24,8 +24,8 @@
       <%= fields_for @order do |order| %>
 
           <tr>
-            <th valign="top" align="left"><%= label_tag(:special_request_text, "Special request:") %></th>
-            <td><%= order.text_area :special_request_text, :size => "24x6" %></td>
+            <th valign="top" align="left"><%= label_tag(:special_request_text, "Special request info:") %></th>
+            <td><%= order.text_area :special_request_text, :size => "100x6" %></td>
           </tr>
           <tr>
             <th valign="top" align="left"><%= label_tag(:gift_text, "Gift message:") %></th>
