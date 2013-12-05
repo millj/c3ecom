@@ -33,9 +33,10 @@ class AllocationOrdersController < ApplicationController
       @allocation_order.save!
       @order_number = @allocation_order.order_num
 
-      FctPackHistory.where(:user_name => current_user.name , :order_num => @order_number).first_or_create do |pack_history|
-        pack_history.processed_at = DateTime.current
-      end
+      pack_history = FctPackHistory.where(:user_name => current_user.name , :order_num => @order_number).first_or_create(:processed_at => DateTime.current)
+      #pack_history.update_attribute(:processed_at => DateTime.current)
+      #pack_history.save
+
       @order = Order.find_by_order_no(@order_number)
 
       @basket_num = Basket.find_by_order_num(@order_number).basket_num
