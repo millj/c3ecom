@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131125020511) do
+ActiveRecord::Schema.define(version: 20131205013142) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20131125020511) do
     t.integer  "qty_scanned"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "description"
   end
 
   create_table "allocation_orders", force: true do |t|
