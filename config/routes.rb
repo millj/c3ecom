@@ -44,6 +44,7 @@ C3ecom::Application.routes.draw do
   get 'giftcard'  => 'allocation_order_lines#giftcard'
   post 'giftcard' => 'allocation_order_lines#giftcard'
 
+  get 'selection'  => 'allocation_orders#selection'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

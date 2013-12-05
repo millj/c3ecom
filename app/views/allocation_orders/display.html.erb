@@ -1,8 +1,8 @@
-<% provide(:title, 'Allocation Orders') %>
+<% provide(:title, 'Order Display') %>
 <br>
 <%= form_for @allocation_order, :url => order_complete_path, :html =>{:method => :post} do |allocation_order| %>
 
-<h2>ORDER NUMBER: <%= @allocation_order.order_num %></h2>
+<h2>Order to Pack: <%= @allocation_order.order_num %></h2>
 <h2>Basket Number: <%= @basket_num %></h2>
 
 
