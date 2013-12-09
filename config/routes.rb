@@ -25,7 +25,6 @@ C3ecom::Application.routes.draw do
   match '/signout',   to: 'sessions#destroy',      via: 'delete'
 
   match '/order_selection', :action => 'selection', :via => [:get], :controller => 'allocation_orders'
-  #match 'order_display', :action => 'display', :via => [:get], :controller => 'allocation_orders'
 
   get 'signup'   => 'users#new'
   get 'help'     => 'static_pages#help'
@@ -45,6 +44,8 @@ C3ecom::Application.routes.draw do
   post 'giftcard' => 'allocation_order_lines#giftcard'
 
   get 'selection'  => 'allocation_orders#selection'
+
+  get 'print_message' =>  'allocation_orders#print_message'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

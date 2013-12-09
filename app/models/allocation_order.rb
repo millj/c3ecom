@@ -3,12 +3,12 @@ class AllocationOrder < ActiveRecord::Base
   self.table_name = 'c3ecom.allocation_orders'
 
   #has_many :baskets
-  belongs_to :order
+  #belongs_to :order
 
   validates :order_num, presence: true
   validates :order_date, presence: true
 
-  accepts_nested_attributes_for :order
+  #accepts_nested_attributes_for :order
 
 
 
