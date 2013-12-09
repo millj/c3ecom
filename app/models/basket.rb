@@ -7,7 +7,7 @@ class Basket < ActiveRecord::Base
 
   self.per_page = 25
 
-  #has_and_belongs_to_many :allocation_order
+  has_and_belongs_to_many :allocation_order, :foreign_key => :order_num
 
 
 
