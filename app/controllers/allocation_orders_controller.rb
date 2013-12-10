@@ -38,7 +38,6 @@ class AllocationOrdersController < ApplicationController
       pack_history.save
 
       @order = Order.find_by_order_no(@order_number)
-
       @basket_num = Basket.find_by_order_num(@order_number).basket_num
 
       #samples
@@ -77,7 +76,7 @@ class AllocationOrdersController < ApplicationController
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
       print res.code
-      flash[:notice] = "Printed"
+      flash[:success] = "Message printed"
 
       redirect_to edit_allocation_order_path(@allocation_order.order_num)
     end
@@ -88,11 +87,12 @@ class AllocationOrdersController < ApplicationController
       @allocation_order = AllocationOrder.find(params[:id])
       @order_num = @allocation_order.order_num
       @order = Order.find_by_order_no(@order_num)
-
+      print "test"
+      print  params[:order_complete]
 
       respond_to do |format|
-        if @allocation_order.update_attributes(:order_complete => 1)  #&&  @order.update_attributes(orders_params)
-
+        if @allocation_order.update_attributes(:order_complete => 1)
+            # allocation_orders_params
           pack_history = FctPackHistory.find_by_order_num(@order_num)
           pack_history.completed_at = DateTime.current
           pack_history.save
@@ -101,6 +101,7 @@ class AllocationOrdersController < ApplicationController
           params = { :solution => 'IT', :action =>'despatcher_sequence_v6.xaction', :order => @allocation_order.order_num, :path => '', :userid => 'report', :password => 'report' }
           uri.query = URI.encode_www_form(params)
           res = Net::HTTP.get_response(uri)
+          print res.code
 
           flash[:success] = "Order ##{@order_num} was successfully completed"
           format.html { redirect_to order_selection_path }
@@ -118,10 +119,5 @@ class AllocationOrdersController < ApplicationController
   def allocation_orders_params
     params.require(:allocation_order).permit(:order_num, :order_date, :order_priority, :order_complete, :order_processed)
   end
-
-  def orders_params
-    params.require(:order).permit(:gift_text, :special_request_text, :order_no)
-  end
-
 
 end
