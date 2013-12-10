@@ -52,24 +52,26 @@
           </table>
         </td>
       </tr>
-      <tr><td><br></td></tr>
+          <tr>
+            <td><br></td>
+          </tr>
       <% end %>
 
-      <%= fields_for @order do |order| %>
+      <tr>
+        <th valign="top" align="left">Special request info:</th>
+        <td><%= @order.special_request_text %></td>
+      </tr>
+      <% gift_wrapped =["Y", "1"]
+         if gift_wrapped.include?(@order.is_gift_wrapped) %>
           <tr>
-            <th valign="top" align="left">Special request info:</th>
-            <td><%= order.text_area :special_request_text, :size => "90x6" %></td>
-          </tr>
-          <% gift_wrapped =["Y", "1"]
-             if gift_wrapped.include?(@order.is_gift_wrapped) %>
-            <tr>
-                <th valign="top" align="left">Gift message: </th>
-            <td><%= @order.gift_text %>   <%= link_to "Print Message", print_message_path(:id=>@allocation_order) %>
+            <th valign="top" align="left">Gift message:</th>
+            <td><%= @order.gift_text %>   <%= link_to "Print Message", print_message_path(:id => @allocation_order) %>
             </td>
-            </tr>
-          <% end %>
+          </tr>
       <% end %>
-      <tr><td><br></td></tr>
+      <tr>
+        <td><br></td>
+      </tr>
 
       <% if !@order_items.empty? %>
       <tr>
@@ -88,7 +90,7 @@
       </tr>
       <% end %>
       <tr><td><br>
-        <%= allocation_order.hidden_field :order_complete, :value => true %></td></tr>
+        <%= allocation_order.hidden_field :order_complete, :value => 0 %></td></tr>
       <tr>
         <td colspan="2" align="center"><%= allocation_order.submit "Complete Order" %>  </td>
       </tr>
