@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131205013142) do
+ActiveRecord::Schema.define(version: 20131210223713) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 20131205013142) do
     t.string   "user_name"
     t.date     "processed_at"
     t.date     "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fct_rpro_sos", force: true do |t|
+    t.string   "so_sid"
+    t.string   "so_no"
+    t.string   "invc_sid"
+    t.string   "ecommerce_order_no"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -126,6 +135,7 @@ ActiveRecord::Schema.define(version: 20131205013142) do
     t.boolean  "admin"
     t.boolean  "demand"
     t.boolean  "direct"
+    t.boolean  "customer_service"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

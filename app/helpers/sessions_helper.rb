@@ -19,6 +19,14 @@ module SessionsHelper
     end
   end
 
+  def customer_service_user?
+    if signed_in?
+      current_user.customer_service?
+    else
+      nil
+    end
+  end
+
   def direct_user?
     if signed_in?
       current_user.direct?

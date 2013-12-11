@@ -47,6 +47,9 @@ C3ecom::Application.routes.draw do
 
   get 'print_message' =>  'allocation_orders#print_message'
 
+  get 'sales_order'  => 'fct_rpro_sos#sales_order'
+  post 'sales_order' => 'fct_rpro_sos#sales_order'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

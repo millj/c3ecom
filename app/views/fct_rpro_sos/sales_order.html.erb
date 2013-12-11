@@ -1,0 +1,46 @@
+<% provide(:title, 'Ecommerce Order Search') %>
+<h1>Gift Cards</h1>
+
+
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Filters</legend>
+
+    <!-- Search input-->
+    <div class="control-group">
+      <label class="control-label" for="search">Ecommerce Order # or Rpro Receipt #</label>
+      <div class="controls">
+        <input id="search" name="search" class="input-medium search-query" type="text" autofocus="true">
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+
+<%= will_paginate @sales_order%>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Ecommerce Order # # </th>
+      <th> Rpro Receipt # </th>
+
+    </tr>
+
+    <% @sales_order.each do |sales_order| %>
+        <tr>
+          <td><%= sales_order.ecommerce_order_no %></td>
+          <td><%= sales_order.receipt_number %></td>
+        </tr>
+    <% end %>
+  </table>
+</ul>
+
+<%= will_paginate @sales_order%>
+
+
+
+
+
