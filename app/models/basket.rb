@@ -1,7 +1,7 @@
 class Basket < ActiveRecord::Base
 
   self.table_name = 'c3ecom.baskets'
-
+  default_scope order('basket_num')
   validates :basket_num,  numericality: { only_integer: true }
 
 
