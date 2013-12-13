@@ -39,7 +39,9 @@ class AllocationOrderLinesController < ApplicationController
      sql_query = 'update c3ecom.allocation_order_lines b
                      set b.qty_scanned = b.qty_scanned + 1
                      where b.order_num = \'' + @order_number + '\'
-                       and b.upc = \'' + params[:upc] + '\'
+                       and (b.upc = \'' + params[:upc] + '\' or
+                            b.item_code = \'' + params[:upc] + '\'
+                           )
                        and b.qty_scanned < b.qty_required'
      ActiveRecord::Base.connection.execute(sql_query)
      @display_screen = 'basket_display'
