@@ -11,7 +11,13 @@ class FctRproSosController < ApplicationController
   end
 
   def sales_order
-        @sales_order = FctRproSo.joins('left join c3dss.fct_sale on fct_rpro_so.invc_sid = fct_sale.invoice_sid').order('ecommerce_order_no desc').select('fct_rpro_so.*, fct_sale.receipt_number').paginate(:page => params[:page])
+    if  params[:search].nil?
+      @sales_order = FctRproSo.joins('left join c3dss.fct_sale on fct_rpro_so.invc_sid = fct_sale.invoice_sid').order('ecommerce_order_no desc').select('fct_rpro_so.*, fct_sale.receipt_number').paginate(:page => params[:page])
+    else
+      @sales_order = FctRproSo.joins('left join c3dss.fct_sale on fct_rpro_so.invc_sid = fct_sale.invoice_sid').order('ecommerce_order_no desc').select('fct_rpro_so.*, fct_sale.receipt_number').search(params[:search], params[:page])
+
+    end
   end
+
 
   end
