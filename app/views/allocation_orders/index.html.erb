@@ -35,8 +35,8 @@
           <td><%= link_to allocation_orders.order_num, allocation_order_lines_path(allocation_orders.order_num) %></td>
           <td><%= allocation_orders.order_date %></td>
           <td><%= allocation_orders.order_priority %></td>
-          <td><%= allocation_orders.order_complete %></td>
-          <td><%= allocation_orders.order_processed %></td>
+          <td><%= allocation_orders.order_complete == "\1" %></td>
+          <td><%= allocation_orders.order_processed == "\1" %></td>
         </tr>
     <% end %>
   </table>

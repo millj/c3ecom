@@ -50,8 +50,8 @@ class AllocationOrdersController < ApplicationController
 
       #order items
       @order_items = AllocationOrderLine.where(:order_num => @order_number)
-      # address
 
+      # address
       sql_query2 = 'SELECT
                       a.company_name,
                       a.first_name,
@@ -75,7 +75,7 @@ class AllocationOrdersController < ApplicationController
       params = { :solution => 'IT', :action =>'Print_gift_messages2.xaction', :order => @allocation_order.order_num, :path => '', :userid => 'report', :password => 'report' }
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
-      print res.code
+
       flash[:success] = "Message printed"
 
       redirect_to edit_allocation_order_path(@allocation_order.order_num)
@@ -87,12 +87,10 @@ class AllocationOrdersController < ApplicationController
       @allocation_order = AllocationOrder.find(params[:id])
       @order_num = @allocation_order.order_num
       @order = Order.find_by_order_no(@order_num)
-      print "test"
-      print  params[:order_complete]
 
       respond_to do |format|
         if @allocation_order.update_attributes(:order_complete => 1)
-            # allocation_orders_params
+            # allocation_orders_params                 print res.code
           pack_history = FctPackHistory.find_by_order_num(@order_num)
           pack_history.completed_at = DateTime.current
           pack_history.save
@@ -101,7 +99,6 @@ class AllocationOrdersController < ApplicationController
           params = { :solution => 'IT', :action =>'despatcher_sequence_v6.xaction', :order => @allocation_order.order_num, :path => '', :userid => 'report', :password => 'report' }
           uri.query = URI.encode_www_form(params)
           res = Net::HTTP.get_response(uri)
-          print res.code
 
           flash[:success] = "Order ##{@order_num} was successfully completed"
           format.html { redirect_to order_selection_path }
