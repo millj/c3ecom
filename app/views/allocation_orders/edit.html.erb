@@ -67,8 +67,8 @@
       <% gift_wrapped =["Y", "1"]
          if gift_wrapped.include?(@order.is_gift_wrapped) %>
           <tr>
-            <th valign="top" align="left">Gift gift wrapped?</th>
-            <td class="red">Y
+            <th valign="top" align="left">Is gift wrapped?</th>
+            <td class="red">YES - Please wrap me!
             </td>
           </tr>
           <tr>
@@ -79,8 +79,8 @@
           </tr>
          <% else %>
           <tr>
-            <th valign="top" align="left">GIs gift wrapped?</th>
-            <td>N
+            <th valign="top" align="left">Is gift wrapped?</th>
+            <td>No
             </td>
           </tr>
          <% end %>
