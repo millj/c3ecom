@@ -24,8 +24,9 @@
 <ul class="users">
   <table class="table table-striped">
     <tr>
-      <th> Ecommerce Order # # </th>
+      <th> Ecommerce Order # </th>
       <th> Rpro Receipt # </th>
+      <th> So # </th>
 
     </tr>
 
@@ -33,6 +34,7 @@
         <tr>
           <td><%= sales_order.ecommerce_order_no %></td>
           <td><%= sales_order.receipt_number %></td>
+          <td><%= sales_order.so_no %></td>
         </tr>
     <% end %>
   </table>

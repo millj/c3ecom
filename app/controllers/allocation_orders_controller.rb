@@ -72,7 +72,7 @@ class AllocationOrdersController < ApplicationController
     def print_message
       @allocation_order = AllocationOrder.find(params[:id])
       uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      params = { :solution => 'Ecommerce', :action =>'Print_gift_messages2.xaction', :order => @allocation_order.order_num, :path => '', :userid => 'report', :password => 'report' }
+      params = { :solution => 'IT', :action =>'Print_gift_messages2.xaction', :order => @allocation_order.order_num, :path => '', :userid => 'report', :password => 'report' }
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
       print res.code
