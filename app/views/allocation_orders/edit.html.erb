@@ -67,12 +67,23 @@
       <% gift_wrapped =["Y", "1"]
          if gift_wrapped.include?(@order.is_gift_wrapped) %>
           <tr>
+            <th valign="top" align="left">GIs gift wrapped?</th>
+            <td class="red">Y
+            </td>
+          </tr>
+          <tr>
             <th valign="top" align="left">Gift message:</th>
             <td><%= @order.gift_text %>   <%= link_to "Print Message", print_message_path(:id => @allocation_order), class: "btn btn-primary", :data => {:disable_with => "Please wait" }%>
 
             </td>
           </tr>
-      <% end %>
+         <% else %>
+          <tr>
+            <th valign="top" align="left">GIs gift wrapped?</th>
+            <td>N
+            </td>
+          </tr>
+         <% end %>
       <tr>
         <td><br></td>
       </tr>
