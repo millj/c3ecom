@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210223713) do
+ActiveRecord::Schema.define(version: 20131216122918) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20131210223713) do
   create_table "fct_pack_histories", force: true do |t|
     t.string   "order_num"
     t.string   "user_name"
-    t.date     "processed_at"
-    t.date     "completed_at"
+    t.datetime "processed_at"
+    t.datetime "completed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
