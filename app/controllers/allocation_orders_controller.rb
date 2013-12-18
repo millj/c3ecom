@@ -39,6 +39,12 @@ class AllocationOrdersController < ApplicationController
 
       @order = Order.find_by_order_no(@order_number)
       @basket_num = Basket.find_by_order_num(@order_number).basket_num
+      sql_query1 = 'select
+                        case when site_id = \'1\' then \'Mecca\' else \'Kit\' end as order_source
+                     from c3ecom.orders a, c3ecom.Customers b
+                     where b.direct_customer_id = a.customer_id
+                       and a.order_no = \'' + @order_number + '\''
+      @order_source = ActiveRecord::Base.connection.select_value(sql_query1)
 
       #samples
       sql_query1 =  'SELECT s.product_name
