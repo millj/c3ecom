@@ -26,7 +26,9 @@
     <tr>
       <th> Ecommerce Order # </th>
       <th> Rpro Receipt # </th>
-      <th> So # </th>
+      <th> SO # </th>
+      <th> Freight Tracking # </th>
+      <th> Billing Last Name </th>
 
     </tr>
 
@@ -35,6 +37,8 @@
           <td><%= sales_order.ecommerce_order_no %></td>
           <td><%= sales_order.receipt_number %></td>
           <td><%= sales_order.so_no %></td>
+          <td><%= sales_order.freight_tracking_num %></td>
+          <td><%= sales_order.customer_name %></td>
         </tr>
     <% end %>
   </table>
