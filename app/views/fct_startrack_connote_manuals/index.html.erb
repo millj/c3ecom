@@ -1,0 +1,48 @@
+<% provide(:title, 'Manual Connotes') %>
+<h1>Manual Connote</h1>
+
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Filters</legend>
+
+    <!-- Search input-->
+    <div class="control-group">
+      <label class="control-label" for="search">Order No</label>
+      <div class="controls">
+        <input id="search" name="search" class="input-medium search-query" type="text">
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+
+
+<%= will_paginate %>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Order # </th>
+      <th> Connote </th>
+      <th> Despatch Date </th>
+      <th> Name 1 </th>
+      <th> Name 2 </th>
+      <th> Address </th>
+    </tr>
+
+  <% @fct_startrack_connote_manual.each do |fct_startrack_connote_manual| %>
+      <tr>
+        <td><%= fct_startrack_connote_manual.order_no %></td>
+        <td><%= fct_startrack_connote_manual.connote %></td>
+        <td><%= fct_startrack_connote_manual.despatch_date %></td>
+        <td><%= fct_startrack_connote_manual.name1 %></td>
+        <td><%= fct_startrack_connote_manual.name2 %></td>
+        <td><%= fct_startrack_connote_manual.addr1 %></td>
+      </tr>
+  <% end %>
+  </table>
+</ul>
+
+<%= will_paginate %>
