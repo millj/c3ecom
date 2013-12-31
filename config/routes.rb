@@ -10,7 +10,7 @@ C3ecom::Application.routes.draw do
   resources :direct_bin_contents
   resources :fct_store_pick_scans
   resources :pick_paths
-  resources :fct_rpro_sos
+  resources :fct_startrack_connote_manual
 
   resources :allocation_order_lines do
       collection do
