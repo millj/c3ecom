@@ -1,0 +1,36 @@
+<% provide(:title, 'Load data - Mecca') %>
+<h2>Load - Mecca</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'load_mecca', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Choose a table to load!</legend>
+    File needs to be in w:/demand/, with a name that matches the table, an extension of csv and no spaces </p>
+      Example: w:/demand/fct_event_fc.csv </p>
+        <%=select_tag "select_table",
+          "<option> c3demand.fct_adj_hist_comment_mecca </option>
+           <option> c3demand.fct_base_replen_fc_item_format_mecca </option>
+           <option> c3demand.fct_event_fc_inputs_mecca </option>
+           <option> c3demand.fct_event_fc_mecca </option>
+           <option> c3demand.fct_le_fc_inputs_mecca </option>
+           <option> c3demand.fct_le_item_forecast_mecca </option>
+           <option> c3demand.fct_le_tester_fc_mecca </option>
+           <option> c3demand.fct_post_launch_adj_hist_mecca </option>
+           <option> c3demand.fct_post_launch_le_fc_mecca </option>
+           <option> c3demand.fct_post_launch_new_mecca </option>
+           <option> c3demand.fct_post_launch_new_tester_mecca </option>
+           <option> c3demand.fct_pre_launch_new_fc_inputs_mecca </option>
+           <option> c3demand.fct_pre_launch_new_mecca </option>
+           <option> c3demand.fct_pre_launch_new_tester_mecca </option>
+           <option> c3demand.fct_promo_uplift_fc_inputs_mecca </option>
+           <option> c3demand.fct_promo_uplift_fc_mecca </option>
+           <option> c3demand.fct_replen_tester_fc_mecca </option>".html_safe, class: "input-xlarge"
+         %>
+
+       <div>
+         <%= submit_tag 'Load me!', class: 'btn btn-warning btn-large' %>
+       </div>
+
+<% end %>
+
+

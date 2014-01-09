@@ -32,11 +32,24 @@ C3ecom::Application.routes.draw do
   get 'about'    => 'static_pages#about'
   get 'contact'  => 'static_pages#contact'
 
+
   post 'truncate' => 'static_pages#table_truncate'
   get  'truncate' => 'static_pages#truncate'
 
   post 'load'  => 'static_pages#load_table'
   get  'load'  => 'static_pages#load'
+
+  post 'truncate_mecca' => 'static_pages#table_truncate_mecca'
+  get  'truncate_mecca' => 'static_pages#truncate_mecca'
+
+  post 'load_mecca'  => 'static_pages#load_table_mecca'
+  get  'load_mecca'  => 'static_pages#load_mecca'
+
+  post 'truncate_km' => 'static_pages#table_truncate_km'
+  get  'truncate_km' => 'static_pages#truncate_km'
+
+  post 'load_km'  => 'static_pages#load_table_km'
+  get  'load_km'  => 'static_pages#load_km'
 
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
