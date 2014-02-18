@@ -7,24 +7,25 @@
     <legend>Choose a table to load!</legend>
     File needs to be in w:/demand/, with a name that matches the table, an extension of csv and no spaces </p>
       Example: w:/demand/fct_event_fc.csv </p>
+      All upload tables are truncated (emptied) prior to load </p>
         <%=select_tag "select_table",
-          "<option> c3demand.fct_adj_hist_comment_kit_maxima </option>
-           <option> c3demand.fct_base_replen_fc_item_format_kit_maxima </option>
-           <option> c3demand.fct_event_fc_inputs_kit_maxima </option>
-           <option> c3demand.fct_event_fc_kit_maxima </option>
-           <option> c3demand.fct_le_fc_inputs_kit_maxima </option>
-           <option> c3demand.fct_le_item_forecast_kit_maxima </option>
-           <option> c3demand.fct_le_tester_fc_kit_maxima </option>
-           <option> c3demand.fct_post_launch_adj_hist_kit_maxima </option>
-           <option> c3demand.fct_post_launch_le_fc_kit_maxima </option>
-           <option> c3demand.fct_post_launch_new_kit_maxima </option>
-           <option> c3demand.fct_post_launch_new_tester_kit_maxima </option>
-           <option> c3demand.fct_pre_launch_new_fc_inputs_kit_maxima </option>
-           <option> c3demand.fct_pre_launch_new_kit_maxima </option>
-           <option> c3demand.fct_pre_launch_new_tester_kit_maxima </option>
-           <option> c3demand.fct_promo_uplift_fc_inputs_kit_maxima </option>
-           <option> c3demand.fct_promo_uplift_fc_kit_maxima </option>
-           <option> c3demand.fct_replen_tester_fc_kit_maxima </option>".html_safe, class: "input-xlarge"
+          "<option> c3demand.fct_adj_hist_comment_kit_maxima_upload </option>
+           <option> c3demand.fct_base_replen_fc_item_format_kit_maxima_upload </option>
+           <option> c3demand.fct_event_fc_inputs_kit_maxima_upload </option>
+           <option> c3demand.fct_event_fc_kit_maxima_upload </option>
+           <option> c3demand.fct_le_fc_inputs_kit_maxima_upload </option>
+           <option> c3demand.fct_le_item_forecast_kit_maxima_upload </option>
+           <option> c3demand.fct_le_tester_fc_kit_maxima_upload </option>
+           <option> c3demand.fct_post_launch_adj_hist_kit_maxima_upload </option>
+           <option> c3demand.fct_post_launch_le_fc_kit_maxima_upload </option>
+           <option> c3demand.fct_post_launch_new_kit_maxima_upload </option>
+           <option> c3demand.fct_post_launch_new_tester_kit_maxima_upload </option>
+           <option> c3demand.fct_pre_launch_new_fc_inputs_kit_maxima_upload </option>
+           <option> c3demand.fct_pre_launch_new_kit_maxima_upload </option>
+           <option> c3demand.fct_pre_launch_new_tester_kit_maxima_upload </option>
+           <option> c3demand.fct_promo_uplift_fc_inputs_kit_maxima_upload </option>
+           <option> c3demand.fct_promo_uplift_fc_kit_maxima_upload </option>
+           <option> c3demand.fct_replen_tester_fc_kit_maxima_upload </option>".html_safe, class: "input-xlarge"
          %>
 
        <div>
