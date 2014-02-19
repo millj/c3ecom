@@ -45,11 +45,17 @@ C3ecom::Application.routes.draw do
   post 'load_mecca'  => 'static_pages#load_table_mecca'
   get  'load_mecca'  => 'static_pages#load_mecca'
 
+  post 'live_load_mecca'  => 'static_pages#live_table_mecca'
+  get  'live_load_mecca'  => 'static_pages#live_mecca'
+
   post 'truncate_km' => 'static_pages#table_truncate_km'
   get  'truncate_km' => 'static_pages#truncate_km'
 
   post 'load_km'  => 'static_pages#load_table_km'
   get  'load_km'  => 'static_pages#load_km'
+
+  post 'live_load_km'  => 'static_pages#live_table_km'
+  get  'live_load_km'  => 'static_pages#live_km'
 
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
