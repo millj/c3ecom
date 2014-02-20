@@ -1,0 +1,54 @@
+<% provide(:title, 'Axima Control') %>
+<h1>Purchase Orders and Axima status</h1>
+
+<h2>Status codes:</h2></p>
+  0 - New order not yet sent</p>
+  1 - Order ready to send to Axima</p>
+  2 - Order sent to Axima</p>
+
+  3 - Order updated, ready to send update to Axima</p>
+
+ 50 - Order ready to cancel</p>
+ 55 - Order cancel sent to Axima</p>
+
+
+
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Filters</legend>
+
+    <!-- Search input-->
+    <div class="control-group">
+      <label class="control-label" for="search">Purchase Order No or Vendor</label>
+      <div class="controls">
+        <input id="search" name="search" class="input-medium search-query" type="text">
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+
+
+<%= will_paginate %>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Order # </th>
+      <th> Status </th>
+      <th> Vendor Code </th>
+    </tr>
+
+  <% @fct_axima_controls.each do |fct_axima_controls| %>
+      <tr>
+        <td><%= fct_axima_controls.purchase_order_no %></td>
+        <td><%= fct_axima_controls.status %></td>
+        <td><%= fct_axima_controls.vendor_code %></td>
+      </tr>
+  <% end %>
+  </table>
+</ul>
+
+<%= will_paginate %>
