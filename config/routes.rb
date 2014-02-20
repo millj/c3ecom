@@ -11,6 +11,7 @@ C3ecom::Application.routes.draw do
   resources :fct_store_pick_scans
   resources :pick_paths
   resources :fct_startrack_connote_manual
+  resources :fct_axima_controls
 
   resources :allocation_order_lines do
       collection do
