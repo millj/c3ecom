@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220011555) do
+ActiveRecord::Schema.define(version: 20140228045353) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 20140220011555) do
     t.string   "purchase_order_no"
     t.integer  "status"
     t.string   "vendor_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fct_countable_stocks", force: true do |t|
+    t.string   "location"
+    t.string   "bin_code"
+    t.integer  "exclude_from_standard"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
