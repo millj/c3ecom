@@ -8,7 +8,17 @@
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li>
           <li><%= link_to "Item Info", items_path %></li>
-          <li><%= link_to "Scan Info", fct_store_pick_scans_path %></li>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Other stuff <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Scan Info", fct_store_pick_scans_path %></li>
+              <li><%= link_to "Countable Stock", '#' %></li>
+              <li class="divider"></li>
+              <li><%= link_to "Help", help_path %></li>
+            </ul>
+          </li>
           <% if demand_user? %>
               <li id="fat-menu" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -58,7 +68,6 @@
                 </ul>
               </li>
           <% end %>
-          <li><%= link_to "Help", help_path %></li>
           <% if signed_in? %>
             <li><%= link_to "Users", users_path %></li>
             <li id="fat-menu" class="dropdown">
