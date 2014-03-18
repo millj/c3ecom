@@ -12,7 +12,7 @@ C3ecom::Application.routes.draw do
   resources :pick_paths
   resources :fct_startrack_connote_manual
   resources :fct_axima_controls
-  resources :fct_vendor_axima_leadtime, only: [:index, :show, :edit, :update]
+  resources :fct_vendor_axima_leadtimes
 
   resources :allocation_order_lines do
       collection do
