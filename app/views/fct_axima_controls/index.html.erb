@@ -2,15 +2,47 @@
 <h1>Purchase Orders and Axima status</h1>
 
 <h2>Status codes:</h2></p>
-  0 - New order not yet sent</p>
-  1 - Order ready to send to Axima</p>
-  2 - Order sent to Axima</p>
 
-  3 - Order updated, ready to send update to Axima</p>
-
- 50 - Order ready to cancel</p>
- 55 - Order cancel sent to Axima</p>
-
+<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:0;}
+    .tg td{font-family:Arial, sans-serif;font-size:10px;padding:1px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;}
+    .tg th{font-family:Arial, sans-serif;font-size:10px;font-weight:normal;padding:1px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;}
+    .tg .tg-glis{font-size:10px}
+</style>
+<table class="tg">
+  <tr>
+    <th class="tg-glis">Status</th>
+    <th class="tg-031e">Description</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">0</td>
+    <td class="tg-031e">New Order, unsent</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">1</td>
+    <td class="tg-031e">Order ready to send</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">2</td>
+    <td class="tg-031e">Order sent to Axima</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">3</td>
+    <td class="tg-031e">Order updated, ready to send update to Axima</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">4</td>
+    <td class="tg-031e">Order updated, update sent</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">50</td>
+    <td class="tg-031e">Order cancelled, ready to send cancel</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">55</td>
+    <td class="tg-031e">Order cancelled, Axima notified</td>
+  </tr>
+</table>
 
 
 <form class="form-horizontal">
