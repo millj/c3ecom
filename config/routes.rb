@@ -72,6 +72,9 @@ C3ecom::Application.routes.draw do
   get 'sales_order'  => 'fct_rpro_sos#sales_order'
   post 'sales_order' => 'fct_rpro_sos#sales_order'
 
+  get 'fct_axima_controls/place_on_hold'
+  get 'fct_axima_controls/remove_from_hold'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -21,24 +21,21 @@
   <tr>
     <td class="tg-031e">1</td>
     <td class="tg-031e">Order ready to send</td>
-  </tr>
-  <tr>
+
     <td class="tg-031e">2</td>
     <td class="tg-031e">Order sent to Axima</td>
   </tr>
   <tr>
     <td class="tg-031e">3</td>
     <td class="tg-031e">Order updated, ready to send update to Axima</td>
-  </tr>
-  <tr>
+
     <td class="tg-031e">4</td>
     <td class="tg-031e">Order updated, update sent</td>
   </tr>
   <tr>
     <td class="tg-031e">50</td>
     <td class="tg-031e">Order cancelled, ready to send cancel</td>
-  </tr>
-  <tr>
+
     <td class="tg-031e">55</td>
     <td class="tg-031e">Order cancelled, Axima notified</td>
   </tr>
@@ -71,6 +68,7 @@
       <th> Order # </th>
       <th> Status </th>
       <th> Vendor Code </th>
+      <th> On Hold </th>
     </tr>
 
   <% @fct_axima_controls.each do |fct_axima_controls| %>
@@ -78,6 +76,8 @@
         <td><%= fct_axima_controls.purchase_order_no %></td>
         <td><%= fct_axima_controls.status %></td>
         <td><%= fct_axima_controls.vendor_code %></td>
+        <td><%= fct_axima_controls.on_hold %></td>
+        <td><%= hold_or_remove_hold fct_axima_controls.on_hold %></td>
       </tr>
   <% end %>
   </table>
