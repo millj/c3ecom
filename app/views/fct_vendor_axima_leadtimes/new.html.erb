@@ -1,0 +1,20 @@
+<% provide(:title, 'New Vendor Axima lead time') %>
+<h1>Create new vendor to axima leadtime</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@fct_vendor_axima_leadtimes) do |f| %>
+
+        <%= render 'shared/error_messages_fval' %>
+
+        <%= f.label :vendor_code %>
+        <%= f.text_field :vendor_code %>
+
+        <%= f.label :lead_time_days %>
+        <%= f.text_field :lead_time_days %>
+
+
+        <%= f.submit "Create Vendor to Axima Lead time", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
