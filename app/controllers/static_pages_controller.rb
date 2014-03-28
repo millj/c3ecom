@@ -89,7 +89,7 @@ class StaticPagesController < ApplicationController
     sql_query =  'truncate table ' + params[:select_table]
     ActiveRecord::Base.connection.execute(sql_query)
 
-    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' ignore 1 lines'
+    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_path
@@ -105,7 +105,7 @@ class StaticPagesController < ApplicationController
     sql_query =  'truncate table ' + params[:select_table]
     ActiveRecord::Base.connection.execute(sql_query)
 
-    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' ignore 1 lines'
+    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_path
@@ -118,7 +118,7 @@ class StaticPagesController < ApplicationController
 
   def load_table
 
-    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' ignore 1 lines'
+    sql_query = 'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_path
