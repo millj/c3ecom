@@ -50,6 +50,9 @@ C3ecom::Application.routes.draw do
   post 'live_load_mecca'  => 'static_pages#live_table_mecca'
   get  'live_load_mecca'  => 'static_pages#live_mecca'
 
+  post 'load_secret_shopper' => 'static_pages#load_secret_shopper'
+  get  'load_secret_shopper' => 'static_pages#load_secret'
+
   post 'truncate_km' => 'static_pages#table_truncate_km'
   get  'truncate_km' => 'static_pages#truncate_km'
 
