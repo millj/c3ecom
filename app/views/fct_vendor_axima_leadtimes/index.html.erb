@@ -25,13 +25,25 @@
   <table class="table table-striped">
     <tr>
       <th> Vendor Code </th>
-      <th> Lead Time Days </th>
+      <th> Brand Lead Time </th>
+      <th> Order Processing Lead </th>
+      <th> Ship LT EXP </th>
+      <th> Ship LT EXP HAZ </th>
+      <th> Ship LT REG </th>
+      <th> Ship LT REG HAZ </th>
+      <th> WHS Processing </th>
     </tr>
 
   <% @fct_vendor_axima_leadtimes.each do |fct_vendor_axima_leadtime| %>
       <tr>
         <td><%= link_to fct_vendor_axima_leadtime.vendor_code, edit_fct_vendor_axima_leadtime_path(fct_vendor_axima_leadtime.vendor_code) %></td>
         <td><%= fct_vendor_axima_leadtime.lead_time_days %></td>
+        <td><%= fct_vendor_axima_leadtime.order_processing_leadtime %></td>
+        <td><%= fct_vendor_axima_leadtime.shipping_leadtime_exp %></td>
+        <td><%= fct_vendor_axima_leadtime.shipping_leadtime_exp_haz %></td>
+        <td><%= fct_vendor_axima_leadtime.shipping_leadtime_reg %></td>
+        <td><%= fct_vendor_axima_leadtime.shipping_leadtime_reg_haz %></td>
+        <td><%= fct_vendor_axima_leadtime.whs_processing_time %></td>
         <td><%= link_to "Delete", fct_vendor_axima_leadtime, method: :delete, data: { confirm:"You sure?"} %></td>
       </tr>
   <% end %>
