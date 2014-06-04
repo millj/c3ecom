@@ -11,6 +11,14 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  def finance_user?
+    if signed_in?
+      current_user.finance?
+    else
+      nil
+    end
+  end
+
   def demand_user?
     if signed_in?
       current_user.demand?

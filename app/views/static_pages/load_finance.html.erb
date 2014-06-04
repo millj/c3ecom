@@ -1,0 +1,26 @@
+<% provide(:title, 'Load data - Finance') %>
+<h2>Load - Mecca</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'load_table_finance', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Choose a table to load!</legend>
+    File needs to be in w:/finance/, with a name that matches the table, an extension of csv and no spaces </p>
+      Example: w:/finance/dim_brandcogs_target.csv </p> </p>
+        <%=select_tag "select_table",
+          "<option> c3dss.dim_brandcogs_target </option>
+           <option> c3dss.dim_target </option>
+           <option> c3dss.fct_budget_hours </option>
+           <option> c3dss.fct_discontinued </option>
+           <option> c3dss.fct_slowmoving   </option>
+           <option> c3dss.fct_terminated   </option>
+           ".html_safe, class: "input-xlarge"
+         %>
+
+       <div>
+         <%= submit_tag 'Load me!', class: 'btn btn-warning btn-large' %>
+       </div>
+
+<% end %>
+
+

@@ -41,6 +41,12 @@ C3ecom::Application.routes.draw do
   post 'load'  => 'static_pages#load_table'
   get  'load'  => 'static_pages#load'
 
+  post 'load_finance' => 'static_pages#load_table_finance'
+  get  'load_finance' => 'static_pages#load_finance'
+
+  post 'truncate_finance' => 'static_pages#truncate_table_finance'
+  get  'truncate_finance' => 'static_pages#truncate_finance'
+
   post 'truncate_mecca' => 'static_pages#table_truncate_mecca'
   get  'truncate_mecca' => 'static_pages#truncate_mecca'
 
