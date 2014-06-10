@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604044824) do
+ActiveRecord::Schema.define(version: 20140609234121) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 20140604044824) do
 
   create_table "fct_vendor_axima_leadtimes", force: true do |t|
     t.string   "vendor_code"
-    t.integer  "lead_time_days"
+    t.integer  "vendor_turnaround"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order_processing_leadtime"

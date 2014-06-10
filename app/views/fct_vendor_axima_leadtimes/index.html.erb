@@ -25,7 +25,7 @@
   <table class="table table-striped">
     <tr>
       <th> Vendor Code </th>
-      <th> Brand Lead Time </th>
+      <th> Vendor Turnaround </th>
       <th> Order Processing Lead </th>
       <th> Ship LT EXP </th>
       <th> Ship LT EXP HAZ </th>
@@ -37,7 +37,7 @@
   <% @fct_vendor_axima_leadtimes.each do |fct_vendor_axima_leadtime| %>
       <tr>
         <td><%= link_to fct_vendor_axima_leadtime.vendor_code, edit_fct_vendor_axima_leadtime_path(fct_vendor_axima_leadtime.vendor_code) %></td>
-        <td><%= fct_vendor_axima_leadtime.lead_time_days %></td>
+        <td><%= fct_vendor_axima_leadtime.vendor_turnaround %></td>
         <td><%= fct_vendor_axima_leadtime.order_processing_leadtime %></td>
         <td><%= fct_vendor_axima_leadtime.shipping_leadtime_exp %></td>
         <td><%= fct_vendor_axima_leadtime.shipping_leadtime_exp_haz %></td>
