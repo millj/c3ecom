@@ -46,7 +46,7 @@ class FctVendorAximaLeadtimesController < ApplicationController
   private
 
   def fct_vendor_axima_leadtimes_params
-    params.require(:fct_vendor_axima_leadtime).permit(:vendor_code, :vendor_turnaround, :order_processing_leadtime, :shipping_leadtime_exp, :shipping_leadtime_exp_haz, :shipping_leadtime_reg, :shipping_leadtime_reg_hz, :whs_processing_time)
+    params.require(:fct_vendor_axima_leadtime).permit(:vendor_code, :vendor_turnaround, :order_processing_leadtime, :shipping_leadtime_exp, :shipping_leadtime_exp_haz, :shipping_leadtime_reg, :shipping_leadtime_reg_haz, :whs_processing_time)
   end
 
 end
