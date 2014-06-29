@@ -69,6 +69,16 @@
           <% if direct_user? %>
               <li id="fat-menu" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  CFC Functions <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to " 01 - Select orders from OMS", '#' %></li>
+                </ul>
+              </li>
+          <% end %>
+          <% if direct_user? %>
+              <li id="fat-menu" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   Direct Functions <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
