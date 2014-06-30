@@ -34,6 +34,16 @@ class StaticPagesController < ApplicationController
 
   def select_oms_orders
 
+    selected_order_ids = params[:selected]
+    selected_order_ids.each do |order_no|
+      sql_query1 = 'update mbecom.order_status  a
+                      set a.order_ecom_status = 2
+                      where a.order_number = ' + order_no +
+                   '    and a.order_ecom_status = 1'
+      ActiveRecord::Base.connection.execute(sql_query1)
+    end
+    redirect_to '/'
+
   end
 
   def table_truncate_mecca

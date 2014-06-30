@@ -14,7 +14,7 @@
           </tr>
           <% @order_choice.each do |order| %>
               <tr>
-                <td><%= check_box_tag(:order_id, value=order['order_selected']) %></td>
+                <td><%= check_box_tag 'selected[]', order['order_number'], checked = true %></td>
                 <td><%= order['order_number'] %></td>
               </tr>
           <% end %>
