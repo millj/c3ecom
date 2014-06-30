@@ -68,6 +68,9 @@ C3ecom::Application.routes.draw do
   post 'live_load_km'  => 'static_pages#live_table_km'
   get  'live_load_km'  => 'static_pages#live_km'
 
+  post 'select_oms_orders' => 'static_pages#select_oms_orders'
+  get  'select_oms_orders' => 'static_pages#select_oms'
+
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
 

@@ -18,6 +18,24 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def select_oms
+
+    # Get orders ready to select
+    sql_query1 = 'select *, false as order_selected from mbecom.order_status where order_ecom_status = 1'
+
+    #load into table
+    @order_choice = ActiveRecord::Base.connection.select_all(sql_query1)
+
+
+
+
+
+  end
+
+  def select_oms_orders
+
+  end
+
   def table_truncate_mecca
 
       sql_query = "truncate table " + params[:select_table]

@@ -1,0 +1,31 @@
+<% provide(:title, 'Select Orders from OMS') %>
+<h2>Select Orders from CFC</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'select_oms_orders', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Select your orders!</legend>
+    This is a list of orders ready to process from OMS. </p>
+    <% if !@order_choice.empty? %>
+        <table class="table table-hover table-condensed">
+          <tr>
+            <th><p class="text-left">Selected</p></th>
+            <th><p class="text-centre"> Order #</p> </th>
+          </tr>
+          <% @order_choice.each do |order| %>
+              <tr>
+                <td><%= check_box_tag(:order_id, value=order['order_selected']) %></td>
+                <td><%= order['order_number'] %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    </p> </p>
+    <div>
+       <%= submit_tag 'Select Orders!', class: 'btn btn-warning btn-large' %>
+    </div>
+
+<% end %>
+
+
