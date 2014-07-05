@@ -23,6 +23,8 @@ C3ecom::Application.routes.draw do
 
   resources :items, only: [:index, :show]
 
+  resources :mb_order_statuses, only: [:index, :show]
+
 
   match '/signin',    to: 'sessions#new',          via: 'get'
   match '/signout',   to: 'sessions#destroy',      via: 'delete'

@@ -1,0 +1,43 @@
+<% provide(:title, 'CFC Orders') %>
+<h1>CFC Orders</h1>
+
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Filters</legend>
+
+    <!-- Search input-->
+    <div class="control-group">
+      <label class="control-label" for="search">Order Number</label>
+      <div class="controls">
+        <input id="search" name="search" class="input-medium search-query" type="text" autofocus="true">
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+
+<%= will_paginate %>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> Order # </th>
+      <th> Web Order GUID </th>
+      <th> Priority </th>
+      <th> Order Status </th>
+    </tr>
+
+  <% @mb_order_statuses.each do |mb_order| %>
+      <tr>
+        <td><%= mb_order.order_number %></td>
+        <td><%= mb_order.order_id %></td>
+        <td><%= mb_order.priority %></td>
+        <td><%= mb_order.order_ecom_status %></td>
+      </tr>
+  <% end %>
+  </table>
+</ul>
+
+<%= will_paginate %>
