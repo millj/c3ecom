@@ -10,12 +10,14 @@
         <table class="table table-hover table-condensed">
           <tr>
             <th><p class="text-left">Selected</p></th>
-            <th><p class="text-centre"> Order #</p> </th>
+            <th><p class="text-centre"> Order #</p></th>
+            <th><p class="text-centre"> Priority #</p></th>
           </tr>
           <% @order_choice.each do |order| %>
               <tr>
                 <td><%= check_box_tag 'selected[]', order['order_number'], checked = true %></td>
                 <td><%= order['order_number'] %></td>
+                <td><%= order['priority'] %></td>
               </tr>
           <% end %>
         </table>

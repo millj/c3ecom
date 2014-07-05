@@ -21,7 +21,7 @@ class StaticPagesController < ApplicationController
   def select_oms
 
     # Get orders ready to select
-    sql_query1 = 'select *, false as order_selected from mbecom.order_status where order_ecom_status = 1'
+    sql_query1 = 'select *, false as order_selected from mbecom.mb_order_status where order_ecom_status = 1 order by priority desc, order_number'
 
     #load into table
     @order_choice = ActiveRecord::Base.connection.select_all(sql_query1)
@@ -36,7 +36,7 @@ class StaticPagesController < ApplicationController
 
     selected_order_ids = params[:selected]
     selected_order_ids.each do |order_no|
-      sql_query1 = 'update mbecom.order_status  a
+      sql_query1 = 'update mbecom.mb_order_status  a
                       set a.order_ecom_status = 2
                       where a.order_number = ' + order_no +
                    '    and a.order_ecom_status = 1'
