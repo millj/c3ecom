@@ -1,4 +1,9 @@
+require 'net/http'
+require 'uri'
+
 class StaticPagesController < ApplicationController
+
+
   def home
   end
 
@@ -42,6 +47,12 @@ class StaticPagesController < ApplicationController
                    '    and a.order_ecom_status = 1'
       ActiveRecord::Base.connection.execute(sql_query1)
     end
+
+    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+
     redirect_to '/'
 
   end
