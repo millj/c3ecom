@@ -66,11 +66,12 @@ class StaticPagesController < ApplicationController
       ActiveRecord::Base.connection.execute(sql_query1)
     end
 
-    # Change this xaction to whichever xaction we need to run to get the order header/details
-    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    #params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
-    #uri.query = URI.encode_www_form(params)
-    #res = Net::HTTP.get_response(uri)
+    # retrieve order details that have been selected
+
+    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    params = { :solution => 'CFC', :action =>'mbecom_retrieve_order_details.xaction', :path => '', :userid => 'report', :password => 'report' }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
 
     redirect_to '/'
 
