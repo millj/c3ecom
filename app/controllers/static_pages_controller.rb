@@ -26,10 +26,22 @@ class StaticPagesController < ApplicationController
   def select_oms
 
     # run the xaction to get the list of currently available orders
-    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    #params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
-    #uri.query = URI.encode_www_form(params)
-    #res = Net::HTTP.get_response(uri)
+    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+
+    # use rails to process the json in the incoming table into the mb_order_status table
+
+    sql_query2 = 'SELECT available_orders_json from mbecom.mb_available_orders_incoming'
+    incoming_json = ActiveRecord::Base.connection.select_value(sql_query2)
+    json_to_process = ActiveSupport::JSON.decode(incoming_json)
+    json_to_process.each do |json_data|
+       sql_query3 = 'insert into mbecom.mb_order_status(order_id) values (' + '\'' + json_data['OrderGuid'] + '\')'
+       ActiveRecord::Base.connection.execute(sql_query3)
+    end
+
+
 
     # Get orders ready to select
     sql_query1 = 'select *, false as order_selected from mbecom.mb_order_status where order_ecom_status = 1 order by priority desc, order_number'
