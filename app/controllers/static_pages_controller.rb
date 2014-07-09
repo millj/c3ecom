@@ -37,7 +37,7 @@ class StaticPagesController < ApplicationController
     incoming_json = ActiveRecord::Base.connection.select_value(sql_query2)
     json_to_process = ActiveSupport::JSON.decode(incoming_json)
     json_to_process.each do |json_data|
-       sql_query3 = 'insert into mbecom.mb_order_status(order_id) values (' + '\'' + json_data['OrderGuid'] + '\')'
+       sql_query3 = 'insert into mbecom.mb_order_status(order_id, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ')'
        ActiveRecord::Base.connection.execute(sql_query3)
     end
 
@@ -61,16 +61,16 @@ class StaticPagesController < ApplicationController
     selected_order_ids.each do |order_no|
       sql_query1 = 'update mbecom.mb_order_status  a
                       set a.order_ecom_status = 2
-                      where a.order_number = ' + order_no +
+                      where a.order_number = ' + '\'' + order_no + '\'' +
                    '    and a.order_ecom_status = 1'
       ActiveRecord::Base.connection.execute(sql_query1)
     end
 
     # Change this xaction to whichever xaction we need to run to get the order header/details
-    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
-    uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
+    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    #params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
+    #uri.query = URI.encode_www_form(params)
+    #res = Net::HTTP.get_response(uri)
 
     redirect_to '/'
 
