@@ -62,37 +62,39 @@ class StaticPagesController < ApplicationController
 
     #update selected orders as being ready to retrieve
     selected_order_ids = params[:selected]
-    selected_order_ids.each do |order_no|
-      sql_query1 = 'update mbecom.mb_order_status  a
+    unless selected_order_ids.nill?
+
+      selected_order_ids.each do |order_no|
+        sql_query1 = 'update mbecom.mb_order_status  a
                       set a.order_ecom_status = 2
                       where a.order_number = ' + '\'' + order_no + '\'' +
-                   '    and a.order_ecom_status = 1'
-      ActiveRecord::Base.connection.execute(sql_query1)
-    end
+            '    and a.order_ecom_status = 1'
+        ActiveRecord::Base.connection.execute(sql_query1)
+      end
 
-    # retrieve order details that have been selected
+      # retrieve order details that have been selected
 
-    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    params = { :solution => 'CFC', :action =>'mbecom_retrieve_order_details.xaction', :path => '', :userid => 'report', :password => 'report' }
-    uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
+      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      params = { :solution => 'CFC', :action =>'mbecom_retrieve_order_details.xaction', :path => '', :userid => 'report', :password => 'report' }
+      uri.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(uri)
 
-    # orders now in DSS, time to break out, if mysql or Pentaho had better json handling we would do it there
-    sql_query3 = 'truncate table mbecom.mb_order_details_incoming_single'
-    ActiveRecord::Base.connection.execute(sql_query3)
+      # orders now in DSS, time to break out, if mysql or Pentaho had better json handling we would do it there
+      sql_query3 = 'truncate table mbecom.mb_order_details_incoming_single'
+      ActiveRecord::Base.connection.execute(sql_query3)
 
-    sql_query3 = 'select order_details_blob from mbecom.mb_order_details_incoming'
-    incoming_json = ActiveRecord::Base.connection.select_value(sql_query3)
-    unless incoming_json.nil?
-      json_to_process = ActiveSupport::JSON.decode(incoming_json)
-      json_to_process.each do |json_data|
-        sql_query3 = 'insert into mbecom.mb_order_details_incoming_single(order_detail_record) values (' + '\'' + json_data.to_s + '\'' + ')'
-        ActiveRecord::Base.connection.execute(sql_query3)
+      sql_query3 = 'select order_details_blob from mbecom.mb_order_details_incoming'
+      incoming_json = ActiveRecord::Base.connection.select_value(sql_query3)
+      unless incoming_json.nil?
+        json_to_process = ActiveSupport::JSON.decode(incoming_json)
+        json_to_process.each do |json_data|
+          sql_query3 = 'insert into mbecom.mb_order_details_incoming_single(order_detail_record) values (' + '\'' + json_data.to_json + '\'' + ')'
+          ActiveRecord::Base.connection.execute(sql_query3)
+        end
+
       end
 
     end
-
-
     redirect_to '/'
 
   end
