@@ -62,7 +62,7 @@ class StaticPagesController < ApplicationController
 
     #update selected orders as being ready to retrieve
     selected_order_ids = params[:selected]
-    unless selected_order_ids.nill?
+    unless selected_order_ids.nil?
 
       selected_order_ids.each do |order_no|
         sql_query1 = 'update mbecom.mb_order_status  a
@@ -85,11 +85,64 @@ class StaticPagesController < ApplicationController
 
       sql_query3 = 'select order_details_blob from mbecom.mb_order_details_incoming'
       incoming_json = ActiveRecord::Base.connection.select_value(sql_query3)
+      #grab all
       unless incoming_json.nil?
         json_to_process = ActiveSupport::JSON.decode(incoming_json)
         json_to_process.each do |json_data|
+          #now we have each order
           sql_query3 = 'insert into mbecom.mb_order_details_incoming_single(order_detail_record) values (' + '\'' + json_data.to_json + '\'' + ')'
           ActiveRecord::Base.connection.execute(sql_query3)
+          order_guid = json_data['OrderGuid']
+          order_line = json_data['OrderItems']
+          unless order_line.nil?
+            order_line.each do |one_order|
+              # now we have each line
+              sql_query4 = 'insert into mbecom.mb_order_line(order_guid,
+                                                             item_upc,
+                                                             item_name,
+                                                             item_type,
+                                                             order_item_status,
+                                                             description,
+                                                             qty_ordered,
+                                                             qty_allocated,
+                                                             qty_back_ordered,
+                                                             qty_shipped,
+                                                             qty_returned,
+                                                             qty_wo,
+                                                             unit_price,
+                                                             tax_rate,
+                                                             discount,
+                                                             net_total,
+                                                             gross_total,
+                                                             discount_code,
+                                                             discount_message,
+                                                             is_gift_wrapped
+                                                            ) values
+                                                            ('
+                                                          + '\'' + json_data['OrderGuid'] + '\', '
+                                                          + '\'' + one_order['ItemUpc'] + '\', '
+                                                          + '\'' + one_order['ItemName'] + '\', '
+                                                          + '\'' + one_order['ItemType'] + '\', '
+                                                          + '\'' + one_order['OrderItemStatus'] + '\', '
+                                                          + '\'' + one_order['Description'] + '\', '
+                                                          + '\'' + one_order['QuantityOrdered'] + '\', '
+                                                          + '\'' + one_order['QuantityAllocated'] + '\', '
+                                                          + '\'' + one_order['QuantityBackOrdered'] + '\', '
+                                                          + '\'' + one_order['QuantityShipped'] + '\', '
+                                                          + '\'' + one_order['Quantityreturned'] + '\', '
+                                                          + '\'' + one_order['QuantityWrittenOff'] + '\', '
+                                                          + '\'' + one_order['UnitPrice'] + '\', '
+                                                          + '\'' + one_order['TaxRate'] + '\', '
+                                                          + '\'' + one_order['Discount'] + '\', '
+                                                          + '\'' + one_order['NetTotal'] + '\', '
+                                                          + '\'' + one_order['GrossTotal'] + '\', '
+                                                          + '\'' + one_order['DiscountCode'] + '\', '
+                                                          + '\'' + one_order['DiscountMessage'] + '\', '
+                                                          + '\'' + one_order['IsGiftWrapped'] + '\', '
+                                                          + ')'
+              ActiveRecord::Base.connection.execute(sql_query4)
+            end
+          end
         end
 
       end
