@@ -42,7 +42,7 @@ class StaticPagesController < ApplicationController
 
       json_to_process = ActiveSupport::JSON.decode(incoming_json)
       json_to_process.each do |json_data|
-        sql_query3 = 'insert into mbecom.mb_order_status(order_id, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_id = order_id '
+        sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
         ActiveRecord::Base.connection.execute(sql_query3)
       end
 
@@ -127,7 +127,7 @@ class StaticPagesController < ApplicationController
           #change order status in c3ecom
           sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 3
-                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
                        '    and a.order_ecom_status = 2'
           ActiveRecord::Base.connection.execute(sql_query6)
 
@@ -188,7 +188,7 @@ class StaticPagesController < ApplicationController
           end
           sql_query7 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 4
-                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
               '    and a.order_ecom_status = 3'
           ActiveRecord::Base.connection.execute(sql_query7)
 
@@ -219,7 +219,7 @@ class StaticPagesController < ApplicationController
           #change order status in c3ecom
           sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 5
-                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
               '    and a.order_ecom_status = 4'
           ActiveRecord::Base.connection.execute(sql_query6)
 
@@ -250,8 +250,47 @@ class StaticPagesController < ApplicationController
           #change order status in c3ecom
           sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 6
-                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
               '    and a.order_ecom_status = 5'
+          ActiveRecord::Base.connection.execute(sql_query6)
+
+          # do payments
+          order_payment = json_data['OrderPayments']
+          unless order_payment.nil?
+            order_payment.each do |one_payment|
+              # now we have each payment
+              sql_query9 = 'insert into mbecom.mb_order_payments(order_guid,
+                                                             payment_guid,
+                                                             payment_type,
+                                                             payment_status,
+                                                             currency_code,
+                                                             payment_method_ref,
+                                                             payment_provider_ref,
+                                                             payment_date,
+                                                             amount,
+                                                             authorised_amount,
+                                                             fee
+                                                            ) values
+                                                            (' +
+                  '\'' + order_guid + '\', ' +
+                  '\'' + one_payment['PaymentGuid'].to_s + '\', ' +
+                  '\'' + one_payment['PaymentType'].to_s + '\', ' +
+                  '\'' + one_payment['PaymentStatus'].to_s + '\', '  +
+                  '\'' + one_payment['IsoCurrencyCode'].to_s + '\', ' +
+                  '\'' + one_payment['PaymentMethodReference'].to_s + '\', ' +
+                  '\'' + one_payment['PaymentProviderReference'].to_s + '\', ' +
+                  '\'' + one_payment['PaymentDate'].to_s + '\', ' +
+                  '\'' + one_payment['Amount'].to_s + '\', ' +
+                  '\'' + one_payment['AuthorisedAmount'].to_s + '\', ' +
+                  '\'' + one_payment['Fee'].to_s + '\'' +
+                  ')'
+              ActiveRecord::Base.connection.execute(sql_query9)
+            end
+          end
+          sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_ecom_status = 7
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+              '    and a.order_ecom_status = 6'
           ActiveRecord::Base.connection.execute(sql_query6)
 
         end
