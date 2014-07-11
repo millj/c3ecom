@@ -192,6 +192,67 @@ class StaticPagesController < ApplicationController
               '    and a.order_ecom_status = 3'
           ActiveRecord::Base.connection.execute(sql_query7)
 
+          # do shipping adddress
+          sql_query8 = 'insert into mbecom.mb_shipping_address (order_guid,
+                                                                first_name,
+                                                                last_name,
+                                                                address1,
+                                                                address2,
+                                                                city,
+                                                                postcode,
+                                                                state,
+                                                                country,
+                                                                phone
+                                                               ) values (' +
+              '\'' + json_data['OrderGuid'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['FirstName'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['LastName'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['Address1'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['Address2'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['City'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['PostCode'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['State'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['Country'].to_s + '\', ' +
+              '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\'' +
+              ')'
+          ActiveRecord::Base.connection.execute(sql_query8)
+          #change order status in c3ecom
+          sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_ecom_status = 5
+                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+              '    and a.order_ecom_status = 4'
+          ActiveRecord::Base.connection.execute(sql_query6)
+
+          # do billing adddress
+          sql_query8 = 'insert into mbecom.mb_billing_address (order_guid,
+                                                                first_name,
+                                                                last_name,
+                                                                address1,
+                                                                address2,
+                                                                city,
+                                                                postcode,
+                                                                state,
+                                                                country,
+                                                                phone
+                                                               ) values (' +
+              '\'' + json_data['OrderGuid'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['FirstName'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['LastName'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['Address1'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['Address2'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['City'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['PostCode'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['State'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['Country'].to_s + '\', ' +
+              '\'' + json_data['BillingAddress']['PhoneNumber'].to_s + '\'' +
+              ')'
+          ActiveRecord::Base.connection.execute(sql_query8)
+          #change order status in c3ecom
+          sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_ecom_status = 6
+                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+              '    and a.order_ecom_status = 5'
+          ActiveRecord::Base.connection.execute(sql_query6)
 
         end
 
