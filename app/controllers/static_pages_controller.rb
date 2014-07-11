@@ -118,28 +118,28 @@ class StaticPagesController < ApplicationController
                                                              discount_message,
                                                              is_gift_wrapped
                                                             ) values
-                                                            ('
-                                                          + '\'' + json_data['OrderGuid'] + '\', '
-                                                          + '\'' + one_order['ItemUpc'] + '\', '
-                                                          + '\'' + one_order['ItemName'] + '\', '
-                                                          + '\'' + one_order['ItemType'] + '\', '
-                                                          + '\'' + one_order['OrderItemStatus'] + '\', '
-                                                          + '\'' + one_order['Description'] + '\', '
-                                                          + '\'' + one_order['QuantityOrdered'] + '\', '
-                                                          + '\'' + one_order['QuantityAllocated'] + '\', '
-                                                          + '\'' + one_order['QuantityBackOrdered'] + '\', '
-                                                          + '\'' + one_order['QuantityShipped'] + '\', '
-                                                          + '\'' + one_order['Quantityreturned'] + '\', '
-                                                          + '\'' + one_order['QuantityWrittenOff'] + '\', '
-                                                          + '\'' + one_order['UnitPrice'] + '\', '
-                                                          + '\'' + one_order['TaxRate'] + '\', '
-                                                          + '\'' + one_order['Discount'] + '\', '
-                                                          + '\'' + one_order['NetTotal'] + '\', '
-                                                          + '\'' + one_order['GrossTotal'] + '\', '
-                                                          + '\'' + one_order['DiscountCode'] + '\', '
-                                                          + '\'' + one_order['DiscountMessage'] + '\', '
-                                                          + '\'' + one_order['IsGiftWrapped'] + '\', '
-                                                          + ')'
+                                                            (' +
+                                                           '\'' + order_guid + '\', ' +
+                                                           '\'' + one_order['ItemUpc'].to_s + '\', ' +
+                                                           '\'' + one_order['ItemName'].to_s + '\', ' +
+                                                           '\'' + one_order['ItemType'].to_s + '\', '  +
+                                                           '\'' + one_order['OrderItemStatus'].to_s + '\', ' +
+                                                           '\'' + one_order['Description'].to_s + '\', ' +
+                                                           '\'' + one_order['QuantityOrdered'].to_s + '\', ' +
+                                                           '\'' + one_order['QuantityAllocated'].to_s + '\', ' +
+                                                           '\'' + one_order['QuantityBackOrdered'].to_s + '\', ' +
+                                                           '\'' + one_order['QuantityShipped'].to_s + '\', ' +
+                                                           '\'' + one_order['QuantityReturned'].to_s + '\', ' +
+                                                           '\'' + one_order['QuantityWrittenOff'].to_s + '\', ' +
+                                                           '\'' + one_order['UnitPrice'].to_s + '\', ' +
+                                                           '\'' + one_order['TaxRate'].to_s + '\', ' +
+                                                           '\'' + one_order['Discount'].to_s + '\', ' +
+                                                           '\'' + one_order['NetTotal'].to_s + '\', ' +
+                                                           '\'' + one_order['GrossTotal'].to_s + '\', ' +
+                                                           '\'' + one_order['DiscountCode'].to_s + '\', ' +
+                                                           '\'' + one_order['DiscountMessage'].to_s + '\', ' +
+                                                           '\'' + one_order['IsGiftWrapped'].to_s + '\'' +
+                                                           ')'
               ActiveRecord::Base.connection.execute(sql_query4)
             end
           end
