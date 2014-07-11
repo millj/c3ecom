@@ -90,10 +90,53 @@ class StaticPagesController < ApplicationController
         json_to_process = ActiveSupport::JSON.decode(incoming_json)
         json_to_process.each do |json_data|
           #now we have each order
+
+          # do header
+          sql_query5 = 'insert into mbecom.mb_order_header (order_guid,
+                                                            order_ref,
+                                                            customer_ref,
+                                                            customer_name,
+                                                            customer_email,
+                                                            channel_guid,
+                                                            channel_code,
+                                                            order_date,
+                                                            order_status,
+                                                            order_type,
+                                                            payment_total,
+                                                            tax_total,
+                                                            gross_total,
+                                                            net_total,
+                                                            gift_message) values (' +
+                                                           '\'' + json_data['OrderGuid'].to_s + '\', ' +
+                                                           '\'' + json_data['OrderReference'].to_s + '\', ' +
+                                                           '\'' + json_data['Customer']['CustomerReference'].to_s + '\', ' +
+                                                           '\'' + json_data['Customer']['CustomerName'].to_s + '\', ' +
+                                                           '\'' + json_data['Customer']['CustomerEmail'].to_s + '\', ' +
+                                                           '\'' + json_data['ChannelGuid'].to_s + '\', ' +
+                                                           '\'' + json_data['ChannelCode'].to_s + '\', ' +
+                                                           '\'' + json_data['OrderDate'].to_s + '\', ' +
+                                                           '\'' + json_data['OrderStatus'].to_s + '\', ' +
+                                                           '\'' + json_data['OrderType'].to_s + '\', ' +
+                                                           '\'' + json_data['PaymentTotal'].to_s + '\', ' +
+                                                           '\'' + json_data['TaxTotal'].to_s + '\', ' +
+                                                           '\'' + json_data['GrossTotal'].to_s + '\', ' +
+                                                           '\'' + json_data['NetTotal'].to_s + '\', ' +
+                                                           '\'' + json_data['GiftMessage'].to_s + '\'' +
+                                                           ')'
+          ActiveRecord::Base.connection.execute(sql_query5)
+          #change order status in c3ecom
+          sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_ecom_status = 3
+                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                       '    and a.order_ecom_status = 2'
+          ActiveRecord::Base.connection.execute(sql_query6)
+
           sql_query3 = 'insert into mbecom.mb_order_details_incoming_single(order_detail_record) values (' + '\'' + json_data.to_json + '\'' + ')'
           ActiveRecord::Base.connection.execute(sql_query3)
           order_guid = json_data['OrderGuid']
           order_line = json_data['OrderItems']
+
+          #do lines
           unless order_line.nil?
             order_line.each do |one_order|
               # now we have each line
@@ -143,6 +186,13 @@ class StaticPagesController < ApplicationController
               ActiveRecord::Base.connection.execute(sql_query4)
             end
           end
+          sql_query7 = 'update mbecom.mb_order_status  a
+                          set a.order_ecom_status = 4
+                          where a.order_id = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+              '    and a.order_ecom_status = 3'
+          ActiveRecord::Base.connection.execute(sql_query7)
+
+
         end
 
       end
