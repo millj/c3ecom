@@ -1,0 +1,33 @@
+<% provide(:title, 'Select Orders for Bulk Pick') %>
+<h2>Select Orders for Bulk Pick</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'select_bulk_pick', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Select orders to bulk pick!</legend>
+    This is a list of orders ready to pick. </p>
+    <% if !@bulk_pick_choice.empty? %>
+        <table class="table table-hover table-condensed">
+          <tr>
+            <th><p class="text-left">Selected</p></th>
+            <th><p class="text-centre"> Order #</p></th>
+            <th><p class="text-centre"> Priority #</p></th>
+          </tr>
+          <% @bulk_pick_choice.each do |bp_choice| %>
+              <tr>
+                <td><%= check_box_tag 'selected[]', bp_choice['order_number'], checked = true %></td>
+                <td><%= bp_choice['order_number'] %></td>
+                <td><%= bp_choice['priority'] %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    </p> </p>
+    <div>
+       <%= submit_tag 'Pick Orders!', class: 'btn btn-warning btn-large' %>
+    </div>
+
+<% end %>
+
+

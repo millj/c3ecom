@@ -23,6 +23,36 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def select_bulk
+
+    # Get orders ready to select
+    sql_query1 = 'select *, false as order_selected from mbecom.mb_order_status where order_ecom_status = 10 order by priority desc, order_number'
+
+    #load into table
+    @bulk_pick_choice = ActiveRecord::Base.connection.select_all(sql_query1)
+
+
+
+  end
+
+
+  def select_bulk_pick
+
+    selected_order_ids = params[:selected]
+    unless selected_order_ids.nil?
+
+      selected_order_ids.each do |order_no|
+        sql_query1 = 'update mbecom.mb_order_status  a
+                      set a.order_ecom_status = 11
+                      where a.order_number = ' + '\'' + order_no + '\'' +
+            '    and a.order_ecom_status = 10'
+        ActiveRecord::Base.connection.execute(sql_query1)
+      end
+    end
+
+    redirect_to '/'
+  end
+
   def select_oms
 
     # run the xaction to get the list of currently available orders
@@ -288,7 +318,7 @@ class StaticPagesController < ApplicationController
             end
           end
           sql_query6 = 'update mbecom.mb_order_status  a
-                          set a.order_ecom_status = 7
+                          set a.order_ecom_status = 10
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
               '    and a.order_ecom_status = 6'
           ActiveRecord::Base.connection.execute(sql_query6)
@@ -298,7 +328,7 @@ class StaticPagesController < ApplicationController
       end
 
     end
-    redirect_to '/'
+    redirect_to select_bulk_pick_path
 
   end
 
