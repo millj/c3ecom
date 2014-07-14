@@ -48,6 +48,13 @@ class StaticPagesController < ApplicationController
             '    and a.order_ecom_status = 10'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
+      # Call the pentaho job to print the bulk print list
+      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      params = { :solution => 'CFC', :action =>'mbecom_print_bulk_order.xaction', :path => '', :userid => 'report', :password => 'report' }
+      uri.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(uri)
+
+
     end
 
     redirect_to '/'
