@@ -235,7 +235,8 @@ class StaticPagesController < ApplicationController
             ActiveRecord::Base.connection.execute(sql_query7)
 
             # do shipping adddress
-            sql_query8 = 'insert into mbecom.mb_shipping_address (order_guid,
+            unless json_data['ShippingAddress'].nil?
+              sql_query8 = 'insert into mbecom.mb_shipping_address (order_guid,
                                                                 first_name,
                                                                 last_name,
                                                                 address1,
@@ -246,18 +247,19 @@ class StaticPagesController < ApplicationController
                                                                 country,
                                                                 phone
                                                                ) values (' +
-                '\'' + json_data['OrderGuid'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['FirstName'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['LastName'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['Address1'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['Address2'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['City'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['PostCode'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['State'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['Country'].to_s + '\', ' +
-                '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\'' +
-                ')'
-            ActiveRecord::Base.connection.execute(sql_query8)
+                  '\'' + json_data['OrderGuid'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['FirstName'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['LastName'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['Address1'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['Address2'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['City'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['PostalCode'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['State'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['Country'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\'' +
+                  ')'
+              ActiveRecord::Base.connection.execute(sql_query8)
+            end
             #change order status in c3ecom
             sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 5
@@ -266,7 +268,8 @@ class StaticPagesController < ApplicationController
             ActiveRecord::Base.connection.execute(sql_query6)
 
             # do billing adddress
-            sql_query8 = 'insert into mbecom.mb_billing_address (order_guid,
+            unless json_data['BillingAddress'].nil?
+              sql_query8 = 'insert into mbecom.mb_billing_address (order_guid,
                                                                 first_name,
                                                                 last_name,
                                                                 address1,
@@ -277,18 +280,19 @@ class StaticPagesController < ApplicationController
                                                                 country,
                                                                 phone
                                                                ) values (' +
-                '\'' + json_data['OrderGuid'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['FirstName'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['LastName'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['Address1'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['Address2'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['City'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['PostCode'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['State'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['Country'].to_s + '\', ' +
-                '\'' + json_data['BillingAddress']['PhoneNumber'].to_s + '\'' +
-                ')'
-            ActiveRecord::Base.connection.execute(sql_query8)
+                  '\'' + json_data['OrderGuid'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['FirstName'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['LastName'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['Address1'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['Address2'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['City'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['PostalCode'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['State'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['Country'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['PhoneNumber'].to_s + '\'' +
+                  ')'
+              ActiveRecord::Base.connection.execute(sql_query8)
+            end
             #change order status in c3ecom
             sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 6
@@ -330,9 +334,39 @@ class StaticPagesController < ApplicationController
               end
             end
             sql_query6 = 'update mbecom.mb_order_status  a
-                          set a.order_ecom_status = 10
+                          set a.order_ecom_status = 7
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
                 '    and a.order_ecom_status = 6'
+            ActiveRecord::Base.connection.execute(sql_query6)
+
+            line_items = json_data['LineItems']
+            unless line_items.nil?
+              line_items.each do |one_line|
+                sql_query = 'insert into mbecom.mb_order_line_other(order_guid,
+                                                                    line_item_type,
+                                                                    description,
+                                                                    net_amount,
+                                                                    tax_amount,
+                                                                    gross_amount,
+                                                                    shipping_provider,
+                                                                    shipping_method) values
+                                                                    (' +
+                    '\'' + order_guid + '\', ' +
+                    '\'' + one_line['OrderLineItemType'].to_s + '\', ' +
+                    '\'' + one_line['Description'].to_s + '\', ' +
+                    '\'' + one_line['NetAmount'].to_s + '\', '  +
+                    '\'' + one_line['TaxAmount'].to_s + '\', ' +
+                    '\'' + one_line['GrossAmount'].to_s + '\', ' +
+                    '\'' + one_line['ShippingProviderReference'].to_s + '\', ' +
+                    '\'' + one_line['ShippingMethodReference'].to_s + '\'' +
+                    ')'
+                ActiveRecord::Base.connection.execute(sql_query)
+              end
+            end
+            sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_ecom_status = 10
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                '    and a.order_ecom_status = 7'
             ActiveRecord::Base.connection.execute(sql_query6)
 
           end
