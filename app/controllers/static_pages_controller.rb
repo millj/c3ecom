@@ -116,20 +116,25 @@ class StaticPagesController < ApplicationController
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
 
-      # orders now in DSS, time to break out, if mysql or Pentaho had better json handling we would do it there
-      sql_query3 = 'truncate table mbecom.mb_order_details_incoming_single'
-      ActiveRecord::Base.connection.execute(sql_query3)
+      #check the http status of the request, saved in table with the json
+      sql_query = 'Select http_status_code from mbecom.mb_order_details_incoming'
+      http_status =  ActiveRecord::Base.connection.select_value(sql_query)
 
-      sql_query3 = 'select order_details_blob from mbecom.mb_order_details_incoming'
-      incoming_json = ActiveRecord::Base.connection.select_value(sql_query3)
-      #grab all
-      unless incoming_json.nil?
-        json_to_process = ActiveSupport::JSON.decode(incoming_json)
-        json_to_process.each do |json_data|
-          #now we have each order
+      if http_status == '200' then
+        # orders now in DSS, time to break out, if mysql or Pentaho had better json handling we would do it there
+        sql_query3 = 'truncate table mbecom.mb_order_details_incoming_single'
+        ActiveRecord::Base.connection.execute(sql_query3)
 
-          # do header
-          sql_query5 = 'insert into mbecom.mb_order_header (order_guid,
+        sql_query3 = 'select order_details_blob from mbecom.mb_order_details_incoming'
+        incoming_json = ActiveRecord::Base.connection.select_value(sql_query3)
+        #grab all
+        unless incoming_json.nil?
+          json_to_process = ActiveSupport::JSON.decode(incoming_json)
+          json_to_process.each do |json_data|
+            #now we have each order
+
+            # do header
+            sql_query5 = 'insert into mbecom.mb_order_header (order_guid,
                                                             order_ref,
                                                             customer_ref,
                                                             customer_name,
@@ -144,40 +149,40 @@ class StaticPagesController < ApplicationController
                                                             gross_total,
                                                             net_total,
                                                             gift_message) values (' +
-                                                           '\'' + json_data['OrderGuid'].to_s + '\', ' +
-                                                           '\'' + json_data['OrderReference'].to_s + '\', ' +
-                                                           '\'' + json_data['Customer']['CustomerReference'].to_s + '\', ' +
-                                                           '\'' + json_data['Customer']['CustomerName'].to_s + '\', ' +
-                                                           '\'' + json_data['Customer']['CustomerEmail'].to_s + '\', ' +
-                                                           '\'' + json_data['ChannelGuid'].to_s + '\', ' +
-                                                           '\'' + json_data['ChannelCode'].to_s + '\', ' +
-                                                           '\'' + json_data['OrderDate'].to_s + '\', ' +
-                                                           '\'' + json_data['OrderStatus'].to_s + '\', ' +
-                                                           '\'' + json_data['OrderType'].to_s + '\', ' +
-                                                           '\'' + json_data['PaymentTotal'].to_s + '\', ' +
-                                                           '\'' + json_data['TaxTotal'].to_s + '\', ' +
-                                                           '\'' + json_data['GrossTotal'].to_s + '\', ' +
-                                                           '\'' + json_data['NetTotal'].to_s + '\', ' +
-                                                           '\'' + json_data['GiftMessage'].to_s + '\'' +
-                                                           ')'
-          ActiveRecord::Base.connection.execute(sql_query5)
-          #change order status in c3ecom
-          sql_query6 = 'update mbecom.mb_order_status  a
+                '\'' + json_data['OrderGuid'].to_s + '\', ' +
+                '\'' + json_data['OrderReference'].to_s + '\', ' +
+                '\'' + json_data['Customer']['CustomerReference'].to_s + '\', ' +
+                '\'' + json_data['Customer']['CustomerName'].to_s + '\', ' +
+                '\'' + json_data['Customer']['CustomerEmail'].to_s + '\', ' +
+                '\'' + json_data['ChannelGuid'].to_s + '\', ' +
+                '\'' + json_data['ChannelCode'].to_s + '\', ' +
+                '\'' + json_data['OrderDate'].to_s + '\', ' +
+                '\'' + json_data['OrderStatus'].to_s + '\', ' +
+                '\'' + json_data['OrderType'].to_s + '\', ' +
+                '\'' + json_data['PaymentTotal'].to_s + '\', ' +
+                '\'' + json_data['TaxTotal'].to_s + '\', ' +
+                '\'' + json_data['GrossTotal'].to_s + '\', ' +
+                '\'' + json_data['NetTotal'].to_s + '\', ' +
+                '\'' + json_data['GiftMessage'].to_s + '\'' +
+                ')'
+            ActiveRecord::Base.connection.execute(sql_query5)
+            #change order status in c3ecom
+            sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 3
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-                       '    and a.order_ecom_status = 2'
-          ActiveRecord::Base.connection.execute(sql_query6)
+                '    and a.order_ecom_status = 2'
+            ActiveRecord::Base.connection.execute(sql_query6)
 
-          sql_query3 = 'insert into mbecom.mb_order_details_incoming_single(order_detail_record) values (' + '\'' + json_data.to_json + '\'' + ')'
-          ActiveRecord::Base.connection.execute(sql_query3)
-          order_guid = json_data['OrderGuid']
-          order_line = json_data['OrderItems']
+            sql_query3 = 'insert into mbecom.mb_order_details_incoming_single(order_detail_record) values (' + '\'' + json_data.to_json + '\'' + ')'
+            ActiveRecord::Base.connection.execute(sql_query3)
+            order_guid = json_data['OrderGuid']
+            order_line = json_data['OrderItems']
 
-          #do lines
-          unless order_line.nil?
-            order_line.each do |one_order|
-              # now we have each line
-              sql_query4 = 'insert into mbecom.mb_order_line(order_guid,
+            #do lines
+            unless order_line.nil?
+              order_line.each do |one_order|
+                # now we have each line
+                sql_query4 = 'insert into mbecom.mb_order_line(order_guid,
                                                              item_upc,
                                                              item_name,
                                                              item_type,
@@ -199,38 +204,38 @@ class StaticPagesController < ApplicationController
                                                              is_gift_wrapped
                                                             ) values
                                                             (' +
-                                                           '\'' + order_guid + '\', ' +
-                                                           '\'' + one_order['ItemUpc'].to_s + '\', ' +
-                                                           '\'' + one_order['ItemName'].to_s + '\', ' +
-                                                           '\'' + one_order['ItemType'].to_s + '\', '  +
-                                                           '\'' + one_order['OrderItemStatus'].to_s + '\', ' +
-                                                           '\'' + one_order['Description'].to_s + '\', ' +
-                                                           '\'' + one_order['QuantityOrdered'].to_s + '\', ' +
-                                                           '\'' + one_order['QuantityAllocated'].to_s + '\', ' +
-                                                           '\'' + one_order['QuantityBackOrdered'].to_s + '\', ' +
-                                                           '\'' + one_order['QuantityShipped'].to_s + '\', ' +
-                                                           '\'' + one_order['QuantityReturned'].to_s + '\', ' +
-                                                           '\'' + one_order['QuantityWrittenOff'].to_s + '\', ' +
-                                                           '\'' + one_order['UnitPrice'].to_s + '\', ' +
-                                                           '\'' + one_order['TaxRate'].to_s + '\', ' +
-                                                           '\'' + one_order['Discount'].to_s + '\', ' +
-                                                           '\'' + one_order['NetTotal'].to_s + '\', ' +
-                                                           '\'' + one_order['GrossTotal'].to_s + '\', ' +
-                                                           '\'' + one_order['DiscountCode'].to_s + '\', ' +
-                                                           '\'' + one_order['DiscountMessage'].to_s + '\', ' +
-                                                           '\'' + one_order['IsGiftWrapped'].to_s + '\'' +
-                                                           ')'
-              ActiveRecord::Base.connection.execute(sql_query4)
+                    '\'' + order_guid + '\', ' +
+                    '\'' + one_order['ItemUpc'].to_s + '\', ' +
+                    '\'' + one_order['ItemName'].to_s + '\', ' +
+                    '\'' + one_order['ItemType'].to_s + '\', '  +
+                    '\'' + one_order['OrderItemStatus'].to_s + '\', ' +
+                    '\'' + one_order['Description'].to_s + '\', ' +
+                    '\'' + one_order['QuantityOrdered'].to_s + '\', ' +
+                    '\'' + one_order['QuantityAllocated'].to_s + '\', ' +
+                    '\'' + one_order['QuantityBackOrdered'].to_s + '\', ' +
+                    '\'' + one_order['QuantityShipped'].to_s + '\', ' +
+                    '\'' + one_order['QuantityReturned'].to_s + '\', ' +
+                    '\'' + one_order['QuantityWrittenOff'].to_s + '\', ' +
+                    '\'' + one_order['UnitPrice'].to_s + '\', ' +
+                    '\'' + one_order['TaxRate'].to_s + '\', ' +
+                    '\'' + one_order['Discount'].to_s + '\', ' +
+                    '\'' + one_order['NetTotal'].to_s + '\', ' +
+                    '\'' + one_order['GrossTotal'].to_s + '\', ' +
+                    '\'' + one_order['DiscountCode'].to_s + '\', ' +
+                    '\'' + one_order['DiscountMessage'].to_s + '\', ' +
+                    '\'' + one_order['IsGiftWrapped'].to_s + '\'' +
+                    ')'
+                ActiveRecord::Base.connection.execute(sql_query4)
+              end
             end
-          end
-          sql_query7 = 'update mbecom.mb_order_status  a
+            sql_query7 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 4
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-              '    and a.order_ecom_status = 3'
-          ActiveRecord::Base.connection.execute(sql_query7)
+                '    and a.order_ecom_status = 3'
+            ActiveRecord::Base.connection.execute(sql_query7)
 
-          # do shipping adddress
-          sql_query8 = 'insert into mbecom.mb_shipping_address (order_guid,
+            # do shipping adddress
+            sql_query8 = 'insert into mbecom.mb_shipping_address (order_guid,
                                                                 first_name,
                                                                 last_name,
                                                                 address1,
@@ -241,27 +246,27 @@ class StaticPagesController < ApplicationController
                                                                 country,
                                                                 phone
                                                                ) values (' +
-              '\'' + json_data['OrderGuid'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['FirstName'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['LastName'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['Address1'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['Address2'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['City'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['PostCode'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['State'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['Country'].to_s + '\', ' +
-              '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\'' +
-              ')'
-          ActiveRecord::Base.connection.execute(sql_query8)
-          #change order status in c3ecom
-          sql_query6 = 'update mbecom.mb_order_status  a
+                '\'' + json_data['OrderGuid'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['FirstName'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['LastName'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['Address1'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['Address2'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['City'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['PostCode'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['State'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['Country'].to_s + '\', ' +
+                '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\'' +
+                ')'
+            ActiveRecord::Base.connection.execute(sql_query8)
+            #change order status in c3ecom
+            sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 5
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-              '    and a.order_ecom_status = 4'
-          ActiveRecord::Base.connection.execute(sql_query6)
+                '    and a.order_ecom_status = 4'
+            ActiveRecord::Base.connection.execute(sql_query6)
 
-          # do billing adddress
-          sql_query8 = 'insert into mbecom.mb_billing_address (order_guid,
+            # do billing adddress
+            sql_query8 = 'insert into mbecom.mb_billing_address (order_guid,
                                                                 first_name,
                                                                 last_name,
                                                                 address1,
@@ -272,31 +277,31 @@ class StaticPagesController < ApplicationController
                                                                 country,
                                                                 phone
                                                                ) values (' +
-              '\'' + json_data['OrderGuid'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['FirstName'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['LastName'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['Address1'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['Address2'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['City'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['PostCode'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['State'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['Country'].to_s + '\', ' +
-              '\'' + json_data['BillingAddress']['PhoneNumber'].to_s + '\'' +
-              ')'
-          ActiveRecord::Base.connection.execute(sql_query8)
-          #change order status in c3ecom
-          sql_query6 = 'update mbecom.mb_order_status  a
+                '\'' + json_data['OrderGuid'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['FirstName'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['LastName'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['Address1'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['Address2'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['City'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['PostCode'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['State'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['Country'].to_s + '\', ' +
+                '\'' + json_data['BillingAddress']['PhoneNumber'].to_s + '\'' +
+                ')'
+            ActiveRecord::Base.connection.execute(sql_query8)
+            #change order status in c3ecom
+            sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 6
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-              '    and a.order_ecom_status = 5'
-          ActiveRecord::Base.connection.execute(sql_query6)
+                '    and a.order_ecom_status = 5'
+            ActiveRecord::Base.connection.execute(sql_query6)
 
-          # do payments
-          order_payment = json_data['OrderPayments']
-          unless order_payment.nil?
-            order_payment.each do |one_payment|
-              # now we have each payment
-              sql_query9 = 'insert into mbecom.mb_order_payments(order_guid,
+            # do payments
+            order_payment = json_data['OrderPayments']
+            unless order_payment.nil?
+              order_payment.each do |one_payment|
+                # now we have each payment
+                sql_query9 = 'insert into mbecom.mb_order_payments(order_guid,
                                                              payment_guid,
                                                              payment_type,
                                                              payment_status,
@@ -309,32 +314,36 @@ class StaticPagesController < ApplicationController
                                                              fee
                                                             ) values
                                                             (' +
-                  '\'' + order_guid + '\', ' +
-                  '\'' + one_payment['PaymentGuid'].to_s + '\', ' +
-                  '\'' + one_payment['PaymentType'].to_s + '\', ' +
-                  '\'' + one_payment['PaymentStatus'].to_s + '\', '  +
-                  '\'' + one_payment['IsoCurrencyCode'].to_s + '\', ' +
-                  '\'' + one_payment['PaymentMethodReference'].to_s + '\', ' +
-                  '\'' + one_payment['PaymentProviderReference'].to_s + '\', ' +
-                  '\'' + one_payment['PaymentDate'].to_s + '\', ' +
-                  '\'' + one_payment['Amount'].to_s + '\', ' +
-                  '\'' + one_payment['AuthorisedAmount'].to_s + '\', ' +
-                  '\'' + one_payment['Fee'].to_s + '\'' +
-                  ')'
-              ActiveRecord::Base.connection.execute(sql_query9)
+                    '\'' + order_guid + '\', ' +
+                    '\'' + one_payment['PaymentGuid'].to_s + '\', ' +
+                    '\'' + one_payment['PaymentType'].to_s + '\', ' +
+                    '\'' + one_payment['PaymentStatus'].to_s + '\', '  +
+                    '\'' + one_payment['IsoCurrencyCode'].to_s + '\', ' +
+                    '\'' + one_payment['PaymentMethodReference'].to_s + '\', ' +
+                    '\'' + one_payment['PaymentProviderReference'].to_s + '\', ' +
+                    '\'' + one_payment['PaymentDate'].to_s + '\', ' +
+                    '\'' + one_payment['Amount'].to_s + '\', ' +
+                    '\'' + one_payment['AuthorisedAmount'].to_s + '\', ' +
+                    '\'' + one_payment['Fee'].to_s + '\'' +
+                    ')'
+                ActiveRecord::Base.connection.execute(sql_query9)
+              end
             end
-          end
-          sql_query6 = 'update mbecom.mb_order_status  a
+            sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 10
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-              '    and a.order_ecom_status = 6'
-          ActiveRecord::Base.connection.execute(sql_query6)
+                '    and a.order_ecom_status = 6'
+            ActiveRecord::Base.connection.execute(sql_query6)
+
+          end
 
         end
+      else
+        puts 'Http Status:'
+        puts http_status
+      end  # http_status = 200
 
-      end
-
-    end
+    end # select_order_ids.nil?
     redirect_to select_bulk_pick_path
 
   end
