@@ -54,6 +54,13 @@ class StaticPagesController < ApplicationController
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
 
+      selected_order_ids.each do |order_no|
+        sql_query1 = 'update mbecom.mb_order_status  a
+                      set a.order_ecom_status = 20
+                      where a.order_number = ' + '\'' + order_no + '\'' +
+            '    and a.order_ecom_status = 13'
+        ActiveRecord::Base.connection.execute(sql_query1)
+      end
 
     end
 
@@ -73,14 +80,17 @@ class StaticPagesController < ApplicationController
     sql_query2 = 'SELECT available_orders_json from mbecom.mb_available_orders_incoming'
     incoming_json = ActiveRecord::Base.connection.select_value(sql_query2)
 
+    sql_query2 = 'SELECT http_status_code from mbecom.mb_available_orders_incoming'
+    http_status = ActiveRecord::Base.connection.select_value(sql_query2)
     # check to ensure there is json data to iterate through
+    if http_status == '200'
+      unless incoming_json.nil?
 
-    unless incoming_json.nil?
-
-      json_to_process = ActiveSupport::JSON.decode(incoming_json)
-      json_to_process.each do |json_data|
-        sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
-        ActiveRecord::Base.connection.execute(sql_query3)
+        json_to_process = ActiveSupport::JSON.decode(incoming_json)
+        json_to_process.each do |json_data|
+          sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
+          ActiveRecord::Base.connection.execute(sql_query3)
+        end
       end
 
     end
@@ -108,6 +118,13 @@ class StaticPagesController < ApplicationController
             '    and a.order_ecom_status = 1'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
+
+      # Lock orders that we wish to retrieve
+
+      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      params = { :solution => 'CFC', :action =>'mb_lock_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
+      uri.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(uri)
 
       # retrieve order details that have been selected
 
@@ -245,7 +262,8 @@ class StaticPagesController < ApplicationController
                                                                 postcode,
                                                                 state,
                                                                 country,
-                                                                phone
+                                                                phone,
+                                                                delivery_instructions
                                                                ) values (' +
                   '\'' + json_data['OrderGuid'].to_s + '\', ' +
                   '\'' + json_data['ShippingAddress']['FirstName'].to_s + '\', ' +
@@ -256,7 +274,8 @@ class StaticPagesController < ApplicationController
                   '\'' + json_data['ShippingAddress']['PostalCode'].to_s + '\', ' +
                   '\'' + json_data['ShippingAddress']['State'].to_s + '\', ' +
                   '\'' + json_data['ShippingAddress']['Country'].to_s + '\', ' +
-                  '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\'' +
+                  '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['DeliveryInstructions'].to_s + '\'' +
                   ')'
               ActiveRecord::Base.connection.execute(sql_query8)
             end
