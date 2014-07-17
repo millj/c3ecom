@@ -43,9 +43,9 @@ class StaticPagesController < ApplicationController
 
       selected_order_ids.each do |order_no|
         sql_query1 = 'update mbecom.mb_order_status  a
-                      set a.order_ecom_status = 11
+                      set a.order_ecom_status = 21
                       where a.order_number = ' + '\'' + order_no + '\'' +
-            '    and a.order_ecom_status = 10'
+            '    and a.order_ecom_status = 20'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
       # Call the pentaho job to print the bulk print list
@@ -56,9 +56,9 @@ class StaticPagesController < ApplicationController
 
       selected_order_ids.each do |order_no|
         sql_query1 = 'update mbecom.mb_order_status  a
-                      set a.order_ecom_status = 20
+                      set a.order_ecom_status = 30
                       where a.order_number = ' + '\'' + order_no + '\'' +
-            '    and a.order_ecom_status = 13'
+            '    and a.order_ecom_status = 23'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
 
@@ -388,6 +388,13 @@ class StaticPagesController < ApplicationController
                 '    and a.order_ecom_status = 7'
             ActiveRecord::Base.connection.execute(sql_query6)
 
+            # All data loaded correctly, can set rpro status as ready to import
+            sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_rpro_status = 1
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                '    and a.order_rpro_status = 0 and a.order_ecom_status = 10'
+            ActiveRecord::Base.connection.execute(sql_query6)
+
           end
 
         end
@@ -397,6 +404,13 @@ class StaticPagesController < ApplicationController
       end  # http_status = 200
 
     end # select_order_ids.nil?
+
+    # Create RPRO files
+    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    params = { :solution => 'CFC', :action =>'mbecom_induct_orders_rpro.xaction', :path => '', :userid => 'report', :password => 'report' }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+
     redirect_to select_bulk_pick_path
 
   end
