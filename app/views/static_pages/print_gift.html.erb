@@ -2,7 +2,7 @@
 <h2>Print Gift Messages</h2>
 
 
-<%= form_tag(controller: 'static_pages', action: 'select_oms_orders', method: "post") do %>
+<%= form_tag(controller: 'static_pages', action: 'print_gift_message', method: "post") do %>
     <!-- Form Name -->
     <legend>Select your message to print!</legend>
     This is a list of orders with gift messages current </p>
@@ -11,13 +11,13 @@
           <tr>
             <th><p class="text-left">Selected</p></th>
             <th><p class="text-centre"> Order #</p></th>
-            <th><p class="text-centre"> Priority #</p></th>
+            <th><p class="text-centre"> Message #</p></th>
           </tr>
           <% @gift_message.each do |message| %>
               <tr>
-                <td><%= check_box_tag 'selected[]', order['order_number'], checked = true %></td>
-                <td><%= order['order_number'] %></td>
-                <td><%= order['priority'] %></td>
+                <td><%= check_box_tag 'selected[]', message['order_number'], checked = true %></td>
+                <td><%= message['order_number'] %></td>
+                <td><%= message['gift_message'] %></td>
               </tr>
           <% end %>
         </table>

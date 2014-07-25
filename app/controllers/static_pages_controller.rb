@@ -24,11 +24,22 @@ class StaticPagesController < ApplicationController
   end
 
   def print_gift_message
-     sql_query1 = 'select * from mbecom.mb_order_header where length(gift_message) > 0 '
-      @gift_message = ActiveRecord::Base.connection.select_all(sql_query1)
+    selected_order_ids = params[:selected]
+    unless selected_order_ids.nil?
+      selected_order_ids.each do |order_no|
+        sql_query1 = 'update mbecom.mb_order_header a
+                      set a.printed_message = a.printed_message + 1
+                      where a.order_ref = ' + '\'' + order_no + '\''
+        ActiveRecord::Base.connection.execute(sql_query1)
+      end
+    end
+    redirect_to '/'
   end
 
   def print_gift
+
+    sql_query1 = 'select * from mbecom.mb_order_header a, mbecom.mb_order_status b where length(gift_message) > 0 and b.order_guid = a.order_guid'
+    @gift_message = ActiveRecord::Base.connection.select_all(sql_query1)
 
   end
 
