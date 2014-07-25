@@ -76,6 +76,9 @@ C3ecom::Application.routes.draw do
   post 'select_bulk_pick' => 'static_pages#select_bulk_pick'
   get  'select_bulk_pick' => 'static_pages#select_bulk'
 
+  post 'print_gift_message' => 'static_pages#print_gift_message'
+  get 'print_gift_message' => 'static_pages#print_gift'
+
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
 

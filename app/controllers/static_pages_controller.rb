@@ -23,10 +23,25 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def print_gift_message
+     sql_query1 = 'select * from mbecom.mb_order_header where length(gift_message) > 0 '
+      @gift_message = ActiveRecord::Base.connection.select_all(sql_query1)
+  end
+
+  def print_gift
+
+  end
+
   def select_bulk
 
-    # Get orders ready to select
-    sql_query1 = 'select *, false as order_selected from mbecom.mb_order_status where order_ecom_status = 10 order by priority desc, order_number'
+    # Get orders ready to select, by default check 10 orders to bulk at a time
+    sql_query1 = 'select
+     a.*,
+     @rownum:= @rownum + 1 as rank,
+     case when @rownum <= 10 then true else false end as order_selected
+     from mbecom.mb_order_status a, (select @rownum := 0) r
+    where order_ecom_status = 10
+    order by priority desc, order_number'
 
     #load into table
     @bulk_pick_choice = ActiveRecord::Base.connection.select_all(sql_query1)

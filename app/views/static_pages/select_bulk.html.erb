@@ -15,7 +15,7 @@
           </tr>
           <% @bulk_pick_choice.each do |bp_choice| %>
               <tr>
-                <td><%= check_box_tag 'selected[]', bp_choice['order_number'], checked = true %></td>
+                <td><%= check_box_tag 'selected[]', bp_choice['order_number'], checked = bp_choice['order_selected'].nonzero? %></td>
                 <td><%= bp_choice['order_number'] %></td>
                 <td><%= bp_choice['priority'] %></td>
               </tr>
