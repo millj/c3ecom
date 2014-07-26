@@ -1,22 +1,24 @@
-<% provide(:title, 'Print Gift Messages') %>
-<h2>Print Gift Messages</h2>
+<% provide(:title, 'Reprint Gift Messages') %>
+<h2>Reprint Gift Messages</h2>
 
 
-<%= form_tag(controller: 'static_pages', action: 'print_gift_message', method: "post") do %>
+<%= form_tag(controller: 'static_pages', action: 'reprint_gift_message', method: "post") do %>
     <!-- Form Name -->
-    <legend>Select your message to print!</legend>
-    This is a list of orders with gift messages current </p>
+    <legend>Select your message to reprint!</legend>
+    This is a list of orders with gift messages </p>
     <% unless @gift_message.nil? %>
         <table class="table table-hover table-condensed">
           <tr>
             <th><p class="text-left">Selected</p></th>
             <th><p class="text-centre"> Order #</p></th>
+            <th><p class="text-centre"> Times Printed #</p></th>
             <th><p class="text-centre"> Message #</p></th>
           </tr>
           <% @gift_message.each do |message| %>
               <tr>
                 <td><%= check_box_tag 'selected[]', message['order_number'], checked = false %></td>
                 <td><%= message['order_number'] %></td>
+                <td><%= message['printed_message'] %></td>
                 <td><%= message['gift_message'] %></td>
               </tr>
           <% end %>
