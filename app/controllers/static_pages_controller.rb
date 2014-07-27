@@ -23,6 +23,24 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def dispatch_the_parcel
+
+    selected_order_ids = params[:selected]
+    unless selected_order_ids.nil?
+      selected_order_ids.each do |order_no|
+        nil
+      end
+    end
+
+  end
+
+  def dispatch_the
+
+    sql_query1 = 'select * from mbecom.mb_order_status where mb_order_ecom_status = 30'
+    @dispatch_orders = ActiveRecord::Base.connection.select_all(sql_query1)
+
+  end
+
   def reprint_gift_message
 
     selected_order_ids = params[:selected]
@@ -31,6 +49,17 @@ class StaticPagesController < ApplicationController
         sql_query1 = 'update mbecom.mb_order_status a
                       set a.printed_message = a.printed_message + 1
                       where a.order_number = ' + '\'' + order_no + '\''
+        ActiveRecord::Base.connection.execute(sql_query1)
+
+        sql_query1 = 'insert into mbecom.mb_print_me(order_number) values ( ' + '\'' + order_no + '\'' + ')'
+        ActiveRecord::Base.connection.execute(sql_query1)
+
+        uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+        params = { :solution => 'CFC', :action =>'mbecom_print_gift.xaction', :path => '', :userid => 'report', :password => 'report' }
+        uri.query = URI.encode_www_form(params)
+        res = Net::HTTP.get_response(uri)
+
+        sql_query1 = 'truncate table mbecom.mb_print_me'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
     end
@@ -52,6 +81,17 @@ class StaticPagesController < ApplicationController
         sql_query1 = 'update mbecom.mb_order_status a
                       set a.printed_message = a.printed_message + 1
                       where a.order_number = ' + '\'' + order_no + '\''
+        ActiveRecord::Base.connection.execute(sql_query1)
+
+        sql_query1 = 'insert into mbecom.mb_print_me(order_number) values ( ' + '\'' + order_no + '\'' + ')'
+        ActiveRecord::Base.connection.execute(sql_query1)
+
+        uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+        params = { :solution => 'CFC', :action =>'mbecom_print_gift.xaction', :path => '', :userid => 'report', :password => 'report' }
+        uri.query = URI.encode_www_form(params)
+        res = Net::HTTP.get_response(uri)
+
+        sql_query1 = 'truncate table mbecom.mb_print_me'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
     end

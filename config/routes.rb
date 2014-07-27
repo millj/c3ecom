@@ -82,6 +82,9 @@ C3ecom::Application.routes.draw do
   post 'reprint_gift_message' => 'static_pages#reprint_gift_message'
   get 'reprint_gift_message' => 'static_pages#reprint_gift'
 
+  post 'dispatch_the_parcel' => 'static_pages#dispatch_the_parcel'
+  get 'dispatch_the_parcel'  => 'static_pages#dispatch'
+
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
 

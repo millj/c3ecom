@@ -1,0 +1,33 @@
+<% provide(:title, 'Select Orders to dispatch') %>
+<h2>Select Orders for dispatch</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'dispatch_the_parcel', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Select orders to dispatch!</legend>
+    This is a list of orders ready to dispatch. </p>
+    <% unless @dispatch_orders.nil? %>
+        <table class="table table-hover table-condensed">
+          <tr>
+            <th><p class="text-left">Selected</p></th>
+            <th><p class="text-centre"> Order #</p></th>
+            <th><p class="text-centre"> Priority #</p></th>
+          </tr>
+          <% @dispatch_orders.each do |dispatch_parcel| %>
+              <tr>
+                <td><%= check_box_tag 'selected[]', dispatch_parcel['order_number'], checked = dispatch_parcel['order_selected'].nonzero? %></td>
+                <td><%= dispatch_parcel['order_number'] %></td>
+                <td><%= dispatch_parcel['priority'] %></td>
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+    </p> </p>
+    <div>
+       <%= submit_tag 'Dispatch Orders!', class: 'btn btn-warning btn-large' %>
+    </div>
+
+<% end %>
+
+
