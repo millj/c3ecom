@@ -39,8 +39,8 @@
   <td>Order available in Startrack dispatcher system</td>
 </tr>
 <tr>
-  <td>33</td>
-  <td>Looking for connote match in dispatcher to update OMS and ship order</td>
+  <td>40</td>
+  <td>Order dispatched, waiting connote number from Dispatcher to ship</td>
 </tr>
 <tr>
   <td></td>
@@ -74,6 +74,7 @@
       <th> Web Order GUID </th>
       <th> Priority </th>
       <th> Order Status </th>
+      <th> Connote # </th>
     </tr>
 
   <% @mb_order_statuses.each do |mb_order| %>
@@ -82,6 +83,7 @@
         <td><%= mb_order.order_guid %></td>
         <td><%= mb_order.priority %></td>
         <td><%= mb_order.order_ecom_status %></td>
+        <td><%= mb_order.connote_reference %></td>
       </tr>
   <% end %>
   </table>

@@ -85,6 +85,9 @@ C3ecom::Application.routes.draw do
   post 'dispatch_the_parcel' => 'static_pages#dispatch_the_parcel'
   get 'dispatch_the_parcel'  => 'static_pages#dispatch_the'
 
+  post 'ship_the_parcel' => 'static_pages#ship_the_parcel'
+  get 'ship_the_parcel'  => 'static_pages#ship_the'
+
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
 

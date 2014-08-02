@@ -23,6 +23,31 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def ship_the_parcel
+    selected_order_ids = params[:selected]
+    unless selected_order_ids.nil?
+      selected_order_ids.each do |order_no|
+        sql_query1 = 'update mbecom.mb_order_status  a
+                      set a.order_ecom_status = 42
+                      where a.order_number = ' + '\'' + order_no + '\'' +
+            '    and a.order_ecom_status = 41'
+        ActiveRecord::Base.connection.execute(sql_query1)
+      end
+    end
+    redirect_to '/'
+  end
+
+  def ship_the
+
+    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    params = { :solution => 'CFC', :action =>'mbecom_update_connote.xaction', :path => '', :userid => 'report', :password => 'report' }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+
+    sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 41'
+    @ship_orders = ActiveRecord::Base.connection.select_all(sql_query1)
+  end
+
   def dispatch_the_parcel
 
     selected_order_ids = params[:selected]
@@ -40,6 +65,10 @@ class StaticPagesController < ApplicationController
       res = Net::HTTP.get_response(uri)
 
     end
+    sql_query1 = 'update mbecom.mb_order_status  a
+                      set a.order_ecom_status = 40
+                      where a.order_ecom_status = 31'
+    ActiveRecord::Base.connection.execute(sql_query1)
     redirect_to '/'
   end
 
