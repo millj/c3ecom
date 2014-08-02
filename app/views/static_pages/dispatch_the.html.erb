@@ -15,7 +15,7 @@
           </tr>
           <% @dispatch_orders.each do |dispatch_parcel| %>
               <tr>
-                <td><%= check_box_tag 'selected[]', dispatch_parcel['order_number'], checked = dispatch_parcel['order_selected'].nonzero? %></td>
+                <td><%= check_box_tag 'selected[]', dispatch_parcel['order_number'], checked = false %></td>
                 <td><%= dispatch_parcel['order_number'] %></td>
                 <td><%= dispatch_parcel['priority'] %></td>
               </tr>

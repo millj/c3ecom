@@ -28,15 +28,24 @@ class StaticPagesController < ApplicationController
     selected_order_ids = params[:selected]
     unless selected_order_ids.nil?
       selected_order_ids.each do |order_no|
-        nil
+        sql_query1 = 'update mbecom.mb_order_status  a
+                      set a.order_ecom_status = 31
+                      where a.order_number = ' + '\'' + order_no + '\'' +
+            '    and a.order_ecom_status = 30'
+        ActiveRecord::Base.connection.execute(sql_query1)
       end
-    end
+      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      params = { :solution => 'CFC', :action =>'mbecom_dispatch_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
+      uri.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(uri)
 
+    end
+    redirect_to '/'
   end
 
   def dispatch_the
 
-    sql_query1 = 'select * from mbecom.mb_order_status where mb_order_ecom_status = 30'
+    sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 30'
     @dispatch_orders = ActiveRecord::Base.connection.select_all(sql_query1)
 
   end
@@ -131,9 +140,9 @@ class StaticPagesController < ApplicationController
 
       selected_order_ids.each do |order_no|
         sql_query1 = 'update mbecom.mb_order_status  a
-                      set a.order_ecom_status = 21
+                      set a.order_ecom_status = 11
                       where a.order_number = ' + '\'' + order_no + '\'' +
-            '    and a.order_ecom_status = 20'
+            '    and a.order_ecom_status = 10'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
       # Call the pentaho job to print the bulk print list
@@ -146,7 +155,7 @@ class StaticPagesController < ApplicationController
         sql_query1 = 'update mbecom.mb_order_status  a
                       set a.order_ecom_status = 30
                       where a.order_number = ' + '\'' + order_no + '\'' +
-            '    and a.order_ecom_status = 23'
+            '    and a.order_ecom_status = 11'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
 

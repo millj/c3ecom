@@ -1,6 +1,53 @@
 <% provide(:title, 'CFC Orders') %>
 <h1>CFC Orders</h1>
 
+  <table class="table table-striped"
+    <tr>
+      <th>Status</th>
+      <th>Meaning</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Order available for processing</td>
+    </tr>
+    <tr>
+      <td>>1</td>
+      <td>Order locked in OMS and being processed</td>
+    </tr>
+    <tr>
+      <td>2..9</td>
+      <td>Order details being retrieved</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Order details retrieved and available for bulk pick</td>
+    </tr>
+<tr>
+  <td>10..29</td>
+  <td>Orders selected for bulk pick and getting printed/picked</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td>Order picked and ready for dispatch</td>
+</tr>
+<tr>
+  <td>30..31</td>
+  <td>Order being dispatched</td>
+</tr>
+<tr>
+  <td>>32</td>
+  <td>Order available in Startrack dispatcher system</td>
+</tr>
+<tr>
+  <td>33</td>
+  <td>Looking for connote match in dispatcher to update OMS and ship order</td>
+</tr>
+<tr>
+  <td></td>
+  <td>At any stage from status 2..100 a order gift message is available for printing</td>
+</tr>
+  </table>
+
 <form class="form-horizontal">
   <fieldset>
 
