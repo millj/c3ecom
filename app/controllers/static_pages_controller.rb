@@ -34,6 +34,9 @@ class StaticPagesController < ApplicationController
         ActiveRecord::Base.connection.execute(sql_query1)
       end
     end
+
+    # add in ship call to api
+
     redirect_to '/'
   end
 
@@ -184,7 +187,7 @@ class StaticPagesController < ApplicationController
         sql_query1 = 'update mbecom.mb_order_status  a
                       set a.order_ecom_status = 30
                       where a.order_number = ' + '\'' + order_no + '\'' +
-            '    and a.order_ecom_status = 11'
+            '    and a.order_ecom_status = 13'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
 
