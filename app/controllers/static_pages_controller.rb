@@ -346,8 +346,7 @@ class StaticPagesController < ApplicationController
                                                              net_total,
                                                              gross_total,
                                                              discount_code,
-                                                             discount_message,
-                                                             is_gift_wrapped
+                                                             discount_message
                                                             ) values
                                                             (' +
                     '\'' + order_guid + '\', ' +
@@ -368,8 +367,7 @@ class StaticPagesController < ApplicationController
                     '\'' + one_order['NetTotal'].to_s + '\', ' +
                     '\'' + one_order['GrossTotal'].to_s + '\', ' +
                     '\'' + one_order['DiscountCode'].to_s + '\', ' +
-                    '\'' + one_order['DiscountMessage'].to_s + '\', ' +
-                    '\'' + one_order['IsGiftWrapped'].to_s + '\'' +
+                    '\'' + one_order['DiscountMessage'].to_s + '\'' +
                     ')'
                 ActiveRecord::Base.connection.execute(sql_query4)
               end
@@ -511,10 +509,42 @@ class StaticPagesController < ApplicationController
                 ActiveRecord::Base.connection.execute(sql_query)
               end
             end
+
+            sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_ecom_status = 8
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+                '    and a.order_ecom_status = 7'
+            ActiveRecord::Base.connection.execute(sql_query6)
+
+            gift_voucher_lines = json_data['GiftVoucherItems']
+            unless gift_voucher_items.nil?
+              gift_voucher_items.each do |gv_line|
+                sql_query = 'insert into mbecom.mb_gift_voucher_items(order_guid,
+                                                                    gv_guid,
+                                                                    item_upc,
+                                                                    buyer_name,
+                                                                    receipient_name,
+                                                                    receipient_email,
+                                                                    item_message,
+                                                                    amount) values
+                                                                    (' +
+                    '\'' + order_guid + '\', ' +
+                    '\'' + one_line['GiftVoucherGuid'].to_s + '\', ' +
+                    '\'' + one_line['GiftVoucherItemUpc'].to_s + '\', ' +
+                    '\'' + one_line['BuyerName'].to_s + '\', '  +
+                    '\'' + one_line['RecipientName'].to_s + '\', ' +
+                    '\'' + one_line['RecipientEmail'].to_s + '\', ' +
+                    '\'' + one_line['ItemMessage'].to_s + '\', ' +
+                    '\'' + one_line['Amount'].to_s + '\'' +
+                    ')'
+                ActiveRecord::Base.connection.execute(sql_query)
+              end
+            end
+
             sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_ecom_status = 10
                           where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-                '    and a.order_ecom_status = 7'
+                '    and a.order_ecom_status = 8'
             ActiveRecord::Base.connection.execute(sql_query6)
 
             # All data loaded correctly, can set rpro status as ready to import
