@@ -517,8 +517,8 @@ class StaticPagesController < ApplicationController
             ActiveRecord::Base.connection.execute(sql_query6)
 
             gift_voucher_lines = json_data['GiftVoucherItems']
-            unless gift_voucher_items.nil?
-              gift_voucher_items.each do |gv_line|
+            unless gift_voucher_lines.nil?
+              gift_voucher_lines.each do |gv_line|
                 sql_query = 'insert into mbecom.mb_gift_voucher_items(order_guid,
                                                                     gv_guid,
                                                                     item_upc,
