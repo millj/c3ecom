@@ -529,13 +529,13 @@ class StaticPagesController < ApplicationController
                                                                     amount) values
                                                                     (' +
                     '\'' + order_guid + '\', ' +
-                    '\'' + one_line['GiftVoucherGuid'].to_s + '\', ' +
-                    '\'' + one_line['GiftVoucherItemUpc'].to_s + '\', ' +
-                    '\'' + one_line['BuyerName'].to_s + '\', '  +
-                    '\'' + one_line['RecipientName'].to_s + '\', ' +
-                    '\'' + one_line['RecipientEmail'].to_s + '\', ' +
-                    '\'' + one_line['ItemMessage'].to_s + '\', ' +
-                    '\'' + one_line['Amount'].to_s + '\'' +
+                    '\'' + gv_line['GiftVoucherGuid'].to_s + '\', ' +
+                    '\'' + gv_line['GiftVoucherItemUpc'].to_s + '\', ' +
+                    '\'' + gv_line['BuyerName'].to_s + '\', '  +
+                    '\'' + gv_line['RecipientName'].to_s + '\', ' +
+                    '\'' + gv_line['RecipientEmail'].to_s + '\', ' +
+                    '\'' + gv_line['ItemMessage'].to_s + '\', ' +
+                    '\'' + gv_line['Amount'].to_s + '\'' +
                     ')'
                 ActiveRecord::Base.connection.execute(sql_query)
               end
