@@ -5,7 +5,7 @@ ruby '2.0.0'
 gem 'rails', '~>4.0.0'
 gem 'pg', '~>0.16.0'
 gem 'mysql2'
-gem 'bootstrap-sass', '2.3.2.0'
+gem 'bootstrap-sass', '~>2.3.2.0'
 gem 'bcrypt-ruby', '~>3.0.1'
 gem 'faker', '1.1.2'
 gem 'will_paginate', '3.0.4'
@@ -27,7 +27,7 @@ group :test do
 end
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '4.0.0'
+gem 'sass-rails', '~>4.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '2.1.1'
