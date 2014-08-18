@@ -33,6 +33,8 @@ class StaticPagesController < ApplicationController
     sql_query1 = 'select order_guid from mbecom.mb_order_status where order_number = ' + '\'' + order_number + '\''
     order_guid = ActiveRecord::Base.connection.select(sql_query1)
 
+
+
     redirect_to '/'
   end
 
