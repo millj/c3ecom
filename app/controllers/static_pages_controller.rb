@@ -23,6 +23,23 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def unlock_the_order
+    order_number = params[:order_to_unlock]
+    sql_query1 = 'update mbecom.mb_order_status  a
+                      set a.order_ecom_status = 59
+                      where a.order_number = ' + '\'' + order_number + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+
+    sql_query1 = 'select order_guid from mbecom.mb_order_status where order_number = ' + '\'' + order_number + '\''
+    order_guid = ActiveRecord::Base.connection.select(sql_query1)
+
+    redirect_to '/'
+  end
+
+  def unlock_the
+
+  end
+
   def ship_the_parcel
     selected_order_ids = params[:selected]
     unless selected_order_ids.nil?
@@ -35,7 +52,10 @@ class StaticPagesController < ApplicationController
       end
     end
 
-    # add in ship call to api
+    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    params = { :solution => 'CFC', :action =>'mbecom_complete_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
 
     redirect_to '/'
   end
