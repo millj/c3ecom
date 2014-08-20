@@ -33,8 +33,8 @@ class StaticPagesController < ApplicationController
     sql_query1 = 'select order_guid from mbecom.mb_order_status where order_number = ' + '\'' + order_number + '\''
     order_guid = ActiveRecord::Base.connection.select(sql_query1)
 
-    @result = httparty.post('https://staging-api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=dydw7W1liamS3KGmEMqFtd3ZWvrE2HS8',
-                            :body => {:OrderGuid => order_guid}.to_json
+    @result = httparty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
+                            :query => {:OrderGuid => order_guid}.to_json
                            )
 
     redirect_to '/'
@@ -101,7 +101,7 @@ class StaticPagesController < ApplicationController
 
   def dispatch_the
 
-    sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 30'
+    sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 30 order by priority desc, order_number'
     @dispatch_orders = ActiveRecord::Base.connection.select_all(sql_query1)
 
   end
