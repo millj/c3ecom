@@ -31,11 +31,15 @@ class StaticPagesController < ApplicationController
     ActiveRecord::Base.connection.execute(sql_query1)
 
     sql_query1 = 'select order_guid from mbecom.mb_order_status where order_number = ' + '\'' + order_number + '\''
-    order_guid = ActiveRecord::Base.connection.select(sql_query1)
+    order_guid = ActiveRecord::Base.connection.select_value(sql_query1)
 
-    @result = httparty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
-                            :query => {:OrderGuid => order_guid}.to_json
+    Rails.logger.debug(order_guid)
+
+    @result = HTTParty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
+                            :body => [{'OrderGuid' => order_guid}].to_json,
+                            :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
                            )
+    Rails.logger.debug("My object: #{@result.inspect}")
 
     redirect_to '/'
   end
