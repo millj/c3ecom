@@ -106,6 +106,7 @@ class StaticPagesController < ApplicationController
   def dispatch_the
 
     sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 30 order by priority desc, order_number'
+
     @dispatch_orders = ActiveRecord::Base.connection.select_all(sql_query1)
 
   end
@@ -253,10 +254,20 @@ class StaticPagesController < ApplicationController
     end
 
     # Get orders ready to select
-    sql_query1 = 'select *, false as order_selected from mbecom.mb_order_status where order_ecom_status = 1 order by priority desc, order_number'
+    #sql_query1 = 'select *, false as order_selected from mbecom.mb_order_status where order_ecom_status = 1 order by priority desc, order_number'
+
+    sql_query1 = 'select
+     a.*,
+     @rownum:= @rownum + 1 as rank,
+     case when @rownum <= 25 then true else false end as order_selected
+     from mbecom.mb_order_status a, (select @rownum := 0) r
+    where order_ecom_status = 1
+    order by priority desc, order_number'
+
 
     #load into table
     @order_choice = ActiveRecord::Base.connection.select_all(sql_query1)
+
 
 
   end
