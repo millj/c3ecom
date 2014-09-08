@@ -91,6 +91,9 @@ C3ecom::Application.routes.draw do
   post 'unlock_the_order'  => 'static_pages#unlock_the_order'
   get 'unlock_the_order'  => 'static_pages#unlock_order'
 
+  post 'archive_the_orders' => 'static_pages#archive_the_orders'
+  get  'archive_orders' => 'static_pages#archive_orders'
+
   get 'allocate' => 'allocation_order_lines#allocate'
   post 'allocate' => 'allocation_order_lines#allocate_item'
 

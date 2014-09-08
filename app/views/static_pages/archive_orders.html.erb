@@ -1,0 +1,17 @@
+<% provide(:title, 'Archive Orders') %>
+<h2>Archive Orders</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'archive_the_orders', method: "post") do %>
+    <!-- Form Name -->
+    <legend>This will archive orders older than the date entered!</legend>
+       </p>
+
+    <%= label_tag(:date_to_archive, "Date:") %> <%= date_field_tag(:date_to_archive, (Date.today - 30)) %>
+    <div>
+       <%= submit_tag 'Arrrrgh', class: 'btn btn-warning btn-large', :confirm => 'Are you certain you wish to archive from this date?' %>
+    </div>
+
+<% end %>
+
+

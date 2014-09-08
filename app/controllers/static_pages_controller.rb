@@ -23,6 +23,14 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def archive_orders
+     sql_query = ''
+  end
+
+  def archive_the_orders
+      redirect to '/'
+  end
+
   def unlock_the_order
     order_number = params[:order_to_unlock]
     sql_query1 = 'update mbecom.mb_order_status  a
