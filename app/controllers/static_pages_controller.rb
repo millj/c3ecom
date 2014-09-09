@@ -118,7 +118,7 @@ class StaticPagesController < ApplicationController
     end
     sql_query1 = 'update mbecom.mb_order_status  a
                       set a.order_ecom_status = 40
-                      where a.order_ecom_status = 31'
+                      where a.order_ecom_status = 32'
     ActiveRecord::Base.connection.execute(sql_query1)
     redirect_to '/'
   end
@@ -266,7 +266,11 @@ class StaticPagesController < ApplicationController
 
         json_to_process = ActiveSupport::JSON.decode(incoming_json)
         json_to_process.each do |json_data|
-          sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
+          sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status)
+                          values (' + '\''
+                                    + json_data['OrderGuid'] + '\', ' + '\''
+                                    + json_data['OrderReference'] + '\', ' + '\''
+                                    + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
           ActiveRecord::Base.connection.execute(sql_query3)
         end
       end
@@ -606,13 +610,6 @@ class StaticPagesController < ApplicationController
                 '    and a.order_ecom_status = 8'
             ActiveRecord::Base.connection.execute(sql_query6)
 
-            # All data loaded correctly, can set rpro status as ready to import
-            sql_query6 = 'update mbecom.mb_order_status  a
-                          set a.order_rpro_status = 1
-                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-                '    and a.order_rpro_status = 0 and a.order_ecom_status = 10'
-            ActiveRecord::Base.connection.execute(sql_query6)
-
           end
 
         end
@@ -621,13 +618,22 @@ class StaticPagesController < ApplicationController
         puts http_status
       end  # http_status = 200
 
+      # All data loaded correctly, can set rpro status as ready to import
+      sql_query6 = 'update mbecom.mb_order_status  a
+                          set a.order_rpro_status = 1
+                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
+          '    and a.order_rpro_status = 0 and a.order_ecom_status = 10'
+      ActiveRecord::Base.connection.execute(sql_query6)
+
+      # Create RPRO files
+      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      params = { :solution => 'CFC', :action =>'mbecom_induct_orders_rpro.xaction', :path => '', :userid => 'report', :password => 'report' }
+      uri.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(uri)
+
     end # select_order_ids.nil?
 
-    # Create RPRO files
-    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    params = { :solution => 'CFC', :action =>'mbecom_induct_orders_rpro.xaction', :path => '', :userid => 'report', :password => 'report' }
-    uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
+
 
     redirect_to select_bulk_pick_path
 
