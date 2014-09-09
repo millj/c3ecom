@@ -266,11 +266,10 @@ class StaticPagesController < ApplicationController
 
         json_to_process = ActiveSupport::JSON.decode(incoming_json)
         json_to_process.each do |json_data|
-          sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status)
-                          values (' + '\''
-                                    + json_data['OrderGuid'] + '\', ' + '\''
-                                    + json_data['OrderReference'] + '\', ' + '\''
-                                    + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
+         # sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
+
+          sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_date, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + json_data['OrderDate'].to_s + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
+
           ActiveRecord::Base.connection.execute(sql_query3)
         end
       end
