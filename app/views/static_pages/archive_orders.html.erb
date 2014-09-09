@@ -9,7 +9,7 @@
 
     <%= label_tag(:date_to_archive, "Date:") %> <%= date_field_tag(:date_to_archive, (Date.today - 30)) %>
     <div>
-       <%= submit_tag 'Arrrrgh', class: 'btn btn-warning btn-large', :confirm => 'Are you certain you wish to archive from this date?' %>
+       <%= submit_tag 'Arrrrgh', class: 'btn btn-warning btn-large', data: { confirm: 'Are you certain you wish to archive from this date?' } %>
     </div>
 
 <% end %>

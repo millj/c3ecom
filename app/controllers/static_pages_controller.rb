@@ -28,7 +28,19 @@ class StaticPagesController < ApplicationController
   end
 
   def archive_the_orders
-      redirect to '/'
+    archive_date = params[:date_to_archive]
+    begin
+      Date.parse(archive_date)
+      if archive_date  < (Date.today - 30).to_s
+        Rails.logger.debug('Working date')
+
+      end
+    rescue
+      Rails.logger.debug('bogus date')
+
+    end
+
+    redirect_to '/'
   end
 
   def unlock_the_order
