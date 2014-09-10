@@ -11,12 +11,14 @@
           <tr>
             <th><p class="text-left">Selected</p></th>
             <th><p class="text-centre"> Order #</p></th>
+            <th><p class="text-centre"> Order Date</p></th>
             <th><p class="text-centre"> Priority #</p></th>
           </tr>
           <% @bulk_pick_choice.each do |bp_choice| %>
               <tr>
                 <td><%= check_box_tag 'selected[]', bp_choice['order_number'], checked = bp_choice['order_selected'].nonzero? %></td>
                 <td><%= bp_choice['order_number'] %></td>
+                <td><%= bp_choice['order_date'] %></td>
                 <td><%= bp_choice['priority'] %></td>
               </tr>
           <% end %>

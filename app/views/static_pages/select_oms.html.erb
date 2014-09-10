@@ -11,12 +11,14 @@
           <tr>
             <th><p class="text-left">Selected</p></th>
             <th><p class="text-centre"> Order #</p></th>
+            <th><p class="text-centre"> Order Date</p></th>
             <th><p class="text-centre"> Priority #</p></th>
           </tr>
           <% @order_choice.each do |order| %>
               <tr>
                 <td><%= check_box_tag 'selected[]', order['order_number'], checked = order['order_selected'].nonzero? %></td>
                 <td><%= order['order_number'] %></td>
+                <td><%= order['order_date'] %></td>
                 <td><%= order['priority'] %></td>
               </tr>
           <% end %>

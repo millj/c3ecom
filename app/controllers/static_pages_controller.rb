@@ -204,7 +204,7 @@ class StaticPagesController < ApplicationController
      case when @rownum <= 10 then true else false end as order_selected
      from mbecom.mb_order_status a, (select @rownum := 0) r
     where order_ecom_status = 10
-    order by priority desc, order_number'
+    order by priority desc, order_date'
 
     #load into table
     @bulk_pick_choice = ActiveRecord::Base.connection.select_all(sql_query1)
@@ -282,10 +282,10 @@ class StaticPagesController < ApplicationController
     sql_query1 = 'select
      a.*,
      @rownum:= @rownum + 1 as rank,
-     case when @rownum <= 25 then true else false end as order_selected
+     case when @rownum <= 20 then true else false end as order_selected
      from mbecom.mb_order_status a, (select @rownum := 0) r
     where order_ecom_status = 1
-    order by priority desc, order_number'
+    order by priority desc, order_date'
 
 
     #load into table
@@ -609,6 +609,8 @@ class StaticPagesController < ApplicationController
                 '    and a.order_ecom_status = 8'
             ActiveRecord::Base.connection.execute(sql_query6)
 
+
+
           end
 
         end
@@ -620,8 +622,7 @@ class StaticPagesController < ApplicationController
       # All data loaded correctly, can set rpro status as ready to import
       sql_query6 = 'update mbecom.mb_order_status  a
                           set a.order_rpro_status = 1
-                          where a.order_guid = ' + '\'' + json_data['OrderGuid'].to_s + '\'' +
-          '    and a.order_rpro_status = 0 and a.order_ecom_status = 10'
+                          where a.order_rpro_status = 0 and a.order_ecom_status = 10'
       ActiveRecord::Base.connection.execute(sql_query6)
 
       # Create RPRO files
