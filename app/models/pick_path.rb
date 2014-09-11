@@ -1,6 +1,6 @@
 class PickPath < ActiveRecord::Base
 
-  self.table_name = 'c3ecom.pick_paths'
+  self.table_name = 'mbecom.pick_paths'
 
   default_scope -> { order('pick_order ASC') }
 

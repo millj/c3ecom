@@ -19,7 +19,11 @@
               <tr>
                 <td><%= check_box_tag 'selected[]', ship_parcel['order_number'], checked = true %></td>
                 <td><%= ship_parcel['order_number'] %></td>
-                <td><%= ship_parcel['order_date'] %></td>
+                <td>
+                  <% unless ship_parcel['order_date'].nil? %>
+                      <%= ship_parcel['order_date'].in_time_zone("Australia/Melbourne").strftime("%d-%m-%Y, %H:%M") %>
+                  <% end %>
+                </td>
                 <td><%= ship_parcel['priority'] %></td>
                 <td><%= ship_parcel['connote_reference'] %></td>
               </tr>

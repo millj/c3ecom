@@ -18,7 +18,11 @@
               <tr>
                 <td><%= check_box_tag 'selected[]', bp_choice['order_number'], checked = bp_choice['order_selected'].nonzero? %></td>
                 <td><%= bp_choice['order_number'] %></td>
-                <td><%= bp_choice['order_date'] %></td>
+                <td>
+                  <% unless bp_choice['order_date'].nil? %>
+                      <%= bp_choice['order_date'].in_time_zone("Australia/Melbourne").strftime("%d-%m-%Y, %H:%M") %>
+                  <% end %>
+                </td>
                 <td><%= bp_choice['priority'] %></td>
               </tr>
           <% end %>

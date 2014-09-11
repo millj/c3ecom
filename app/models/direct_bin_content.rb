@@ -1,6 +1,6 @@
 class DirectBinContent < ActiveRecord::Base
 
-  self.table_name = 'c3ecom.direct_bin_contents'
+  self.table_name = 'mbecom.direct_bin_contents'
 
   validates :bin_name, presence: true, length: {maximum: 15}
   validates :item_code, presence: true, length: {maximum: 15}

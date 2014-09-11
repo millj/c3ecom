@@ -18,7 +18,11 @@
               <tr>
                 <td><%= check_box_tag 'selected[]', order['order_number'], checked = order['order_selected'].nonzero? %></td>
                 <td><%= order['order_number'] %></td>
-                <td><%= order['order_date'] %></td>
+                <td>
+                  <% unless order['order_date'].nil? %>
+                      <%= order['order_date'].in_time_zone("Australia/Melbourne").strftime("%d-%m-%Y, %H:%M") %>
+                  <% end %>
+                </td>
                 <td><%= order['priority'] %></td>
               </tr>
           <% end %>

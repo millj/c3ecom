@@ -82,23 +82,9 @@
                   <li><%= link_to "Unlock Order", unlock_the_order_path %></li>
                   <li><%= link_to "Reprint Gift Message", reprint_gift_message_path %></li>
                   <li><%= link_to "Archive orders(non functional)", archive_orders_path %></li>
-                </ul>
-              </li>
-          <% end %>
-          <% if direct_user? %>
-              <li id="fat-menu" class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Direct Functions <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
+                  <li class="divider"></li>
                   <li><%= link_to "Location to Item Maintenance", direct_bin_contents_path %></li>
                   <li><%= link_to "Pick Path Maintenance", pick_paths_path %></li>
-                  <li><%= link_to "Basket Maintenance", baskets_path %></li>
-                  <li><%= link_to "Allocation Orders", allocation_orders_url %></li>
-                  <li><%= link_to "Gift Cards", giftcard_path %></li>
-                  <li class="divider"></li>
-                  <li><%= link_to "Allocation", allocate_path %></li>
-                  <li><%= link_to "Orders to pack", selection_path %></li>
                 </ul>
               </li>
           <% end %>

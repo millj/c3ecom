@@ -18,7 +18,11 @@
               <tr>
                 <td><%= check_box_tag 'selected[]', dispatch_parcel['order_number'], checked = false %></td>
                 <td><%= dispatch_parcel['order_number'] %></td>
-                <td><%= dispatch_parcel['order_date'] %></td>
+                <td>
+                  <% unless dispatch_parcel['order_date'].nil? %>
+                  <%= dispatch_parcel['order_date'].in_time_zone("Australia/Melbourne").strftime("%d-%m-%Y, %H:%M") %>
+                  <% end %>
+                </td>
                 <td><%= dispatch_parcel['priority'] %></td>
               </tr>
           <% end %>
