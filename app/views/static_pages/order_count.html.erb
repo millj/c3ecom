@@ -1,0 +1,27 @@
+<% provide(:title, 'Show order counts') %>
+<h2>Show order counts</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'order_count_display', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Show order counts.</legend>
+    </p>
+    <% if !@order_display_data.empty? %>
+        <table class="table table-hover table-condensed">
+          <tr>
+            <th><p class="text-left">Order stage</p></th>
+            <th><p class="text-centre"> Count</p></th>
+          </tr>
+          <% @order_display_data.each do |order| %>
+              <tr>
+                <td><%= order['order_stage'] %></td>
+                <td><%= order['order_count'] %></td>
+
+              </tr>
+          <% end %>
+        </table>
+    <% end %>
+
+<% end %>
+
+

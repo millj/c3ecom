@@ -73,6 +73,9 @@ C3ecom::Application.routes.draw do
   post 'select_oms_orders' => 'static_pages#select_oms_orders'
   get  'select_oms_orders' => 'static_pages#select_oms'
 
+  post 'select_oms_orders2' => 'static_pages#select_oms_orders'
+  get  'select_oms_orders2' => 'static_pages#select_oms2'
+
   post 'select_bulk_pick' => 'static_pages#select_bulk_pick'
   get  'select_bulk_pick' => 'static_pages#select_bulk'
 
@@ -94,18 +97,8 @@ C3ecom::Application.routes.draw do
   post 'archive_the_orders' => 'static_pages#archive_the_orders'
   get  'archive_orders' => 'static_pages#archive_orders'
 
-  get 'allocate' => 'allocation_order_lines#allocate'
-  post 'allocate' => 'allocation_order_lines#allocate_item'
-
-  get 'giftcard'  => 'allocation_order_lines#giftcard'
-  post 'giftcard' => 'allocation_order_lines#giftcard'
-
-  get 'selection'  => 'allocation_orders#selection'
-
-  get 'print_message' =>  'allocation_orders#print_message'
-
-  get 'sales_order'  => 'fct_rpro_sos#sales_order'
-  post 'sales_order' => 'fct_rpro_sos#sales_order'
+  post 'order_count'  => 'static_pages#order_count_display'
+  get  'order_count' => 'static_pages#order_count'
 
   get 'fct_axima_controls/place_on_hold'
   get 'fct_axima_controls/remove_from_hold'

@@ -23,6 +23,30 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def order_count_display
+
+  end
+
+  def order_count
+
+    sql_query1 = 'select
+                      order_ecom_status      as order_stage,
+                      case
+                        when order_ecom_status = 1 then "Ready to retrieve"
+                        when order_ecom_status = 10 then "Ready to Pick"
+                        when order_ecom_status = 30 then "Ready to Dispatch"
+                        when order_ecom_status = 40 then "Ready to Complete"
+                      end as order_stage,
+                      count(order_ecom_status) as order_count
+                     from mbecom.mb_order_status
+                     where order_ecom_status < 50
+                     group by order_ecom_status'
+
+    @order_display_data = ActiveRecord::Base.connection.select_all(sql_query1)
+
+
+  end
+
   def archive_orders
      sql_query = ''
   end
@@ -69,6 +93,7 @@ class StaticPagesController < ApplicationController
   end
 
   def ship_the_parcel
+
     selected_order_ids = params[:selected]
     unless selected_order_ids.nil?
       selected_order_ids.each do |order_no|
@@ -80,12 +105,8 @@ class StaticPagesController < ApplicationController
       end
     end
 
-    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    #params = { :solution => 'CFC', :action =>'mbecom_complete_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
-    #uri.query = URI.encode_www_form(params)
-    #res = Net::HTTP.get_response(uri)
-
     http = HTTPClient.new
+    http.connect_timeout = 300
     http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_complete_orders.xaction&path=&userid=report&password=report"
 
     redirect_to '/'
@@ -93,16 +114,13 @@ class StaticPagesController < ApplicationController
 
   def ship_the
 
-    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    #params = { :solution => 'CFC', :action =>'mbecom_update_connote.xaction', :path => '', :userid => 'report', :password => 'report' }
-    #uri.query = URI.encode_www_form(params)
-    #res = Net::HTTP.get_response(uri)
-
     http = HTTPClient.new
+    http.connect_timeout = 300
     http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_update_connote.xaction&path=&userid=report&password=report"
 
     sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 41'
     @ship_orders = ActiveRecord::Base.connection.select_all(sql_query1)
+
   end
 
   def dispatch_the_parcel
@@ -116,12 +134,9 @@ class StaticPagesController < ApplicationController
             '    and a.order_ecom_status = 30'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
-      #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      #params = { :solution => 'CFC', :action =>'mbecom_dispatch_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
-      #uri.query = URI.encode_www_form(params)
-      #res = Net::HTTP.get_response(uri)
 
       http = HTTPClient.new
+      http.connect_timeout = 300
       http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_dispatch_orders.xaction&path=&userid=report&password=report"
 
     end
@@ -130,6 +145,7 @@ class StaticPagesController < ApplicationController
                       where a.order_ecom_status = 32'
     ActiveRecord::Base.connection.execute(sql_query1)
     redirect_to '/'
+
   end
 
   def dispatch_the
@@ -242,6 +258,7 @@ class StaticPagesController < ApplicationController
       #res = Net::HTTP.get_response(uri)
 
       http = HTTPClient.new
+      http.connect_timeout = 300
       http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_print_bulk_order.xaction&path=&userid=report&password=report"
 
       selected_order_ids.each do |order_no|
@@ -259,12 +276,9 @@ class StaticPagesController < ApplicationController
 
   def select_oms
 
-    # run the xaction to get the list of currently available orders
-    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    #params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
-    #uri.query = URI.encode_www_form(params)
-    #res = Net::HTTP.get_response(uri)
+
     http = HTTPClient.new
+    http.connect_timeout = 300
     http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_retrieve_available_orders_list.xaction&path=&userid=report&password=report"
 
     # use rails to process the json in the incoming table into the mb_order_status table
@@ -281,6 +295,55 @@ class StaticPagesController < ApplicationController
         json_to_process = ActiveSupport::JSON.decode(incoming_json)
         json_to_process.each do |json_data|
          # sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
+
+          sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_date, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + json_data['OrderDate'].to_s + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
+
+          ActiveRecord::Base.connection.execute(sql_query3)
+        end
+      end
+
+    end
+
+    # Get orders ready to select
+    #sql_query1 = 'select *, false as order_selected from mbecom.mb_order_status where order_ecom_status = 1 order by priority desc, order_number'
+
+    sql_query1 = 'select
+     a.*,
+     @rownum:= @rownum + 1 as rank,
+     case when @rownum <= 20 then true else false end as order_selected
+     from mbecom.mb_order_status a, (select @rownum := 0) r
+    where order_ecom_status = 1
+    order by priority desc, order_date'
+
+
+    #load into table
+    @order_choice = ActiveRecord::Base.connection.select_all(sql_query1)
+
+
+
+  end
+
+  def select_oms2
+
+
+    #http = HTTPClient.new
+    #http.connect_timeout = 300
+    #http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_retrieve_available_orders_list.xaction&path=&userid=report&password=report"
+
+    # use rails to process the json in the incoming table into the mb_order_status table
+
+    sql_query2 = 'SELECT available_orders_json from mbecom.mb_available_orders_incoming'
+    incoming_json = ActiveRecord::Base.connection.select_value(sql_query2)
+
+    sql_query2 = 'SELECT http_status_code from mbecom.mb_available_orders_incoming'
+    http_status = ActiveRecord::Base.connection.select_value(sql_query2)
+    # check to ensure there is json data to iterate through
+    if http_status == '200'
+      unless incoming_json.nil?
+
+        json_to_process = ActiveSupport::JSON.decode(incoming_json)
+        json_to_process.each do |json_data|
+          # sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
 
           sql_query3 = 'insert into mbecom.mb_order_status(order_guid, order_number, order_date, order_ecom_status) values (' + '\'' + json_data['OrderGuid'] + '\', ' + '\'' + json_data['OrderReference'] + '\', ' + '\'' + json_data['OrderDate'].to_s + '\', ' + '\'' + '1' + '\'' + ') on duplicate key update order_guid = order_guid '
 
@@ -332,6 +395,7 @@ class StaticPagesController < ApplicationController
       #res = Net::HTTP.get_response(uri)
 
       http = HTTPClient.new
+      http.connect_timeout = 300
       http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mb_lock_orders.xaction&path=&userid=report&password=report"
 
 
@@ -343,6 +407,7 @@ class StaticPagesController < ApplicationController
       #res = Net::HTTP.get_response(uri)
 
       http = HTTPClient.new
+      http.connect_timeout = 300
       http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_retrieve_order_details.xaction&path=&userid=report&password=report"
 
 
