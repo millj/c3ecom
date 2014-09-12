@@ -80,20 +80,26 @@ class StaticPagesController < ApplicationController
       end
     end
 
-    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    params = { :solution => 'CFC', :action =>'mbecom_complete_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
-    uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
+    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    #params = { :solution => 'CFC', :action =>'mbecom_complete_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
+    #uri.query = URI.encode_www_form(params)
+    #res = Net::HTTP.get_response(uri)
+
+    http = HTTPClient.new
+    http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_complete_orders.xaction&path=&userid=report&password=report"
 
     redirect_to '/'
   end
 
   def ship_the
 
-    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    params = { :solution => 'CFC', :action =>'mbecom_update_connote.xaction', :path => '', :userid => 'report', :password => 'report' }
-    uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
+    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    #params = { :solution => 'CFC', :action =>'mbecom_update_connote.xaction', :path => '', :userid => 'report', :password => 'report' }
+    #uri.query = URI.encode_www_form(params)
+    #res = Net::HTTP.get_response(uri)
+
+    http = HTTPClient.new
+    http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_update_connote.xaction&path=&userid=report&password=report"
 
     sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 41'
     @ship_orders = ActiveRecord::Base.connection.select_all(sql_query1)
@@ -110,10 +116,13 @@ class StaticPagesController < ApplicationController
             '    and a.order_ecom_status = 30'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
-      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      params = { :solution => 'CFC', :action =>'mbecom_dispatch_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
-      uri.query = URI.encode_www_form(params)
-      res = Net::HTTP.get_response(uri)
+      #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      #params = { :solution => 'CFC', :action =>'mbecom_dispatch_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
+      #uri.query = URI.encode_www_form(params)
+      #res = Net::HTTP.get_response(uri)
+
+      http = HTTPClient.new
+      http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_dispatch_orders.xaction&path=&userid=report&password=report"
 
     end
     sql_query1 = 'update mbecom.mb_order_status  a
@@ -227,10 +236,13 @@ class StaticPagesController < ApplicationController
         ActiveRecord::Base.connection.execute(sql_query1)
       end
       # Call the pentaho job to print the bulk print list
-      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      params = { :solution => 'CFC', :action =>'mbecom_print_bulk_order.xaction', :path => '', :userid => 'report', :password => 'report' }
-      uri.query = URI.encode_www_form(params)
-      res = Net::HTTP.get_response(uri)
+      #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      #params = { :solution => 'CFC', :action =>'mbecom_print_bulk_order.xaction', :path => '', :userid => 'report', :password => 'report' }
+      #uri.query = URI.encode_www_form(params)
+      #res = Net::HTTP.get_response(uri)
+
+      http = HTTPClient.new
+      http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_print_bulk_order.xaction&path=&userid=report&password=report"
 
       selected_order_ids.each do |order_no|
         sql_query1 = 'update mbecom.mb_order_status  a
@@ -636,10 +648,13 @@ class StaticPagesController < ApplicationController
       ActiveRecord::Base.connection.execute(sql_query6)
 
       # Create RPRO files
-      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      params = { :solution => 'CFC', :action =>'mbecom_induct_orders_rpro.xaction', :path => '', :userid => 'report', :password => 'report' }
-      uri.query = URI.encode_www_form(params)
-      res = Net::HTTP.get_response(uri)
+      #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      #params = { :solution => 'CFC', :action =>'mbecom_induct_orders_rpro.xaction', :path => '', :userid => 'report', :password => 'report' }
+      #uri.query = URI.encode_www_form(params)
+      #res = Net::HTTP.get_response(uri)
+
+      http = HTTPClient.new
+      http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_induct_orders_rpro.xaction&path=&userid=report&password=report"
 
     end # select_order_ids.nil?
 
