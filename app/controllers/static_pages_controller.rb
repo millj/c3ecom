@@ -248,10 +248,12 @@ class StaticPagesController < ApplicationController
   def select_oms
 
     # run the xaction to get the list of currently available orders
-    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-    params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
-    uri.query = URI.encode_www_form(params)
-    res = Net::HTTP.get_response(uri)
+    #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    #params = { :solution => 'CFC', :action =>'mbecom_retrieve_available_orders_list.xaction', :path => '', :userid => 'report', :password => 'report' }
+    #uri.query = URI.encode_www_form(params)
+    #res = Net::HTTP.get_response(uri)
+    http = HTTPClient.new
+    http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_retrieve_available_orders_list.xaction&path=&userid=report&password=report"
 
     # use rails to process the json in the incoming table into the mb_order_status table
 
@@ -312,17 +314,25 @@ class StaticPagesController < ApplicationController
 
       # Lock orders that we wish to retrieve
 
-      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      params = { :solution => 'CFC', :action =>'mb_lock_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
-      uri.query = URI.encode_www_form(params)
-      res = Net::HTTP.get_response(uri)
+      #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      #params = { :solution => 'CFC', :action =>'mb_lock_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
+      #uri.query = URI.encode_www_form(params)
+      #res = Net::HTTP.get_response(uri)
+
+      http = HTTPClient.new
+      http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mb_lock_orders.xaction&path=&userid=report&password=report"
+
 
       # retrieve order details that have been selected
 
-      uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      params = { :solution => 'CFC', :action =>'mbecom_retrieve_order_details.xaction', :path => '', :userid => 'report', :password => 'report' }
-      uri.query = URI.encode_www_form(params)
-      res = Net::HTTP.get_response(uri)
+      #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+      #params = { :solution => 'CFC', :action =>'mbecom_retrieve_order_details.xaction', :path => '', :userid => 'report', :password => 'report' }
+      #uri.query = URI.encode_www_form(params)
+      #res = Net::HTTP.get_response(uri)
+
+      http = HTTPClient.new
+      http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_retrieve_order_details.xaction&path=&userid=report&password=report"
+
 
       #check the http status of the request, saved in table with the json
       sql_query = 'Select http_status_code from mbecom.mb_order_details_incoming'
