@@ -100,7 +100,8 @@ class StaticPagesController < ApplicationController
         sql_query1 = 'update mbecom.mb_order_status  a
                       set a.order_ecom_status = 42
                       where a.order_number = ' + '\'' + order_no + '\'' +
-            '    and a.order_ecom_status = 41'
+            '    and a.order_ecom_status = 41
+                 and a.connote_reference is not null'
         ActiveRecord::Base.connection.execute(sql_query1)
       end
     end
@@ -118,7 +119,7 @@ class StaticPagesController < ApplicationController
     http.connect_timeout = 300
     http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_update_connote.xaction&path=&userid=report&password=report"
 
-    sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 41'
+    sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 41 and connote_reference is not null'
     @ship_orders = ActiveRecord::Base.connection.select_all(sql_query1)
 
   end
@@ -389,10 +390,6 @@ class StaticPagesController < ApplicationController
 
       # Lock orders that we wish to retrieve
 
-      #uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
-      #params = { :solution => 'CFC', :action =>'mb_lock_orders.xaction', :path => '', :userid => 'report', :password => 'report' }
-      #uri.query = URI.encode_www_form(params)
-      #res = Net::HTTP.get_response(uri)
 
       http = HTTPClient.new
       http.connect_timeout = 300
@@ -406,9 +403,9 @@ class StaticPagesController < ApplicationController
       #uri.query = URI.encode_www_form(params)
       #res = Net::HTTP.get_response(uri)
 
-      http = HTTPClient.new
-      http.connect_timeout = 300
-      http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_retrieve_order_details.xaction&path=&userid=report&password=report"
+      http2 = HTTPClient.new
+      http2.connect_timeout = 300
+      http2.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_retrieve_order_details.xaction&path=&userid=report&password=report"
 
 
       #check the http status of the request, saved in table with the json
@@ -719,6 +716,7 @@ class StaticPagesController < ApplicationController
       #res = Net::HTTP.get_response(uri)
 
       http = HTTPClient.new
+      http.connect_timeout = 300
       http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_induct_orders_rpro.xaction&path=&userid=report&password=report"
 
     end # select_order_ids.nil?
