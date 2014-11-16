@@ -272,6 +272,8 @@ class StaticPagesController < ApplicationController
 
     end
 
+    #Nowc push any orders that have only a electronic gift card to the ship status as we do not need to do anything with them
+
     redirect_to '/'
   end
 
@@ -536,7 +538,8 @@ class StaticPagesController < ApplicationController
                                                                 state,
                                                                 country,
                                                                 phone,
-                                                                delivery_instructions
+                                                                delivery_instructions,
+                                                                company_name
                                                                ) values (' +
                   '\'' + json_data['OrderGuid'].to_s + '\', ' +
                   '\'' + json_data['ShippingAddress']['FirstName'].to_s + '\', ' +
@@ -548,7 +551,8 @@ class StaticPagesController < ApplicationController
                   '\'' + json_data['ShippingAddress']['State'].to_s + '\', ' +
                   '\'' + json_data['ShippingAddress']['Country'].to_s + '\', ' +
                   '\'' + json_data['ShippingAddress']['PhoneNumber'].to_s + '\', ' +
-                  '\'' + json_data['ShippingAddress']['DeliveryInstructions'].to_s + '\'' +
+                  '\'' + json_data['ShippingAddress']['DeliveryInstructions'].to_s + '\', ' +
+                  '\'' + json_data['ShippingAddress']['CompanyName'].to_s + '\'' +
                   ')'
               ActiveRecord::Base.connection.execute(sql_query8)
             end
@@ -570,7 +574,8 @@ class StaticPagesController < ApplicationController
                                                                 postcode,
                                                                 state,
                                                                 country,
-                                                                phone
+                                                                phone,
+                                                                company_name
                                                                ) values (' +
                   '\'' + json_data['OrderGuid'].to_s + '\', ' +
                   '\'' + json_data['BillingAddress']['FirstName'].to_s + '\', ' +
@@ -581,7 +586,8 @@ class StaticPagesController < ApplicationController
                   '\'' + json_data['BillingAddress']['PostalCode'].to_s + '\', ' +
                   '\'' + json_data['BillingAddress']['State'].to_s + '\', ' +
                   '\'' + json_data['BillingAddress']['Country'].to_s + '\', ' +
-                  '\'' + json_data['BillingAddress']['PhoneNumber'].to_s + '\'' +
+                  '\'' + json_data['BillingAddress']['PhoneNumber'].to_s + '\', ' +
+                  '\'' + json_data['BillingAddress']['CompanyName'].to_s + '\'' +
                   ')'
               ActiveRecord::Base.connection.execute(sql_query8)
             end
