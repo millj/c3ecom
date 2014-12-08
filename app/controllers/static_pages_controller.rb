@@ -106,9 +106,9 @@ class StaticPagesController < ApplicationController
       end
     end
 
-    http = HTTPClient.new
-    http.connect_timeout = 300
-    http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_complete_orders.xaction&path=&userid=report&password=report"
+    #http = HTTPClient.new
+    #http.connect_timeout = 300
+    #http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_complete_orders.xaction&path=&userid=report&password=report"
 
     redirect_to '/'
   end
