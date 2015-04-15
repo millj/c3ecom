@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140705040340) do
+ActiveRecord::Schema.define(version: 20150415014747) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 20140705040340) do
     t.boolean  "direct"
     t.boolean  "customer_service"
     t.boolean  "finance"
+    t.boolean  "direct2"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

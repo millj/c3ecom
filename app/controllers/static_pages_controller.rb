@@ -116,8 +116,8 @@ class StaticPagesController < ApplicationController
   def ship_the
 
     http = HTTPClient.new
-    http.connect_timeout = 300
-    http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_update_connote.xaction&path=&userid=report&password=report"
+    http.connect_timeout = 600
+    #http.get "http://dss.ccubed.local:8084/pentaho/ViewAction?solution=CFC&action=mbecom_update_connote.xaction&path=&userid=report&password=report"
 
     sql_query1 = 'select * from mbecom.mb_order_status where order_ecom_status = 41 and connote_reference is not null'
     @ship_orders = ActiveRecord::Base.connection.select_all(sql_query1)

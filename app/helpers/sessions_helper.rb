@@ -43,6 +43,14 @@ module SessionsHelper
     end
   end
 
+  def direct2_user?
+    if signed_in?
+      current_user.direct2?
+    else
+      nil
+    end
+  end
+
   def current_user=(user)
     @current_user = user
   end
