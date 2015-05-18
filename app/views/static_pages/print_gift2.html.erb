@@ -1,0 +1,16 @@
+<% provide(:title, 'Print a message') %>
+<h2>Order Message print</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'print_gift_message2', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Enter an order# to print!</legend>
+        Prints the order message if found</p>
+    <%= label_tag(:order_to_print, "Order #:") %> <%= text_field_tag(:order_to_print) %>
+    <div>
+       <%= submit_tag 'Print me!', class: 'btn btn-warning btn-large' %>
+    </div>
+
+<% end %>
+
+

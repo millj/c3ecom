@@ -82,6 +82,9 @@ C3ecom::Application.routes.draw do
   post 'print_gift_message' => 'static_pages#print_gift_message'
   get 'print_gift_message' => 'static_pages#print_gift'
 
+  post 'print_gift_message2' => 'static_pages#print_gift_message2'
+  get 'print_gift_message2' => 'static_pages#print_gift2'
+
   post 'reprint_gift_message' => 'static_pages#reprint_gift_message'
   get 'reprint_gift_message' => 'static_pages#reprint_gift'
 

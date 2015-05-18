@@ -190,6 +190,26 @@ class StaticPagesController < ApplicationController
 
   end
 
+
+  def print_gift_message2
+    order_number = params[:order_to_print]
+    sql_query1 = 'insert into mbecom.mb_print_me_a1w(order_number) values ( ' + '\'' + order_number + '\'' + ')'
+    ActiveRecord::Base.connection.execute(sql_query1)
+
+    uri = URI.parse('http://dss.ccubed.local:8084/pentaho/ViewAction')
+    params = { :solution => 'CFC', :action =>'mbecom_print_gift_a1w.xaction', :path => '', :userid => 'report', :password => 'report' }
+    uri.query = URI.encode_www_form(params)
+    res = Net::HTTP.get_response(uri)
+
+    #sql_query1 = 'truncate table mbecom.mb_print_me_a1w'
+    #ActiveRecord::Base.connection.execute(sql_query1)
+    redirect_to '/'
+  end
+
+  def print_gift2
+
+  end
+
   def print_gift_message
     selected_order_ids = params[:selected]
     unless selected_order_ids.nil?
