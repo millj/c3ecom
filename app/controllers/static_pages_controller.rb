@@ -102,13 +102,29 @@ class StaticPagesController < ApplicationController
     sql_query1 = 'select order_guid from mbecom.mb_order_status_a1w where order_number = ' + '\'' + order_number + '\''
     order_guid = ActiveRecord::Base.connection.select_value(sql_query1)
 
+
+    sql_query1 = 'delete from mbecom.mb_billing_address_a1w where order_guid = ' + '\'' + order_guid + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+    sql_query1 = 'delete from mbecom.mb_gift_voucher_items_a1w where order_guid = ' + '\'' + order_guid + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+    sql_query1 = 'delete from mbecom.mb_order_header_a1w where order_guid = ' + '\'' + order_guid + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+    sql_query1 = 'delete from mbecom.mb_order_line_a1w where order_guid = ' + '\'' + order_guid + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+    sql_query1 = 'delete from mbecom.mb_order_line_other_a1w where order_guid = ' + '\'' + order_guid + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+    sql_query1 = 'delete from mbecom.mb_order_payments_a1w where order_guid = ' + '\'' + order_guid + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+    sql_query1 = 'delete from mbecom.mb_shipping_address_a1w where order_guid = ' + '\'' + order_guid + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+
     Rails.logger.debug(order_guid)
 
-    @result = HTTParty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
-                            :body => [{'OrderGuid' => order_guid}].to_json,
-                            :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
-    )
-    Rails.logger.debug("My object: #{@result.inspect}")
+    #@result = HTTParty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
+     #                       :body => [{'OrderGuid' => order_guid}].to_json,
+      #                      :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
+    #)
+    #Rails.logger.debug("My object: #{@result.inspect}")
 
     redirect_to '/'
   end
@@ -116,9 +132,10 @@ class StaticPagesController < ApplicationController
   def reload_the_order_a1w
     order_number = params[:order_to_reload]
     sql_query2 = 'select a.order_guid
-                    from mbecom.mb_order_status_a1w a,
-                         mbecom.mb_order_header_a1w b
-                    where b.order_guid = a.order_guid
+                    from mbecom.mb_order_status_a1w a
+                    where a.order_ecom_status = 999
+                      and not exists ( select * from mbecom.mb_order_header_a1w b
+                                          where b.order_guid = a.order_guid)
                       and a.order_number =   ' + '\'' + order_number + '\''
     order_guid = ActiveRecord::Base.connection.select_value(sql_query2)
 
