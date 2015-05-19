@@ -92,6 +92,50 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def unlock_the_order_a1w
+    order_number = params[:order_to_unlock]
+    sql_query1 = 'update mbecom.mb_order_status_a1w  a
+                      set a.order_ecom_status = 999
+                      where a.order_number = ' + '\'' + order_number + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+
+    sql_query1 = 'select order_guid from mbecom.mb_order_status_a1w where order_number = ' + '\'' + order_number + '\''
+    order_guid = ActiveRecord::Base.connection.select_value(sql_query1)
+
+    Rails.logger.debug(order_guid)
+
+    @result = HTTParty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
+                            :body => [{'OrderGuid' => order_guid}].to_json,
+                            :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
+    )
+    Rails.logger.debug("My object: #{@result.inspect}")
+
+    redirect_to '/'
+  end
+
+  def reload_the_order_a1w
+    order_number = params[:order_to_reload]
+    sql_query2 = 'select a.order_guid
+                    from mbecom.mb_order_status_a1w a,
+                         mbecom.mb_order_header_a1w b
+                    where b.order_guid = a.order_guid
+                      and a.order_number =   ' + '\'' + order_number + '\''
+    order_guid = ActiveRecord::Base.connection.select_value(sql_query2)
+
+    unless order_guid.nil?
+       sql_query1 = 'update mbecom.mb_order_status_a1w  a
+                      set a.order_ecom_status = 10
+                      where a.order_number = ' + '\'' + order_number + '\''
+       ActiveRecord::Base.connection.execute(sql_query1)
+    end
+    redirect_to '/'
+  end
+
+  def reload_order_a1w
+
+  end
+
+
   def ship_the_parcel
 
     selected_order_ids = params[:selected]
@@ -201,8 +245,8 @@ class StaticPagesController < ApplicationController
     uri.query = URI.encode_www_form(params)
     res = Net::HTTP.get_response(uri)
 
-    #sql_query1 = 'truncate table mbecom.mb_print_me_a1w'
-    #ActiveRecord::Base.connection.execute(sql_query1)
+    sql_query1 = 'truncate table mbecom.mb_print_me_a1w'
+    ActiveRecord::Base.connection.execute(sql_query1)
     redirect_to '/'
   end
 

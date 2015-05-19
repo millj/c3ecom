@@ -1,0 +1,18 @@
+<% provide(:title, 'Reload an Order A1w') %>
+<h2>Unlock Order A1w</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'reload_the_order_a1w', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Enter an order to reload!</legend>
+        Reloading an order sets its order status back to 10.</p>
+        The next automated order load should refetch any changed info from OMS.</p>
+        This will not work if the order has not been reset and unlocked first.</p>
+    <%= label_tag(:order_to_reload, "Order #:") %> <%= text_field_tag(:order_to_reload) %>
+    <div>
+       <%= submit_tag 'Reload me!', class: 'btn btn-warning btn-large', :confirm => 'Are you certain you wish to reload this order?' %>
+    </div>
+
+<% end %>
+
+

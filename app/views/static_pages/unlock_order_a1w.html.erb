@@ -1,0 +1,18 @@
+<% provide(:title, 'Unlock an Order A1w') %>
+<h2>Unlock Order A1w</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'unlock_the_order_a1w', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Enter an order to unlock!</legend>
+        Unlocking an order will change its status in OMS to unlocked</p>
+        and change it's order status in mbEcom to 999, deleting all the downloaded data.</p>
+        Do not forget to unwave, unallocate and delete the order in A1w!</p>
+    <%= label_tag(:order_to_unlock, "Order #:") %> <%= text_field_tag(:order_to_unlock) %>
+    <div>
+       <%= submit_tag 'Unlock me!', class: 'btn btn-warning btn-large', :confirm => 'Are you certain you wish to unlock this order?' %>
+    </div>
+
+<% end %>
+
+

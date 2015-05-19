@@ -97,6 +97,12 @@ C3ecom::Application.routes.draw do
   post 'unlock_the_order'  => 'static_pages#unlock_the_order'
   get 'unlock_the_order'  => 'static_pages#unlock_order'
 
+  post 'unlock_the_order_a1w'  => 'static_pages#unlock_the_order_a1w'
+  get 'unlock_the_order_a1w'  => 'static_pages#unlock_order_a1w'
+
+  post 'reload_the_order_a1w'  => 'static_pages#reload_the_order_a1w'
+  get 'reload_the_order_a1w'  => 'static_pages#reload_order_a1w'
+
   post 'archive_the_orders' => 'static_pages#archive_the_orders'
   get  'archive_orders' => 'static_pages#archive_orders'
 
