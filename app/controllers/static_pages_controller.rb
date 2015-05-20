@@ -152,6 +152,22 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def cancel_the_purchase_order
+    purchase_order_number = params[:order_to_cancel]
+
+    sql_query1 = 'update c3dss.fct_axima_control a
+                   set a.status = 50
+                  where purchase_order_no = ' + '\'' + purchase_order_number + '\''
+    ActiveRecord::Base.connection.execute(sql_query1)
+    flash[:success] = 'Cancelled ' + params[:order_to_cancel]
+    redirect_to '/'
+
+  end
+
+  def cancel_purchase
+
+  end
+
 
   def ship_the_parcel
 

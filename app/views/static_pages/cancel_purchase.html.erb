@@ -1,0 +1,18 @@
+<% provide(:title, 'Cancel a PO in Axima') %>
+<h2>Cancel Purchase Order in Axima</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'cancel_the_purchase_order', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Enter a purchase order to cancel!</legend>
+        This will set a PO status to 50. Overnight will send the cancel message to Axima</p>
+        </p>
+        </p>
+    <%= label_tag(:order_to_cancel, "Purchase Order #:") %> <%= text_field_tag(:order_to_cancel) %>
+    <div>
+       <%= submit_tag 'Cancel me!', class: 'btn btn-warning btn-large', :confirm => 'Are you certain you wish to cancel this order?' %>
+    </div>
+
+<% end %>
+
+

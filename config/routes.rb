@@ -103,6 +103,9 @@ C3ecom::Application.routes.draw do
   post 'reload_the_order_a1w'  => 'static_pages#reload_the_order_a1w'
   get 'reload_the_order_a1w'  => 'static_pages#reload_order_a1w'
 
+  post 'cancel_purchase_order'  => 'static_pages#cancel_the_purchase_order'
+  get 'cancel_purchase_order'  => 'static_pages#cancel_purchase'
+
   post 'archive_the_orders' => 'static_pages#archive_the_orders'
   get  'archive_orders' => 'static_pages#archive_orders'
 
