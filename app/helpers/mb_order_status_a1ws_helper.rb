@@ -1,0 +1,2 @@
+module MbOrderStatusA1wsHelper
+end

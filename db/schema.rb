@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415014747) do
+ActiveRecord::Schema.define(version: 20150602055558) do
 
   create_table "allocation_order_lines", force: true do |t|
     t.string   "order_num"
@@ -131,6 +131,16 @@ ActiveRecord::Schema.define(version: 20150415014747) do
     t.string   "description"
     t.string   "vendor_code"
     t.string   "upc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mb_order_status_a1ws", force: true do |t|
+    t.string   "order_id"
+    t.integer  "order_ecom_status"
+    t.integer  "order_rpro_status"
+    t.string   "order_number"
+    t.integer  "priority"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

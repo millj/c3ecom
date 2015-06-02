@@ -25,6 +25,10 @@ C3ecom::Application.routes.draw do
 
   resources :mb_order_statuses, only: [:index, :show]
 
+  resources :mb_order_status_a1ws, only: [:index, :show]
+
+
+
 
   match '/signin',    to: 'sessions#new',          via: 'get'
   match '/signout',   to: 'sessions#destroy',      via: 'delete'
@@ -114,6 +118,9 @@ C3ecom::Application.routes.draw do
 
   get 'fct_axima_controls/place_on_hold'
   get 'fct_axima_controls/remove_from_hold'
+
+  post 'special_instructions' => 'static_pages#special_instructions_post'
+  get  'special_instructions' => 'static_pages#special_instructions_get'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
