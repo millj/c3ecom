@@ -20,12 +20,10 @@ C3ecom::Application.routes.draw do
       end
   end
   resources :allocation_orders, only: [:index, :show, :edit, :update]
-
   resources :items, only: [:index, :show]
-
   resources :mb_order_statuses, only: [:index, :show]
-
   resources :mb_order_status_a1ws, only: [:index, :show]
+  resources :fct_special_instructions, only: [:index, :show]
 
 
 
