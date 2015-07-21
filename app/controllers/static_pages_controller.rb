@@ -120,11 +120,11 @@ class StaticPagesController < ApplicationController
 
     Rails.logger.debug(order_guid)
 
-    #@result = HTTParty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
-     #                       :body => [{'OrderGuid' => order_guid}].to_json,
-      #                      :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
-    #)
-    #Rails.logger.debug("My object: #{@result.inspect}")
+    @result = HTTParty.post('https://api.mecca.com.au/v1/orderprocess/bulkUnlockOrders?key=CbrpoGCVzJQZeNaus0XmRLeYuFmPVNlx',
+                            :body => [{'OrderGuid' => order_guid}].to_json,
+                            :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
+    )
+    Rails.logger.debug("My object: #{@result.inspect}")
 
     redirect_to '/'
   end
@@ -278,8 +278,8 @@ class StaticPagesController < ApplicationController
     uri.query = URI.encode_www_form(params)
     res = Net::HTTP.get_response(uri)
 
-    sql_query1 = 'truncate table mbecom.mb_print_me_a1w'
-    ActiveRecord::Base.connection.execute(sql_query1)
+        #sql_query1 = 'truncate table mbecom.mb_print_me_a1w'
+    #ActiveRecord::Base.connection.execute(sql_query1)
     redirect_to '/'
   end
 
@@ -901,7 +901,7 @@ class StaticPagesController < ApplicationController
     sql_query =  'truncate table ' + params[:select_table]
     ActiveRecord::Base.connection.execute(sql_query)
 
-    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
+    sql_query =  'load data infile \'/mnt/integration2/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_mecca_path
@@ -917,7 +917,7 @@ class StaticPagesController < ApplicationController
     sql_query =  'truncate table ' + params[:select_table]
     ActiveRecord::Base.connection.execute(sql_query)
 
-    sql_query =  'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
+    sql_query =  'load data infile \'/mnt/integration2/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_km_path
@@ -930,7 +930,7 @@ class StaticPagesController < ApplicationController
 
   def load_table
 
-    sql_query = 'load data infile \'/mnt/integration/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
+    sql_query = 'load data infile \'/mnt/integration2/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_path
@@ -942,7 +942,7 @@ class StaticPagesController < ApplicationController
   end
 
   def load_table_finance
-    sql_query = 'load data infile \'/mnt/integration/finance/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
+    sql_query = 'load data infile \'/mnt/integration2/finance/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_finance_path
@@ -969,7 +969,7 @@ class StaticPagesController < ApplicationController
 
   def load_secret_shopper
 
-    sql_query =  'load data infile \'/mnt/integration/secretshopper/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
+    sql_query =  'load data infile \'/mnt/integration2/secretshopper/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
     ActiveRecord::Base.connection.execute(sql_query)
     flash[:success] = 'Loaded ' + params[:select_table]
     redirect_to load_secret_shopper

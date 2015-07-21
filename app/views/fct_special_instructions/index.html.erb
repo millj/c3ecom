@@ -28,6 +28,7 @@
       <th> Priority </th>
       <th> Special Instructions </th>
       <th> SSCC # </th>
+      <th> Message </th>
     </tr>
 
   <% @fct_special_instructions.each do |special_instr| %>
@@ -36,6 +37,7 @@
         <td><%= special_instr.priority %></td>
         <td><%= special_instr.delivery_instructions %></td>
         <td><%= special_instr.sscc %></td>
+        <td><%= special_instr.gift_message %></td>
       </tr>
   <% end %>
   </table>
