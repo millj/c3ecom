@@ -51,26 +51,35 @@ C3ecom::Application.routes.draw do
   post 'truncate_finance' => 'static_pages#truncate_table_finance'
   get  'truncate_finance' => 'static_pages#truncate_finance'
 
-  post 'truncate_mecca' => 'static_pages#table_truncate_mecca'
-  get  'truncate_mecca' => 'static_pages#truncate_mecca'
+  post 'load_mp1'  => 'static_pages#load_table_mp1'
+  get  'load_mp1'  => 'static_pages#load_mp1'
 
-  post 'load_mecca'  => 'static_pages#load_table_mecca'
-  get  'load_mecca'  => 'static_pages#load_mecca'
+  post 'load_mp2'  => 'static_pages#load_table_mp2'
+  get  'load_mp2'  => 'static_pages#load_mp2'
 
-  post 'live_load_mecca'  => 'static_pages#live_table_mecca'
-  get  'live_load_mecca'  => 'static_pages#live_mecca'
+  post 'load_mp3'  => 'static_pages#load_table_mp3'
+  get  'load_mp3'  => 'static_pages#load_mp3'
+
+  post 'truncate_mp1' => 'static_pages#table_truncate_mp1'
+  get  'truncate_mp1' => 'static_pages#truncate_mp1'
+
+  post 'truncate_mp2' => 'static_pages#table_truncate_mp2'
+  get  'truncate_mp2' => 'static_pages#truncate_mp2'
+
+  post 'truncate_mp3' => 'static_pages#table_truncate_mp3'
+  get  'truncate_mp3' => 'static_pages#truncate_mp3'
+
+  post 'live_load_mp1'  => 'static_pages#live_table_mp1'
+  get  'live_load_mp1'  => 'static_pages#live_mp1'
+
+  post 'live_load_mp2'  => 'static_pages#live_table_mp2'
+  get  'live_load_mp2'  => 'static_pages#live_mp2'
+
+  post 'live_load_mp3'  => 'static_pages#live_table_mp3'
+  get  'live_load_mp3'  => 'static_pages#live_mp3'
 
   post 'load_secret_shopper' => 'static_pages#load_secret_shopper'
   get  'load_secret_shopper' => 'static_pages#load_shopper'
-
-  post 'truncate_km' => 'static_pages#table_truncate_km'
-  get  'truncate_km' => 'static_pages#truncate_km'
-
-  post 'load_km'  => 'static_pages#load_table_km'
-  get  'load_km'  => 'static_pages#load_km'
-
-  post 'live_load_km'  => 'static_pages#live_table_km'
-  get  'live_load_km'  => 'static_pages#live_km'
 
   post 'select_oms_orders' => 'static_pages#select_oms_orders'
   get  'select_oms_orders' => 'static_pages#select_oms'

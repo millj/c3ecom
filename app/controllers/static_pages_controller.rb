@@ -830,7 +830,7 @@ class StaticPagesController < ApplicationController
 
   end
 
-  def table_truncate_mecca
+  def table_truncate_mp1
 
       sql_query = "truncate table " + params[:select_table]
       ActiveRecord::Base.connection.execute(sql_query)
@@ -842,7 +842,19 @@ class StaticPagesController < ApplicationController
     redirect_to truncate_mecca_path
   end
 
-  def table_truncate_km
+  def table_truncate_mp2
+
+    sql_query = "truncate table " + params[:select_table]
+    ActiveRecord::Base.connection.execute(sql_query)
+    flash[:success] = 'Truncated ' + params[:select_table]
+    redirect_to truncate_path
+  rescue Exception => exc
+    logger.error("Message for the log file #{exc.message}")
+    flash[:notice] = "Error #{exc.message}"
+    redirect_to truncate_km_path
+  end
+
+  def table_truncate_mp3
 
     sql_query = "truncate table " + params[:select_table]
     ActiveRecord::Base.connection.execute(sql_query)
@@ -870,7 +882,7 @@ class StaticPagesController < ApplicationController
 
   end
 
-  def live_table_mecca
+  def live_table_mp1
 
     sql_query = 'insert into ' + params[:select_table] + ' select * from ' + params[:select_table] + '_upload'
     ActiveRecord::Base.connection.execute(sql_query)
@@ -883,7 +895,7 @@ class StaticPagesController < ApplicationController
 
   end
 
-  def live_table_km
+  def live_table_mp2
 
     sql_query = 'insert into ' + params[:select_table] + ' select * from ' + params[:select_table] + '_upload'
     ActiveRecord::Base.connection.execute(sql_query)
@@ -896,7 +908,20 @@ class StaticPagesController < ApplicationController
 
   end
 
-  def load_table_mecca
+  def live_table_mp3
+
+    sql_query = 'insert into ' + params[:select_table] + ' select * from ' + params[:select_table] + '_upload'
+    ActiveRecord::Base.connection.execute(sql_query)
+    flash[:success] = 'Loaded ' + params[:select_table]
+    redirect_to live_load_km_path
+  rescue Exception => exc
+    logger.error("Message for the log file #{exc.message}")
+    flash[:notice] = "Error #{exc.message}"
+    redirect_to live_load_km_path
+
+  end
+
+  def load_table_mp1
 
     sql_query =  'truncate table ' + params[:select_table]
     ActiveRecord::Base.connection.execute(sql_query)
@@ -912,7 +937,24 @@ class StaticPagesController < ApplicationController
 
   end
 
-  def load_table_km
+  def load_table_mp2
+
+    sql_query =  'truncate table ' + params[:select_table]
+    ActiveRecord::Base.connection.execute(sql_query)
+
+    sql_query =  'load data infile \'/mnt/integration2/demand/' + params[:select_table][((params[:select_table].index('.')) + 1)..(params[:select_table].length)] + '.csv \' into table ' + params[:select_table] + ' fields terminated by \',\' optionally enclosed by \'\"\' lines terminated by  \'\\r\\n\' ignore 1 lines'
+    ActiveRecord::Base.connection.execute(sql_query)
+    flash[:success] = 'Loaded ' + params[:select_table]
+    redirect_to load_km_path
+  rescue Exception => exc
+    logger.error("Message for the log file #{exc.message}")
+    flash[:notice] = "Error #{exc.message}"
+    redirect_to load_km_path
+
+  end
+
+
+  def load_table_mp3
 
     sql_query =  'truncate table ' + params[:select_table]
     ActiveRecord::Base.connection.execute(sql_query)
