@@ -1,0 +1,36 @@
+<% provide(:title, 'Load live data - Mecca') %>
+<h2>Load to live - Mecca</h2>
+
+
+<%= form_tag(controller: 'static_pages', action: 'live_table_mecca', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Choose a table to load to live !</legend>
+    This copies data from the matching upload table to the live table. </p>
+      All data is appended to current live data</p>
+        <%=select_tag "select_table",
+          "<option> c3demand.fct_pre_launch_new_fc_inputs_mp1 </option>
+            <option> c3demand.fct_pre_launch_new_mp1 </option>
+            <option> c3demand.fct_pre_launch_new_tester_mp1 </option>
+            <option> c3demand.fct_le_fc_inputs_mp1 </option>
+            <option> c3demand.fct_le_item_forecast_mp1 </option>
+            <option> c3demand.fct_le_tester_fc_mp1 </option>
+            <option> c3demand.fct_post_launch_adj_hist_mp1 </option>
+            <option> c3demand.fct_post_launch_new_mp1 </option>
+            <option> c3demand.fct_post_launch_new_tester_mp1 </option>
+            <option> c3demand.fct_post_launch_le_fc_mp1 </option>
+            <option> c3demand.fct_event_fc_inputs_mp1 </option>
+            <option> c3demand.fct_event_fc_mp1 </option>
+            <option> c3demand.fct_base_replen_fc_item_format_mp1 </option>
+            <option> c3demand.fct_replen_tester_fc_mp1 </option>
+            <option> c3demand.fct_promo_uplift_fc_inputs_mecca </option>
+            <option> c3demand.fct_promo_uplift_fc_mecca </option>
+".html_safe, class: "input-xlarge"
+         %>
+
+       <div>
+         <%= submit_tag 'Load to live!', class: 'btn btn-warning btn-large' %>
+       </div>
+
+<% end %>
+
+

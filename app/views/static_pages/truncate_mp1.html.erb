@@ -1,0 +1,34 @@
+<% provide(:title, 'Truncate - MP1') %>
+<h2>Truncate - Mecca</h2>
+
+<%= form_tag(controller: 'static_pages', action: 'table_truncate_mp1', method: "post") do %>
+    <!-- Form Name -->
+    <legend>Choose a table to truncate! (Remember this is not reversable)</legend>
+
+        <%=select_tag "select_table",
+          "<option> c3demand.fct_pre_launch_new_fc_inputs_mp1 </option>
+            <option> c3demand.fct_pre_launch_new_mp1 </option>
+            <option> c3demand.fct_pre_launch_new_tester_mp1 </option>
+            <option> c3demand.fct_le_fc_inputs_mp1 </option>
+            <option> c3demand.fct_le_item_forecast_mp1 </option>
+            <option> c3demand.fct_le_tester_fc_mp1 </option>
+            <option> c3demand.fct_post_launch_adj_hist_mp1 </option>
+            <option> c3demand.fct_post_launch_new_mp1 </option>
+            <option> c3demand.fct_post_launch_new_tester_mp1 </option>
+            <option> c3demand.fct_post_launch_le_fc_mp1 </option>
+            <option> c3demand.fct_event_fc_inputs_mp1 </option>
+            <option> c3demand.fct_event_fc_mp1 </option>
+            <option> c3demand.fct_base_replen_fc_item_format_mp1 </option>
+            <option> c3demand.fct_replen_tester_fc_mp1 </option>
+            <option> c3demand.fct_promo_uplift_fc_inputs_mecca </option>
+            <option> c3demand.fct_promo_uplift_fc_mecca </option>
+          ".html_safe, class: "input-xlarge"
+         %>
+
+       <div>
+         <%= submit_tag 'Go ahead, truncate my day.', data: {confirm: 'Are you sure?'}, class: 'btn btn-warning btn-large' %>
+       </div>
+
+<% end %>
+
+
