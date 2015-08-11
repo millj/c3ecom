@@ -1,27 +1,27 @@
-<% provide(:title, 'Load live data - Mecca') %>
+<% provide(:title, 'Load live data - MP3') %>
 <h2>Load to live - Mecca</h2>
 
 
-<%= form_tag(controller: 'static_pages', action: 'live_table_mecca', method: "post") do %>
+<%= form_tag(controller: 'static_pages', action: 'live_table_mp3', method: "post") do %>
     <!-- Form Name -->
     <legend>Choose a table to load to live !</legend>
     This copies data from the matching upload table to the live table. </p>
       All data is appended to current live data</p>
         <%=select_tag "select_table",
           "<option> c3demand.fct_pre_launch_new_fc_inputs_mp3 </option>
-            <option> c3demand.fct_pre_launch_new_mp2 </option>
-            <option> c3demand.fct_pre_launch_new_tester_mp2 </option>
-            <option> c3demand.fct_le_fc_inputs_mp2 </option>
-            <option> c3demand.fct_le_item_forecast_mp2 </option>
-            <option> c3demand.fct_le_tester_fc_mp2 </option>
-            <option> c3demand.fct_post_launch_adj_hist_mp2 </option>
-            <option> c3demand.fct_post_launch_new_mp2 </option>
-            <option> c3demand.fct_post_launch_new_tester_mp2 </option>
-            <option> c3demand.fct_post_launch_le_fc_mp2 </option>
-            <option> c3demand.fct_event_fc_inputs_mp2 </option>
-            <option> c3demand.fct_event_fc_mp2 </option>
-            <option> c3demand.fct_base_replen_fc_item_format_mp2 </option>
-            <option> c3demand.fct_replen_tester_fc_mp2 </option>
+            <option> c3demand.fct_pre_launch_new_mp3 </option>
+            <option> c3demand.fct_pre_launch_new_tester_mp3 </option>
+            <option> c3demand.fct_le_fc_inputs_mp3 </option>
+            <option> c3demand.fct_le_item_forecast_mp3 </option>
+            <option> c3demand.fct_le_tester_fc_mp3 </option>
+            <option> c3demand.fct_post_launch_adj_hist_mp3 </option>
+            <option> c3demand.fct_post_launch_new_mp3 </option>
+            <option> c3demand.fct_post_launch_new_tester_mp3 </option>
+            <option> c3demand.fct_post_launch_le_fc_mp3 </option>
+            <option> c3demand.fct_event_fc_inputs_mp3 </option>
+            <option> c3demand.fct_event_fc_mp3 </option>
+            <option> c3demand.fct_base_replen_fc_item_format_mp3 </option>
+            <option> c3demand.fct_replen_tester_fc_mp3 </option>
             ".html_safe, class: "input-xlarge"
          %>
 
