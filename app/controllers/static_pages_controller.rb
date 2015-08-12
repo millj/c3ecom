@@ -839,7 +839,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to truncate_mecca_path
+    redirect_to truncate_mp1_path
   end
 
   def table_truncate_mp2
@@ -851,7 +851,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to truncate_km_path
+    redirect_to truncate_mp2_path
   end
 
   def table_truncate_mp3
@@ -863,7 +863,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to truncate_km_path
+    redirect_to truncate_mp3_path
   end
 
   def table_truncate
@@ -891,7 +891,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to live_load_mecca_path
+    redirect_to live_load_mp1_path
 
   end
 
@@ -904,7 +904,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to live_load_km_path
+    redirect_to live_load_mp3_path
 
   end
 
@@ -917,7 +917,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to live_load_km_path
+    redirect_to live_load_mp3_path
 
   end
 
@@ -933,7 +933,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to load_mecca_path
+    redirect_to load_mp1_path
 
   end
 
@@ -949,7 +949,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to load_km_path
+    redirect_to load_mp2_path
 
   end
 
@@ -966,7 +966,7 @@ class StaticPagesController < ApplicationController
   rescue Exception => exc
     logger.error("Message for the log file #{exc.message}")
     flash[:notice] = "Error #{exc.message}"
-    redirect_to load_km_path
+    redirect_to load_mp3_path
 
   end
 
