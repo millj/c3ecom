@@ -51,6 +51,14 @@ module SessionsHelper
     end
   end
 
+  def store_user?
+    if signed_in?
+      current_user.store?
+    else
+      nil
+    end
+  end
+
   def current_user=(user)
     @current_user = user
   end

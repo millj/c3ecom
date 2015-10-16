@@ -1,0 +1,44 @@
+<% provide(:title, 'Store ASN Control') %>
+<h1>Store Carton Receiving</h1>
+
+<form class="form-horizontal">
+  <fieldset>
+
+    <!-- Form Name -->
+    <legend>Filters</legend>
+
+    <!-- Search input-->
+    <div class="control-group">
+      <label class="control-label" for="search">SSCC</label>
+      <div class="controls">
+        <input id="search" name="search" class="input-medium search-query" type="text">
+      </div>
+    </div>
+
+  </fieldset>
+</form>
+
+
+<%= will_paginate %>
+
+<ul class="users">
+  <table class="table table-striped">
+    <tr>
+      <th> SSCC </th>
+      <th> Transfer Order # </th>
+      <th> Store Code </th>
+      <th> Date Shipped</th>
+    </tr>
+
+  <% @fct_wms_carton_asn_controls.each do |fct_wms_carton_asn_control| %>
+      <tr>
+        <td><%= fct_wms_carton_asn_control.sscc %></td>
+        <td><%= fct_wms_carton_asn_control.to_number %></td>
+        <td><%= fct_wms_carton_asn_control.store_code %></td>
+        <td><%= fct_wms_carton_asn_control.date_shipped %></td>
+      </tr>
+  <% end %>
+  </table>
+</ul>
+
+<%= will_paginate %>

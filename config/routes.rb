@@ -24,6 +24,7 @@ C3ecom::Application.routes.draw do
   resources :mb_order_statuses, only: [:index, :show]
   resources :mb_order_status_a1ws, only: [:index, :show]
   resources :fct_special_instructions, only: [:index, :show]
+  resources :fct_wms_carton_asn_controls, only: [:index, :show]
 
 
 

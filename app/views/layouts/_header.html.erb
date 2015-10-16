@@ -110,6 +110,16 @@
                 </ul>
               </li>
           <% end %>
+          <% if store_user? %>
+              <li id="fat-menu" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Stores <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Receive Cartons", fct_wms_carton_asn_controls_path %></li>
+                </ul>
+              </li>
+          <% end %>
           <% if signed_in? %>
             <li><%= link_to "Users", users_path %></li>
             <li id="fat-menu" class="dropdown">
